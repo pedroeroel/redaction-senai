@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Arvo:ital,wght@0,400;0,700;1,400;1,700&family=Dancing+Script:wght@400..700&family=Great+Vibes&family=Gudea:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
 </head>
-<body class="min-h-screen flex flex-col font-sans bg-[#1f113b] text-[#E8E1CF] overflow-y-hidden">
+<body class="min-h-screen flex flex-col font-sans bg-[#1f113b] text-[#E8E1CF] overflow-y-auto">
     {% if header %}
 <header class="flex items-center justify-between p-5 bg-[#3D1E8D] text-[#E8E1CF] shadow-lg">
     <div class="flex w-fit h-fit gap-3 items-center">    
@@ -23,7 +23,7 @@
         {% block pagetext %}{% endblock %}
     </p>
     <div class="flex items-center space-x-4">
-        <a href="" class="invisible md:visible"><span class="font-semibold">Sair</span></a>
+        <a href="/logout" class="invisible md:visible"><span class="font-semibold">Sair</span></a>
         <div class="avatar">
             <div class="overflow-hidden ring-[#E8E1CF] w-10 rounded-full ring-2">
                 <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
@@ -40,9 +40,6 @@
             >
         </a>
     </div>
-    <footer class="text-center py-4 text-md text-[#E8E1CF]">
-    &copy; 2024 AlphaTech. All rights reserved.
-</footer>
 </header>
 {% endif %}
 {% if main %}
