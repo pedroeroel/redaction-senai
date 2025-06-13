@@ -7,8 +7,7 @@
 
 {% block main_content %}
 <div
-    class="bg-no-repeat bg-cover bg-center flex flex-col justify-center"
-    style="background-image: url('imagens//fundo-padrao.png');">
+    class="bg-no-repeat bg-cover bg-center flex flex-col justify-center">
 
     <div class="container mx-auto px-6 lg:px-8 flex flex-col md:flex-row items-center md:items-stretch w-full h-full">
 
@@ -30,7 +29,7 @@
         </div>
         <div class="flex items-end justify-end w-full h-full">
             <div class="relative self-end">
-                <div class="p-10 fixed bottom-[-15vh] right-11 invisible lg:visible lg:w-[50vw] bg-[#3D1E8D] rounded-full">
+                <div class="z-0 p-10 fixed bottom-[-15vh] right-11 invisible lg:visible lg:w-[50vw] bg-[#3D1E8D] rounded-full">
                     <img
                     src="{{ url_for('static', filename='img/funny-guy.png') }}"
                     alt="Personagem"
