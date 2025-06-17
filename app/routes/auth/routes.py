@@ -9,11 +9,6 @@ def login():
     if session:
         return redirect('/')
     else:
-    
-        if request.method == 'POST':
-            session = True
-            return redirect('/')
-        
         return render_template('login.html')
 
 @auth.route('/register', methods=['GET', 'POST'])
