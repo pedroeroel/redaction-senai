@@ -1,0 +1,88 @@
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: #4c1d95; /* Roxo escuro */
+    color: white;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 32px;
+    background-color: #5b21b6; /* Roxo médio */
+}
+
+header h1 {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+header button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+header button:first-child {
+    background-color: #ffffff; /* Roxo claro */
+    color: #6d28d9;
+}
+
+header button:first-child:hover {
+    background-color: #7c3aed;
+}
+
+header button:last-child {
+    background-color: #4c1d95;
+    color: #fdfdfd;
+}
+
+header button:last-child:hover {
+    background-color: #f3f4f6;
+}
+
+main {
+    text-align: center;
+    padding: 64px 16px;
+}
+
+main h2 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 16px;
+}
+
+main p {
+    font-size: 18px;
+    max-width: 600px;
+    margin: 0 auto 32px;
+    line-height: 1.6;
+}
+
+.cta-button {
+    padding: 12px 24px;
+    background-color: white;
+    color: #4c1d95;
+    font-size: 16px;
+    font-weight: bold;
+    border: 2px solid rgb(109, 98, 98);
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s, color 0.3s;
+}
+
+.cta-button:hover {
+    background-color: #4c1d95;
+    color: white;
+}
+
+.hero-image {
+    margin-top: 32px;
+}
+.logo {
+    max-width: 200px;
+    height: auto;
+}

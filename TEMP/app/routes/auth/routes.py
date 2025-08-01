@@ -5,7 +5,7 @@ auth = Blueprint('auth', __name__, template_folder='templates')
 
 @auth.route('/login', methods=['GET', 'POST'])
 def login():
-    
+
     if session:
         return redirect('/')
     else:

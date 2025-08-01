@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Home</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            overflow-y: hidden; 
+        }
+        #main-content {
+            height: calc(100vh - 5rem); /* 5rem = altura do header (h-20) */
+            overflow-y: auto; 
+        }
+    </style>
+</head>
+<body class="bg-[#2A0F5E] text-[#E8E1CF] font-sans">
+
+    <header class="bg-[#3D1E8D] h-20 shadow-md flex justify-between items-center px-6 sm:px-8 lg:px-12">
+        <div class="flex items-center space-x-4 md:space-x-5">
+        <!-- linkar com a pagina inicial do ROEL -->
+            <a href="" class="text-[#E8E1CF] hover:opacity-75"> 
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+            </a>
+            <img src="../logo.png" alt="Redaction" class="h-10 sm:h-12">
+        </div>
+        
+        <div class="flex items-center space-x-4 sm:space-x-6">
+            <div class="flex flex-col items-end text-right">
+                <p class="text-sm sm:text-base font-semibold text-[#E8E1CF] whitespace-nowrap">
+                    Pontos: <span id="currentPointsHeader">0</span> XP ✨
+                </p>
+                <div class="w-24 sm:w-32 bg-[#2A0F5E] rounded-full h-1.5 mt-0.5">
+                    <div class="bg-[#A78BFA] h-1.5 rounded-full" style="width: 85%"></div> 
+                </div>
+            </div>
+
+            <a href="#" class="text-sm text-[#E8E1CF] hover:opacity-75 hidden sm:block">Sair</a>
+            <a href="../CONFIGURACOES/index.html" class="w-9 h-9 bg-[#2A0F5E] rounded-full flex items-center justify-center ring-2 ring-[#5A3E9D] hover:ring-white transition-all duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#E8E1CF" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main
+        id="main-content"
+        class="bg-no-repeat bg-cover bg-center"
+        style="background-image: url('../fundo-temas.png');">
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+
+            <div class="max-w-3xl mx-auto md:mx-0 mb-8 md:mb-12">
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight text-[#E8E1CF]">
+                    Otimize suas redações<br>com a Redaction!
+                </h1>
+                <hr class="border-t-2 border-[#E8E1CF] opacity-50 w-32">
+            </div>
+
+            <div class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg mb-8 flex items-center justify-center">
+                <a 
+                    id="ctaRedacao" 
+                    href="../busca/index.html"  
+                    class="bg-[#A78BFA] text-[#2A0F5E] font-bold py-3 px-6 rounded-lg shadow-md hover:bg-[#C4B5FD] transition-all duration-200 ease-in-out cursor-not-allowed opacity-60" 
+                    aria-disabled="true"  
+                    onclick="return updateCtaRedacao();" 
+                >
+                    Nova Redação (Desbloqueie!)
+                </a>
+            </div>
+            
+            <script>
+                const currentPoints = 850; // Este valor viria do backend
+                const pointsToUnlock = 1000; // Este valor viria do backend
+                
+                // Pega o elemento do link
+                const ctaRedacaoLink = document.getElementById('ctaRedacao');
+
+                // Função que atualiza o estado do link (habilita/desabilita)
+                function updateCtaRedacao() {
+                    if (currentPoints >= pointsToUnlock) {
+                        ctaRedacaoLink.classList.remove('cursor-not-allowed', 'opacity-60');
+                        ctaRedacaoLink.classList.add('hover:bg-[#C4B5FD]');
+                        ctaRedacaoLink.innerText = 'Enviar Nova Redação!';
+                        ctaRedacaoLink.removeAttribute('aria-disabled');
+                        return true; 
+                    } else {
+                        ctaRedacaoLink.classList.add('cursor-not-allowed', 'opacity-60');
+                        ctaRedacaoLink.classList.remove('hover:bg-[#C4B5FD]');
+                        ctaRedacaoLink.innerText = 'Nova Redação (Desbloqueie!)';
+                        ctaRedacaoLink.setAttribute('aria-disabled', 'true');
+                        return false; 
+                    }
+                }
+
+                // Chama a função uma vez para definir o estado inicial do botão ao carregar a página
+                updateCtaRedacao(); 
+
+                // Opcional: Se a pontuação mudar dinamicamente sem recarregar a página,
+                // você precisaria chamar updateCtaRedacao() novamente após a mudança dos pontos.
+            </script>
+
+
+            <div class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg mb-8 hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1">
+                <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-[#E8E1CF]">Sua Tarefa de Hoje! 🚀</h2>
+                <p class="text-lg text-[#E8E1CF] opacity-90 mb-4">
+                    Com base na sua agenda, preparamos uma atividade rápida para você:
+                </p>
+                <div class="flex items-center justify-between bg-[#2A0F5E] p-4 rounded-lg">
+                    <div>
+                        <p class="text-xl font-semibold text-[#E8E1CF]">Mini-aula: Coesão Textual (10 min)</p>
+                        <p class="text-sm text-[#E8E1CF] opacity-75 mt-1">Conecte suas ideias como um profissional!</p>
+                    </div>
+                    <a href="../miniaula/tarefasdodia.html" class="bg-[#A78BFA] text-[#2A0F5E] font-bold py-2 px-5 rounded-lg shadow-md hover:bg-[#C4B5FD] transition-all duration-200 ease-in-out">
+                        Iniciar!
+                    </a>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8">
+                
+                <a href="../NOTA/index.html" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center min-h-[150px] sm:min-h-[180px]">
+                    <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Minhas redações</h2>
+                </a>
+                <a href="../redaction temas atuais/temasatuais.html" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center min-h-[150px] sm:min-h-[180px]">
+                    <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Temas Atuais</h2>
+                </a>
+                <a href="../argumentos_tema/index.html" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center min-h-[150px] sm:min-h-[180px]">
+                    <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Banco de Argumentos</h2>
+                </a>
+                <a href="../redacoes_exemplo/index.html" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center min-h-[150px] sm:min-h-[180px]">
+                    <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Redações Exemplo</h2>
+                </a>
+                
+                <a href="../aulainterativa/index.html" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center min-h-[150px] sm:min-h-[180px]">
+                    <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Aulas Interativas</h2>
+                </a>
+                <a href="../joguinhos/index.html" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center min-h-[150px] sm:min-h-[180px]">
+                    <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Joguinhos de Redação</h2>
+                </a>
+                
+            </div>
+        </div>
+    </main>
+</body>
+</html>

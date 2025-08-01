@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Desafios da Saúde Mental dos Jovens</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <style>
+        /* Estilos personalizados com Tailwind para fontes e cores */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #1A0B3D; /* Fundo geral */
+            overflow-x: hidden; /* Evita scroll horizontal indesejado */
+            color: #E8E1CF; /* Cor de texto padrão */
+        }
+        h1, h2, .section-title {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 700;
+        }
+        .main-content {
+            background-color: #1A0B3D; /* Fundo base para o parallax */
+            overflow: hidden; /* Garante que o parallax funcione bem */
+            min-height: 100vh; /* Garante que o main-content ocupe a tela para o scroll */
+        }
+
+        /* HEADER - Idêntico ao seu exemplo de IA Responsável */
+        header {
+            position: fixed;
+            width: 100%;
+            top: 0;
+            z-index: 50;
+            height: 5rem; /* h-20, para combinar com seu exemplo */
+            background-color: #3D1E8D;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding-left: 1.5rem; /* px-6 */
+            padding-right: 1.5rem; /* px-6 */
+        }
+        @media (min-width: 640px) { /* sm */
+            header { padding-left: 2rem; padding-right: 2rem; } /* sm:px-8 */
+        }
+        @media (min-width: 1024px) { /* lg */
+            header { padding-left: 3rem; padding-right: 3rem; } /* lg:px-12 */
+        }
+
+        /* Classes para animação de fade-in no scroll */
+        .fade-in-section {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: opacity 1s ease-out, transform 1s ease-out;
+        }
+        .fade-in-section.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+        
+        /* Estilo para a caixa de destaque/alerta - Idêntico ao seu exemplo de IA Responsável */
+        .alert-box {
+            border-left: 4px solid #FCA311; /* Amarelo/Laranja para alerta */
+            padding-left: 1.5rem;
+            margin-top: 1.5rem; 
+            margin-bottom: 1.5rem;
+            background-color: rgba(252, 163, 17, 0.1); /* Fundo suave para o alerta */
+            border-radius: 0.5rem;
+            padding: 1.5rem;
+            color: #E8E1CF;
+        }
+        .alert-box strong {
+            color: #FCA311; /* Cor mais forte para o texto destacado */
+        }
+        .alert-box h3 {
+            font-family: 'Poppins', sans-serif;
+            font-weight: 600;
+            color: #FCA311; /* Títulos do alert-box na cor de destaque */
+            display: flex; /* Para alinhar o ícone */
+            align-items: center; /* Para alinhar o ícone */
+            margin-bottom: 0.75rem; /* Espaço entre título e parágrafo no alert-box */
+        }
+        .alert-box h3 svg {
+            margin-right: 0.5rem; /* Espaço entre o ícone e o texto do título */
+            flex-shrink: 0; /* Impede que o ícone diminua em telas pequenas */
+        }
+    </style>
+</head>
+<body class="text-[#E8E1CF]">
+    <header class="bg-[#3D1E8D] h-20 shadow-lg flex justify-between items-center px-6 sm:px-8 lg:px-12 fixed w-full z-50 top-0">
+        <div class="flex items-center space-x-4 md:space-x-5">
+            <a href="../temasatuais.html" class="text-[#E8E1CF] hover:opacity-75 transition-opacity duration-300">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+            </a>
+            <img src="../../logo.png" alt="Redaction" class="h-10 sm:h-12">
+        </div>
+        <div class="flex items-center space-x-4">
+            <a href="#" class="text-sm text-[#E8E1CF] hover:opacity-75 transition-opacity duration-300">Sair</a>
+            <div class="w-9 h-9 bg-[#2A0F5E] rounded-full flex items-center justify-center ring-2 ring-[#5A3E9D]">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#E8E1CF" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-content relative pt-20">
+        <div class="absolute inset-0 bg-cover bg-center z-0" 
+             style="background-image: url('../../fundo-temas.png'); transform: translateY(var(--translate-y, 0));" 
+             id="parallax-bg"></div>
+        
+        <div class="absolute inset-0 bg-black bg-opacity-40 z-10"></div>
+
+        <div class="relative z-20 min-h-screen flex flex-col items-center justify-center text-center p-8">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#E8E1CF] mb-2 drop-shadow-lg leading-tight animate-fade-in-up">
+                Desafios da Saúde Mental dos Jovens
+            </h1>
+            <p class="text-lg sm:text-xl text-[#E8E1CF] mb-6 opacity-90 animate-fade-in-up delay-200">
+                Compreendendo e apoiando o bem-estar da juventude.
+            </p>
+        </div>
+
+        <section class="bg-[#1A0B3D] bg-opacity-90 flex items-center justify-center py-16">
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
+                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">A Juventude: Um Período de Intensas Mudanças</h2>
+                <p class="text-lg text-justify leading-relaxed mb-4">
+                    A saúde mental dos jovens tem ganhado destaque como um tema crucial. A juventude é uma fase de profundas transformações físicas, emocionais e sociais, que podem gerar desafios como ansiedade, insegurança, estresse e até transtornos mais sérios, como a depressão.
+                </p>
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mt-6">
+                    <div class="bg-[#3D1E8D] p-5 rounded-lg shadow-md flex flex-col items-center text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-[#E8E1CF] mb-3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.731 0 2.813-1.874 1.948-3.374L13.948 3.374c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
+                        </svg>
+                        <p class="text-lg font-semibold text-[#E8E1CF]">Ansiedade e Estresse</p>
+                    </div>
+                    <div class="bg-[#3D1E8D] p-5 rounded-lg shadow-md flex flex-col items-center text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-[#E8E1CF] mb-3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 10.5c0 2.228-1.5 4.875-3 6.75-1.5 1.875-3 3.75-3 3.75S9 17.553 7.5 15.678c-1.5-1.875-3-4.522-3-6.75C4.5 7.373 6.373 5.5 8.625 5.5h6.75C17.627 5.5 19.5 7.373 19.5 10.5Z" />
+                        </svg>
+                        <p class="text-lg font-semibold text-[#E8E1CF]">Depressão e Insegurança</p>
+                    </div>
+                    <div class="bg-[#3D1E8D] p-5 rounded-lg shadow-md flex flex-col items-center text-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-10 h-10 text-[#E8E1CF] mb-3">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
+                        </svg>
+                        <p class="text-lg font-semibold text-[#E8E1CF]">Pressão Social e Acadêmica</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-[#2A0F5E] bg-opacity-90 flex items-center justify-center py-16">
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
+                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Fatores que Afligem a Saúde Mental Jovem</h2>
+                <p class="text-lg text-justify leading-relaxed mb-3">
+                    Diversos elementos contribuem para o cenário delicado da saúde mental na juventude, desde a dinâmica escolar e social até influências globais.
+                </p>
+                <div class="alert-box text-left">
+                    <h3 class="text-2xl font-semibold mb-3 flex items-center text-[#FCA311]">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M10.5 1.5H8.25A2.25 2.25 0 0 0 6 3.75v16.5a2.25 2.25 0 0 0 2.25 2.25h7.5A2.25 2.25 0 0 0 18 20.25V3.75A2.25 2.25 0 0 0 15.75 1.5H13.5m-3 0V3h3V1.5m-3 0h3l-3 0ZM9 18h6" />
+                        </svg>
+                        Pressão Escolar e Redes Sociais
+                    </h3>
+                    <p class="text-base leading-relaxed">
+                        A cobrança por desempenho, o bullying e o uso excessivo de redes sociais com suas comparações constantes são grandes fontes de estresse e angústia.
+                    </p>
+                </div>
+                <div class="alert-box text-left">
+                    <h3 class="text-2xl font-semibold mb-3 flex items-center text-[#FCA311]">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 mr-2">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M12 18.75a6 6 0 0 0 6-6v-1.5m-6 7.5v-6a6 6 0 0 0-6-6v1.5m6 4.5V12a6 6 0 0 1 3-5.197M12 4.5V12a6 6 0 0 0-3-5.197M12 4.5a6 6 0 0 1 6 6v1.5m-6-7.5a6 6 0 0 0-6 6v1.5m6 4.5" />
+                        </svg>
+                        Impacto da Pandemia e Isolação
+                    </h3>
+                    <p class="text-base leading-relaxed">
+                        O isolamento social e a interrupção das atividades cotidianas durante a pandemia agravaram quadros de ansiedade, depressão e automutilação em adolescentes.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-[#1A0B3D] bg-opacity-90 flex items-center justify-center py-16">
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
+                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Diálogo e Apoio: O Caminho para o Bem-Estar</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
+                    <div class="bg-[#3D1E8D] p-6 rounded-lg shadow-md text-left">
+                        <h3 class="text-2xl font-semibold mb-3 text-[#E8E1CF] flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 mr-2 text-[#E8E1CF]">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M8.625 9.75a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H7.5m2.25 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H9.75m3 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H12m2.25 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H14.25m2.25 0a.375.375 0 1 1-.75 0 .375.375 0 0 1 .75 0Zm0 0H16.5M4.5 19.5h15c2.25 0 2.75-2.25 2.75-2.25V6.75C22.25 4.5 22.25 3.75 20.25 3.75H4.5A2.25 2.25 0 0 0 2.25 6v10.5a2.25 2.25 0 0 0 2.25 2.25ZM12 6.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 12.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5ZM12 18.75a.75.75 0 1 1 0-1.5.75.75 0 0 1 0 1.5Z" />
+                        </svg>
+                        Superando o Preconceito
+                        </h3>
+                        <p class="text-base leading-relaxed">
+                            Ainda há muito tabu em torno da saúde mental. É fundamental promover um diálogo aberto e sem julgamentos para que os jovens se sintam seguros para buscar ajuda.
+                        </p>
+                    </div>
+                    <div class="bg-[#3D1E8D] p-6 rounded-lg shadow-md text-left">
+                        <h3 class="text-2xl font-semibold mb-3 text-[#E8E1CF] flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 mr-2 text-[#E8E1CF]">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M2.25 6.75c0 8.284 6.716 15 15 15h2.25a2.25 2.25 0 0 0 2.25-2.25v-1.396a2.25 2.25 0 0 0-1.478-2.106l-4.5-1.125a1.125 1.125 0 0 1-1.462-.647l-.76-1.74A1.125 1.125 0 0 0 10.75 7.5h-.75a8.25 8.25 0 0 0-8.25 8.25V6.75Z" />
+                            </svg>
+                            Onde Buscar Ajuda
+                        </h3>
+                        <p class="text-base leading-relaxed">
+                            Famílias, escolas e serviços de saúde são pilares de apoio. O acesso a psicólogos e profissionais especializados faz toda a diferença para o bem-estar dos jovens.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="bg-[#2A0F5E] bg-opacity-90 flex items-center justify-center py-16">
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
+                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Cuidar da Mente: Prioridade para um Futuro Saudável</h2>
+                <p class="text-lg text-justify leading-relaxed mb-4">
+                    Promover o autoconhecimento, o equilíbrio emocional e o respeito às diferenças deve ser uma prioridade para garantir que os jovens cresçam de forma saudável e com qualidade de vida.
+                </p>
+                <ul class="text-left text-lg space-y-3">
+                    <li class="flex items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3 text-[#E8E1CF] flex-shrink-0 mt-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <strong>Diálogo Aberto:</strong> Criar um ambiente onde os jovens se sintam à vontade para expressar seus sentimentos e preocupações.
+                    </li>
+                    <li class="flex items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3 text-[#E8E1CF] flex-shrink-0 mt-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <strong>Consciência sobre Redes Sociais:</strong> Incentivar o uso saudável e moderado, promovendo a desconexão quando necessário.
+                    </li>
+                    <li class="flex items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3 text-[#E8E1CF] flex-shrink-0 mt-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <strong>Suporte Profissional:</strong> Garantir acesso a psicólogos e terapeutas, desmistificando a busca por ajuda especializada.
+                    </li>
+                    <li class="flex items-start">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3 text-[#E8E1CF] flex-shrink-0 mt-1">
+                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
+                        </svg>
+                        <strong>Ambiente Acolhedor:</strong> Escolas e famílias devem ser espaços seguros que promovem o bem-estar e o autoconhecimento.
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="bg-[#1A0B3D] bg-opacity-90 flex flex-col items-center justify-center py-16">
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
+                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Um Futuro com Equilíbrio e Bem-Estar</h2>
+                <p class="text-lg leading-relaxed mb-6">
+                    Investir na saúde mental dos jovens é investir no futuro da sociedade. Ao oferecer suporte, compreensão e recursos, ajudamos a construir uma geração mais resiliente, feliz e capaz de enfrentar os desafios da vida.
+                </p>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        // JavaScript para Parallax e Animações no Scroll
+
+        // 1. Parallax
+        const parallaxBg = document.getElementById('parallax-bg');
+        if (parallaxBg) {
+            window.addEventListener('scroll', () => {
+                const scrollY = window.scrollY;
+                // Mantendo o fator 0.3 como no seu código de exemplo de IA
+                parallaxBg.style.setProperty('--translate-y', `${scrollY * 0.3}px`); 
+            });
+        }
+
+        // 2. Fade-in Sections (com Intersection Observer)
+        const fadeSections = document.querySelectorAll('.fade-in-section');
+        const observerOptions = {
+            root: null, // viewport como root
+            rootMargin: '0px',
+            threshold: 0.15 // quando 15% do elemento estiver visível
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+                    observer.unobserve(entry.target); // Para animar apenas uma vez
+                }
+            });
+        }, observerOptions);
+
+        fadeSections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

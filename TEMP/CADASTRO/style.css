@@ -1,0 +1,109 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+  
+  body {
+    font-family: sans-serif;
+    background-color: #1d1031; /* fundo roxo escuro */
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  header {
+    background-color: #4c1aa6; /* faixa roxa */
+    padding: 12px;
+    color: #fff;
+    font-size: 2rem;
+    padding-left: 30px;
+  } 
+  
+  header h1 {
+    font-family: 'Pacifico', cursive;
+    font-size: 2.5rem; /* tamanho reduzido */
+  }
+  
+  main {
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .cad-box {
+    background-color: #e0e0e0;
+    padding: 30px;
+    border-radius: 20px;
+    width: 320px;
+    text-align: center;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+  }
+  
+  .cad-box h2 {
+    margin-bottom: 20px;
+    font-style: italic;
+  }
+  
+  .cad-box input {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 10px;
+    background-color: white;
+    font-size: 0.9rem;
+    color: #333;
+  }
+  
+  .cad-box input::placeholder {
+    color: #bbb;
+    font-style: italic;
+  }
+  
+  .submit-btn {
+    width: 100%;
+    padding: 10px;
+    margin-top: 15px;
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 10px;
+    cursor: pointer;
+    font-style: italic;
+  }
+  
+  hr {
+    margin: 20px 0 10px;
+    border: none;
+    border-top: 2px solid black;
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  
+  .create-account {
+    text-decoration: none;
+    color: black;
+    font-size: 0.9rem;
+  }
+  
+  footer {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+  }
+  
+  .back-btn {
+    padding: 8px 16px;
+    background-color: #4003aa;
+    color: white;
+    border: 2px solid white;
+    border-radius: 15px;
+    cursor: pointer;
+    font-size: 0.9rem;
+  }
+  .logo {
+    height: 75px;
+}

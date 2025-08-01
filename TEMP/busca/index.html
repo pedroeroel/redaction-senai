@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Redaction</title>
+    <link rel="stylesheet" href="../busca/style.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+
+</head>
+<body>
+        <!-- Header -->
+        <header class="bg-[#3D1E8D] h-20 shadow-md flex justify-between items-center px-6 sm:px-8 lg:px-12">
+        <div class="flex items-center space-x-4 md:space-x-5">
+            <a href="../HOME/index.html" class="text-[#E8E1CF] hover:opacity-75">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+            </a>
+            <img src="redaction-logo.png" alt="Redaction" class="h-10 sm:h-12">
+        </div>
+        <div class="flex items-center space-x-4">
+            <a href="/redaction tela inicial/index.html" class="text-sm text-[#E8E1CF] hover:opacity-75">Sair</a>
+            <div class="w-9 h-9 bg-[#2A0F5E] rounded-full flex items-center justify-center ring-2 ring-[#5A3E9D]">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#E8E1CF" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
+            </div>
+        
+    </header>
+
+        <!-- Main Content -->
+        <main
+        id="main-content"
+        class="bg-no-repeat bg-cover bg-center flex"
+        style="background-image: url('fundo-padrao.png');">
+            
+            <form class="form-area">
+                <div class="row">
+                    <div class="input-group">
+                        <input type="text" placeholder="BUSCAR POR ÁREA">
+                        <span class="dropdown">&#9660;</span>
+                    </div>
+                    <div class="input-group">
+                        <input type="text" placeholder="BUSCAR PALAVRA CHAVE">
+                        <span class="dropdown">&#9660;</span>
+                    </div>
+                </div>
+                <div class="row center">
+                    <div class="input-group wide">
+                        <input type="text" placeholder="Selecionar tema">
+                        <span class="dropdown">&#9660;</span>
+                    </div>
+                </div>
+                <div class="row center">
+                    <div class="input-group widest">
+                        <input type="text" placeholder="SELECIONE O TIPO DE TEXTO">
+                        <span class="dropdown">&#9660;</span>
+                    </div>
+                </div>
+                <div class="row center">
+                    <div class="textarea-group">
+                        <textarea placeholder="Comece a escrever.."></textarea>
+                    </div>
+                </div>
+                <div class="row center">
+                    <button type="button" class="evaluate-btn">Avaliar com IA</button>
+                </div>
+            </form>
+        </main>
+    </div>
+</body>
+</html>

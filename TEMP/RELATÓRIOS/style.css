@@ -1,0 +1,138 @@
+/* Reset básico */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* Main Container */
+.main {
+  padding: 2rem;
+}
+
+.titulo {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+}
+
+.nota {
+  float: right;
+  font-weight: bold;
+}
+
+
+.grafico {
+  flex: 1 1 300px;
+  max-width: 400px;
+}
+
+/* Agrupamento lateral */
+.texto-e-barras {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+}
+
+.competencias {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  min-width: 140px;
+  line-height: 2rem;
+}
+
+.barras {
+  flex: 1;
+}
+
+.barra {
+  margin-bottom: 1rem;
+}
+
+.barra span {
+  display: block;
+  margin-bottom: 0.2rem;
+  padding-top: 5px;
+}
+
+.progress {
+  width: 75%;
+  height: 10px;
+  background-color: #d0b4ec;
+  border-radius: 5px;
+  overflow: hidden;
+}
+
+.fill {
+  height: 100%;
+  background-color: #ef57ef;
+}
+
+/* Descrição */
+.descricao {
+  flex: 1 1 300px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+  padding-top: 100px;
+  padding-left: 80px;
+}
+
+/* Botões das competências */
+.botao-competencia {
+  width: 100%;
+  padding: 0.5rem 2rem;
+  background-color: transparent;
+  border: 1px solid white;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: background 0.3s, color 0.3s;
+  text-align: left;
+}
+
+.botao-competencia:hover {
+  background-color: white;
+  color: #400880;
+}
+
+.competencias li {
+  margin-bottom: 0.5rem; /* Espaçamento vertical entre botões */
+}
+.btn-voltar {
+    position: absolute;
+    bottom: 24px;
+    right: 24px;
+    background: #4B1FA6;
+    color: #fff;
+    padding: 12px 32px;
+    border: none;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 500;
+    text-decoration: none;
+    box-shadow: 0 2px 8px #0002;
+    transition: background 0.2s;
+}
+.btn-voltar:hover {
+    background: #32106e;
+}
+.desempenho-container {
+  max-width: 1200px;
+  margin: 32px auto;
+  padding: 24px;
+}
+
+.desempenho-box {
+  max-height: 500px; /* ou ajuste conforme necessário */
+    overflow: auto;    /* adiciona barra de rolagem interna se passar do limite */
+  background-color: #400880;
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  padding: 2rem;
+  display: flex;
+  gap: 2rem;
+  flex-wrap: wrap;
+}

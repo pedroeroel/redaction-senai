@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Temas Atuais - Redaction</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    body {
+      overflow-y: hidden; 
+    }
+    #main-content {
+      height: calc(100vh - 5rem); /* 5rem = altura do header (h-20) */
+      overflow-y: auto; 
+    }
+  </style>
+</head>
+<body class="bg-[#2A0F5E] text-[#E8E1CF] font-sans">
+
+
+    <header class="bg-[#3D1E8D] h-20 shadow-md flex justify-between items-center px-6 sm:px-8 lg:px-12">
+        <div class="flex items-center space-x-4 md:space-x-5">
+            <a href="../homecerta/home.html" class="text-[#E8E1CF] hover:opacity-75">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+            </a>
+            <img src="../logo.png" alt="Redaction" class="h-10 sm:h-12">
+        </div>
+        <div class="flex items-center space-x-4">
+            <a href="#" class="text-sm text-[#E8E1CF] hover:opacity-75">Sair</a>
+            <div class="w-9 h-9 bg-[#2A0F5E] rounded-full flex items-center justify-center ring-2 ring-[#5A3E9D]">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#E8E1CF" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
+            </div>
+        </div>
+    </header>
+
+  <!-- Main Section -->
+  <main
+    id="main-content"
+    class="bg-no-repeat bg-cover bg-center"
+    style="background-image: url('../fundo-temas.png');">
+    
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+
+      <div class="max-w-3xl mx-auto md:mx-0 mb-8 md:mb-12">
+        <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight text-[#E8E1CF]">
+          Fique por dentro dos temas mais cobrados e relevantes!
+        </h1>
+        <p class="text-base sm:text-lg text-[#E8E1CF] mb-6 leading-relaxed">
+          Explore assuntos atuais para treinar sua escrita de forma estratégica para o ENEM.
+        </p>
+        <hr class="border-t-2 border-[#E8E1CF] opacity-50 w-32">
+      </div>
+
+      <!-- Grid de Temas -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8">
+        
+        <a href="../redaction temas atuais/components/tema1.html" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center min-h-[150px] sm:min-h-[180px]">
+          <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Desigualdade social no Brasil</h2>
+        </a>
+        <a href="../redaction temas atuais/components/tema2.html" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center min-h-[150px] sm:min-h-[180px]">
+          <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Inteligência Artificial e ética</h2>
+        </a>
+        <a href="../redaction temas atuais/components/tema3.html" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center min-h-[150px] sm:min-h-[180px]">
+          <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Desafios da educação pública</h2>
+        </a>
+        <a href="../redaction temas atuais/components/tema4.html" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center min-h-[150px] sm:min-h-[180px]">
+          <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Violência contra a mulher</h2>
+        </a>
+        <a href="../redaction temas atuais/components/tema5.html" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center min-h-[150px] sm:min-h-[180px]">
+          <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Inclusão de pessoas com deficiência</h2>
+        </a>
+        <a href="../redaction temas atuais/components/tema6.html" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center min-h-[150px] sm:min-h-[180px]">
+          <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Saúde mental entre os jovens</h2>
+        </a>
+        
+      </div>
+    </div>
+  </main>
+
+ 
+</body>
+</html>

@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Mini-aula: Coesão Textual - Redaction</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            overflow-y: hidden; 
+        }
+        #main-content {
+            height: calc(100vh - 5rem); /* 5rem = altura do header (h-20) */
+            overflow-y: auto; 
+        }
+    </style>
+</head>
+<body class="bg-[#2A0F5E] text-[#E8E1CF] font-sans">
+
+    <header class="bg-[#3D1E8D] h-20 shadow-md flex justify-between items-center px-6 sm:px-8 lg:px-12">
+        <div class="flex items-center space-x-4 md:space-x-5">
+            <a href="../homecerta/home.html" class="text-[#E8E1CF] hover:opacity-75">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+            </a>
+            <img src="imagens/logo.png" alt="Redaction" class="h-10 sm:h-12">
+        </div>
+        
+        <div class="flex items-center space-x-4 sm:space-x-6">
+            <div class="flex flex-col items-end text-right">
+                <p class="text-sm sm:text-base font-semibold text-[#E8E1CF] whitespace-nowrap">
+                    Pontos: <span id="currentPointsHeader">850</span> XP ✨
+                </p>
+                <div class="w-24 sm:w-32 bg-[#2A0F5E] rounded-full h-1.5 mt-0.5">
+                    <div class="bg-[#A78BFA] h-1.5 rounded-full" style="width: 85%"></div> 
+                </div>
+            </div>
+
+            <a href="#" class="text-sm text-[#E8E1CF] hover:opacity-75 hidden sm:block">Sair</a>
+            <a href="../CONFIGURACOES/index.html" class="w-9 h-9 bg-[#2A0F5E] rounded-full flex items-center justify-center ring-2 ring-[#5A3E9D] hover:ring-white transition-all duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#E8E1CF" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main
+        id="main-content"
+        class="bg-no-repeat bg-cover bg-center"
+        style="background-image: url('imagens/fundo-temas.png');">
+        
+        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+
+            <div class="max-w-4xl mx-auto bg-[#3D1E8D] p-6 sm:p-8 rounded-xl shadow-lg">
+                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-6 text-[#E8E1CF] text-center">
+                    Mini-aula: Coesão Textual 🧠
+                </h1>
+                
+                <p class="text-lg text-[#E8E1CF] opacity-90 mb-6 text-center">
+                    Entenda como conectar suas ideias de forma fluida e clara para uma redação nota 10!
+                </p>
+
+                <div class="aspect-w-16 aspect-h-9 w-full bg-black rounded-lg overflow-hidden mb-6">
+                    <iframe 
+                        src="https://www.youtube.com/embed/YOUR_YOUTUBE_VIDEO_ID?controls=0" 
+                        title="YouTube video player" 
+                        frameborder="0" 
+                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+                        referrerpolicy="strict-origin-when-cross-origin" 
+                        allowfullscreen 
+                        class="w-full h-full">
+                    </iframe>
+                </div>
+
+                <div class="prose prose-invert max-w-none text-[#E8E1CF] opacity-90">
+                    <h3 class="text-2xl font-semibold mb-3 text-[#A78BFA]">O que é Coesão Textual?</h3>
+                    <p class="mb-4">
+                        A coesão textual é a conexão harmoniosa entre as frases, parágrafos e partes de um texto. Ela é responsável por fazer com que as ideias se liguem de forma lógica, sem "saltos" que possam confundir o leitor. É como a "cola" que une todas as partes da sua redação!
+                    </p>
+                    <h3 class="text-2xl font-semibold mb-3 text-[#A78BFA]">Tipos de Coesão:</h3>
+                    <ul class="list-disc list-inside mb-4 ml-4">
+                        <li>**Coesão Referencial:** Uso de pronomes, advérbios e sinônimos para evitar repetições desnecessárias. Ex: "Lucas é estudante. Ele se dedica muito."</li>
+                        <li>**Coesão Sequencial:** Uso de conectivos (conjunções, advérbios) para organizar o texto no tempo e no espaço. Ex: "Primeiramente, em seguida, portanto, além disso."</li>
+                    </ul>
+                    <h3 class="text-2xl font-semibold mb-3 text-[#A78BFA]">Dicas Rápidas:</h3>
+                    <ul class="list-disc list-inside mb-4 ml-4">
+                        <li>Use sinônimos e antônimos para enriquecer o vocabulário.</li>
+                        <li>Explore conjunções e advérbios variados para iniciar seus parágrafos de desenvolvimento e conclusão.</li>
+                        <li>Leia seu texto em voz alta para identificar frases que não "casam" bem.</li>
+                    </ul>
+                </div>
+
+                <div class="flex justify-center mt-8">
+                    <a href="../homecerta/home.html" class="bg-[#A78BFA] text-[#2A0F5E] font-bold py-3 px-8 rounded-lg shadow-md hover:bg-[#C4B5FD] transition-all duration-200 ease-in-out">
+                        Concluído! Voltar à Home
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </main>
+
+    <script>
+        const currentPoints = 850; // Este valor viria do backend
+        const pointsToUnlock = 1000; // Este valor viria do backend
+        
+        // Atualiza o header
+        document.getElementById('currentPointsHeader').innerText = currentPoints;
+        document.querySelector('.h-1\\.5.rounded-full').style.width = `${(currentPoints / pointsToUnlock) * 100}%`;
+    </script>
+</body>
+</html>
