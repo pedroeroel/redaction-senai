@@ -8,6 +8,11 @@ session = True
 def new_essay():
     return render_template('new_essay.html')
 
+@essay.route('/my-essays')
+def my_essays():
+    if request.method == 'GET':
+        return render_template('my_essays.html')
+
 @essay.route('/essay_results')
 def essay_results():
     if request.method == 'GET':

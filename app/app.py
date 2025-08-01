@@ -3,6 +3,8 @@ from flask_cors import CORS
 from app.routes.main.routes import main
 from app.routes.auth.routes import auth
 from app.routes.essay.routes import essay
+from app.routes.games.routes import games
+from app.routes.classes.routes import classes
 
 def create_app():
 
