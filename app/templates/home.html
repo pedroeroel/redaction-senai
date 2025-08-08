@@ -7,16 +7,91 @@
 
 {% block content %}
 
-<section class="mb-12">
-    <p class="text-2xl font-bold border-b-2 w-fit pb-5">Otimize suas redações<br>com a Redaction!</p>
-</section>
+<main
+    id="main-content"
+    class="bg-no-repeat bg-cover bg-center"
+    style="background-image: url('../fundo-temas.png');">
+    <div class="mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
 
-<div class="grid grid-cols-1 lg:grid-cols-6 lg:grid-rows-2 gap-4 mb-8 place-content-center">
-    <a href="" class="bg-[#3D1E8D] text-lg font-semibold shadow rounded p-6 text-center hover:border-[#E8E1CF] border-transparent border-2 transition duration-200 card lg:col-span-2">Minhas redações</a>
-    <a href="" class="bg-[#3D1E8D] text-lg font-semibold shadow rounded p-6 text-center hover:border-[#E8E1CF] border-transparent border-2 transition duration-200 card lg:col-span-2">Temas Atuais</a>
-    <a href="" class="bg-[#3D1E8D] text-lg font-semibold shadow rounded p-6 text-center hover:border-[#E8E1CF] border-transparent border-2 transition duration-200 card lg:col-span-2">Argumentos</a>
-    <a href="" class="bg-[#3D1E8D] text-lg font-semibold shadow rounded p-6 text-center hover:border-[#E8E1CF] border-transparent border-2 transition duration-200 card lg:row-start-2 lg:row-end-2 lg:col-span-2 lg:col-start-4">Redações exemplo</a>
-    <a href="/new_essay" class="bg-[#3D1E8D] text-lg font-semibold shadow rounded p-6 text-center hover:border-[#E8E1CF] border-transparent border-2 transition duration-200 card lg:row-start-2 lg:row-end-2 lg:col-start-2 lg:col-span-2">Nova redação</a>
-</div>
+        <div class="max-w-3xl mx-auto md:mx-0 mb-8 md:mb-12">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight text-[#E8E1CF]">
+                Otimize suas redações<br>com a Redaction!
+            </h1>
+            <hr class="border-t-2 border-[#E8E1CF] opacity-50 w-32">
+        </div>
+
+        <div class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg mb-8 flex items-center justify-center">
+            <a 
+                id="ctaRedacao" 
+                href="../busca/index.html"  
+                class="bg-[#A78BFA] text-[#2A0F5E] font-bold py-3 px-6 rounded-lg shadow-md hover:bg-[#C4B5FD] transition-all duration-200 ease-in-out cursor-not-allowed opacity-60" 
+                aria-disabled="true"  
+                onclick="return updateCtaRedacao();" 
+            >
+                Nova Redação (Desbloqueie!)
+            </a>
+        </div>
+        
+        <script>
+            const currentPoints = 850; // Este valor viria do backend
+            const pointsToUnlock = 1000; // Este valor viria do backend
+            
+            const ctaRedacaoLink = document.getElementById('ctaRedacao');
+            function updateCtaRedacao() {
+                if (currentPoints >= pointsToUnlock) {
+                    ctaRedacaoLink.classList.remove('cursor-not-allowed', 'opacity-60');
+                    ctaRedacaoLink.classList.add('hover:bg-[#C4B5FD]');
+                    ctaRedacaoLink.innerText = 'Enviar Nova Redação!';
+                    ctaRedacaoLink.removeAttribute('aria-disabled');
+                    return true; 
+                } else {
+                    ctaRedacaoLink.classList.add('cursor-not-allowed', 'opacity-60');
+                    ctaRedacaoLink.classList.remove('hover:bg-[#C4B5FD]');
+                    ctaRedacaoLink.innerText = 'Nova Redação (Desbloqueie!)';
+                    ctaRedacaoLink.setAttribute('aria-disabled', 'true');
+                    return false; 
+                }
+            }
+            updateCtaRedacao(); 
+        </script>
+
+        <div class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg mb-8 hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1">
+            <h2 class="text-2xl sm:text-3xl font-bold mb-4 text-[#E8E1CF]">Sua Tarefa de Hoje! 🚀</h2>
+            <p class="text-lg text-[#E8E1CF] opacity-90 mb-4">
+                Com base na sua agenda, preparamos uma atividade rápida para você:
+            </p>
+            <div class="flex items-center justify-between bg-[#2A0F5E] p-4 rounded-lg">
+                <div>
+                    <p class="text-xl font-semibold text-[#E8E1CF]">Mini-aula: Coesão Textual (10 min)</p>
+                    <p class="text-sm text-[#E8E1CF] opacity-75 mt-1">Conecte suas ideias como um profissional!</p>
+                </div>
+                <a href="../miniaula/tarefasdodia.html" class="bg-[#A78BFA] text-[#2A0F5E] font-bold py-2 px-5 rounded-lg shadow-md hover:bg-[#C4B5FD] transition-all duration-200 ease-in-out">
+                    Iniciar!
+                </a>
+            </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+            <a href="/my-essays" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center">
+                <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Minhas redações</h2>
+            </a>
+            <a href="/subjects" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center">
+                <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Temas Atuais</h2>   
+            </a>
+            <a href="../argumentos_tema/index.html" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center">
+                <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Banco de Argumentos</h2>
+            </a>
+            <a href="../redacoes_exemplo/index.html" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center">
+                <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Redações Exemplo</h2>
+            </a>
+            <a href="" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center">
+                <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Aulas Interativas</h2>
+            </a>
+            <a href="../joguinhos/index.html" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center">
+            <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Joguinhos de Redação</h2>
+            </a>
+        </div>
+    </div>
+</main>
 
 {% endblock %}

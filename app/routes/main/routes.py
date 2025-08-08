@@ -2,6 +2,8 @@ from flask import Flask, Blueprint, request, render_template, session, redirect
 
 main = Blueprint('main', __name__, template_folder='templates')
 
+session = True
+
 @main.route('/')
 def index():
 
@@ -18,10 +20,10 @@ def home():
     else:
         return redirect('/login')
     
-@main.route('/themes', methods=['GET'])
+@main.route('/subjects', methods=['GET'])
 def themes():
     if session:
-        return render_template('themes.html')
+        return render_template('subjects.html')
     else:
         return redirect('/login')
     

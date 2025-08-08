@@ -17,5 +17,8 @@ def create_app():
     app.register_blueprint(main)
     app.register_blueprint(auth)
     app.register_blueprint(essay)
+    app.register_blueprint(games)
+    app.register_blueprint(classes)
 
+    
     return app

@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+{% block pagename %}Minhas Redações{% endblock %}
+{% block pagetext %}Veja suas redações corrigidas e notas!{% endblock %}
+{% set header = True %}
+{% set footer = True %}
+{% set main = True %}
+
+{% block content %}
+<main
+  id="main-content"
+  class="bg-[url('../fundo-temas.png')] bg-no-repeat bg-cover bg-center min-h-[calc(100vh-5rem)] overflow-auto text-white"
+>
+  <div class="py-16 px-4 sm:px-6 lg:px-8 mx-auto w-full max-w-6xl flex flex-col items-center">
+    <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-8 leading-tight text-[#e5d6d6] text-center section-title">
+      Minhas Redações
+    </h1>
+    <div class="flex flex-col gap-5 w-full max-w-4xl notas-container">
+      <div
+        class="bg-[#5e2ccf] rounded-2xl p-6 sm:p-8 shadow-lg border-2 border-transparent transition-transform duration-200 ease-in-out hover:scale-105 hover:border-[#e5d6d6] nota-card"
+      >
+        <h2 class="text-[22px] font-semibold mb-2 tema">Tema: A importância da educação</h2>
+        <p class="text-[20px] my-1 nota">Nota: <strong class="text-emerald-300 text-xl font-bold">920</strong></p>
+        <p class="text-[16px] text-[#d3c8f2] mb-4 data">Enviada em: 12/04/2025</p>
+        <a href="../RELATÓRIOS/relatorios.html"
+          class="inline-block bg-[#4c1aa6] text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200 hover:bg-[#7D5FB9] hover:text-white"
+        >
+          Ver Relatório
+        </a>
+      </div>
+      <div
+        class="bg-[#5e2ccf] rounded-2xl p-6 sm:p-8 shadow-lg border-2 border-transparent transition-transform duration-200 ease-in-out hover:scale-105 hover:border-[#e5d6d6] nota-card"
+      >
+        <h2 class="text-[22px] font-semibold mb-2 tema">Tema: Desafios da tecnologia</h2>
+        <p class="text-[20px] my-1 nota">Nota: <strong class="text-emerald-300 text-xl font-bold">880</strong></p>
+        <p class="text-[16px] text-[#d3c8f2] mb-4 data">Enviada em: 28/03/2025</p>
+        <a href="../RELATÓRIOS/relatorios.html"
+          class="inline-block bg-[#4c1aa6] text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200 hover:bg-[#7D5FB9] hover:text-white"
+        >
+          Ver Relatório
+        </a>
+      </div>
+      <div
+        class="bg-[#5e2ccf] rounded-2xl p-6 sm:p-8 shadow-lg border-2 border-transparent transition-transform duration-200 ease-in-out hover:scale-105 hover:border-[#e5d6d6] nota-card"
+      >
+        <h2 class="text-[22px] font-semibold mb-2 tema">Tema: Sustentabilidade no Brasil</h2>
+        <p class="text-[20px] my-1 nota">Nota: <strong class="text-emerald-300 text-xl font-bold">910</strong></p>
+        <p class="text-[16px] text-[#d3c8f2] mb-4 data">Enviada em: 10/03/2025</p>
+        <a href="../RELATÓRIOS/relatorios.html"
+          class="inline-block bg-[#4c1aa6] text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200 hover:bg-[#7D5FB9] hover:text-white"
+        >
+          Ver Relatório
+        </a>
+      </div>
+    </div>
+  </div>
+</main>
+{% endblock %}
