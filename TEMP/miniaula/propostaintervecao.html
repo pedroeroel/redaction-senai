@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mini-Aula: Proposta de Intervenção</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            /* Mantendo o padrão do seu código */
+            overflow-y: hidden;
+            font-family: 'Poppins', sans-serif;
+            /* Sugestão de fonte, ajuste conforme o projeto */
+        }
+
+        #main-content {
+            height: calc(100vh - 5rem);
+            /* 5rem = altura do header */
+            overflow-y: auto;
+            scroll-behavior: smooth;
+            /* Anima o scroll para os links âncora */
+        }
+    </style>
+</head>
+
+<body class="bg-[#2A0F5E] text-[#E8E1CF]">
+
+    <header class="bg-[#3D1E8D] h-20 shadow-md flex justify-between items-center px-6 sm:px-8 lg:px-12">
+        <div class="flex items-center space-x-4 md:space-x-5">
+            <a href="../aulainterativa/index.html" class="text-[#E8E1CF] hover:opacity-75">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2"
+                    stroke="currentColor" class="w-7 h-7">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
+                </svg>
+            </a>
+            <img src="../logo.png" alt="Redaction" class="h-10 sm:h-12">
+        </div>
+        <div class="flex items-center space-x-4 sm:space-x-6">
+            <div class="flex flex-col items-end text-right">
+                <p class="text-sm sm:text-base font-semibold text-[#E8E1CF] whitespace-nowrap">
+                    Pontos: <span id="currentPointsHeader">850</span> XP ✨
+                </p>
+                <div class="w-24 sm:w-32 bg-[#2A0F5E] rounded-full h-1.5 mt-0.5">
+                    <div class="bg-[#A78BFA] h-1.5 rounded-full" style="width: 85%"></div>
+                </div>
+            </div>
+            <a href="#" class="text-sm text-[#E8E1CF] hover:opacity-75 hidden sm:block">Sair</a>
+            <a href="../CONFIGURACOES/index.html"
+                class="w-9 h-9 bg-[#2A0F5E] rounded-full flex items-center justify-center ring-2 ring-[#5A3E9D] hover:ring-white transition-all duration-200">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5"
+                    stroke="#E8E1CF" class="w-6 h-6">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
+                </svg>
+            </a>
+        </div>
+    </header>
+
+    <main id="main-content" class="flex flex-col md:flex-row bg-[#2A0F5E]">
+
+        <aside class="sticky top-0 bg-[#3D1E8D] md:w-1/4 lg:w-1/5 p-6 h-full shadow-lg overflow-y-auto hidden md:block">
+            <h2 class="text-xl font-bold mb-4">Tópicos da Aula</h2>
+            <div id="progress-bar" class="w-full bg-[#2A0F5E] rounded-full h-2 mb-4">
+                <div class="bg-[#A78BFA] h-2 rounded-full" style="width: 0%"></div>
+            </div>
+            <nav id="topic-navigation" class="space-y-2">
+                <a href="#introducao"
+                    class="block py-2 px-3 rounded-lg text-sm text-[#E8E1CF] hover:bg-[#5A3E9D] transition-colors duration-200">
+                    1. O que é a proposta?
+                </a>
+                <a href="#cincoelementos"
+                    class="block py-2 px-3 rounded-lg text-sm text-[#E8E1CF] hover:bg-[#5A3E9D] transition-colors duration-200">
+                    2. Os 5 Elementos-Chave
+                </a>
+                <a href="#exemplos"
+                    class="block py-2 px-3 rounded-lg text-sm text-[#E8E1CF] hover:bg-[#5A3E9D] transition-colors duration-200">
+                    3. Desafio Interativo
+                </a>
+                <a href="#prair"
+                    class="block py-2 px-3 rounded-lg text-sm text-[#E8E1CF] hover:bg-[#5A3E9D] transition-colors duration-200">
+                    4. Pra Ir Além
+                </a>
+            </nav>
+        </aside>
+
+        <section class="flex-1 p-6 md:p-12 lg:p-16">
+            <header class="mb-8">
+                <h1 class="text-4xl lg:text-5xl font-bold text-[#E8E1CF] mb-2">
+                    Proposta de Intervenção: A Solução para os Problemas do Mundo ✍️
+                </h1>
+                <p class="text-lg text-[#E8E1CF] opacity-80">
+                    Aprenda a construir uma solução completa e detalhada que pode valer 200 pontos na sua redação do ENEM!
+                </p>
+            </header>
+
+            <div class="space-y-12 lg:space-y-16">
+
+                <section id="introducao" class="bg-[#3D1E8D] p-6 sm:p-8 rounded-2xl shadow-xl">
+                    <h2 class="text-3xl font-semibold mb-4 text-[#A78BFA]">1. O que é a Proposta de Intervenção? 💡</h2>
+                    <p class="mb-4 text-[#E8E1CF] opacity-90 leading-relaxed">
+                        A Proposta de Intervenção é o ponto alto da sua redação. É o momento de mostrar ao corretor que você não apenas entende o problema social discutido, mas também consegue pensar em uma solução concreta, viável e que respeita os direitos humanos.
+                    </p>
+                    <p class="mb-4 text-[#E8E1CF] opacity-90 leading-relaxed">
+                        Ela deve aparecer no último parágrafo e, para ser perfeita, precisa conter cinco elementos-chave. Pense nela como um plano de ação para mudar a realidade que você descreveu!
+                    </p>
+                    <div class="bg-[#2A0F5E] p-4 rounded-xl border border-[#5A3E9D] mt-6">
+                        <h3 class="font-bold text-[#E8E1CF] mb-2">💡 Dica de Mestre:</h3>
+                        <p class="italic text-sm text-[#E8E1CF] opacity-70">
+                            "Sua proposta de intervenção precisa estar diretamente conectada aos problemas que você apresentou nos parágrafos de desenvolvimento. Um problema, uma solução!"
+                        </p>
+                    </div>
+                </section>
+
+                <section id="cincoelementos" class="bg-[#3D1E8D] p-6 sm:p-8 rounded-2xl shadow-xl">
+                    <h2 class="text-3xl font-semibold mb-4 text-[#A78BFA]">2. Os 5 Elementos-Chave 🔑</h2>
+                    <p class="mb-6 text-[#E8E1CF] opacity-90 leading-relaxed">
+                        Para garantir a nota máxima, sua proposta precisa ter estes cinco ingredientes. Preste atenção em cada um!
+                    </p>
+                    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                        <div
+                            class="p-5 bg-[#2A0F5E] rounded-lg border border-[#5A3E9D] transition-transform duration-300 hover:scale-105">
+                            <h3 class="font-bold text-lg mb-1 text-[#E8E1CF]">1. Agente</h3>
+                            <p class="text-sm text-[#E8E1CF] opacity-80">
+                                Quem irá executar a proposta? (Governo, Ministério da Educação, ONGs, Mídia, Família, etc.).
+                            </p>
+                        </div>
+                        <div
+                            class="p-5 bg-[#2A0F5E] rounded-lg border border-[#5A3E9D] transition-transform duration-300 hover:scale-105">
+                            <h3 class="font-bold text-lg mb-1 text-[#E8E1CF]">2. Ação</h3>
+                            <p class="text-sm text-[#E8E1CF] opacity-80">
+                                O que será feito? (Criar campanhas, desenvolver projetos, implementar leis, promover debates, etc.).
+                            </p>
+                        </div>
+                        <div
+                            class="p-5 bg-[#2A0F5E] rounded-lg border border-[#5A3E9D] transition-transform duration-300 hover:scale-105">
+                            <h3 class="font-bold text-lg mb-1 text-[#E8E1CF]">3. Modo/Meio</h3>
+                            <p class="text-sm text-[#E8E1CF] opacity-80">
+                                Como a ação será executada? (Por meio de palestras, através de aplicativos, via redes sociais, etc.).
+                            </p>
+                        </div>
+                        <div
+                            class="p-5 bg-[#2A0F5E] rounded-lg border border-[#5A3E9D] transition-transform duration-300 hover:scale-105">
+                            <h3 class="font-bold text-lg mb-1 text-[#E8E1CF]">4. Finalidade</h3>
+                            <p class="text-sm text-[#E8E1CF] opacity-80">
+                                Para que a ação será feita? (Para conscientizar a população, com o intuito de diminuir a violência, a fim de garantir direitos, etc.).
+                            </p>
+                        </div>
+                        <div
+                            class="p-5 bg-[#2A0F5E] rounded-lg border border-[#5A3E9D] transition-transform duration-300 hover:scale-105">
+                            <h3 class="font-bold text-lg mb-1 text-[#E8E1CF]">5. Detalhamento</h3>
+                            <p class="text-sm text-[#E8E1CF] opacity-80">
+                                Informações extras sobre qualquer um dos outros elementos. É o "toque especial" que mostra que a ideia é concreta.
+                            </p>
+                        </div>
+                    </div>
+                </section>
+
+                <section id="exemplos" class="bg-[#3D1E8D] p-6 sm:p-8 rounded-2xl shadow-xl">
+                    <h2 class="text-3xl font-semibold mb-4 text-[#A78BFA]">3. Desafio Interativo: Monte a Proposta! 🧩</h2>
+                    <p class="mb-6 text-[#E8E1CF] opacity-90 leading-relaxed">
+                        Leia o parágrafo abaixo. Ele contém uma proposta de intervenção com um erro. Tente identificar qual elemento está faltando ou foi usado de forma inadequada.
+                    </p>
+                    <form id="quiz-form" class="bg-[#2A0F5E] p-5 rounded-xl border-dashed border-2 border-[#5A3E9D]">
+                        <h3 class="font-bold text-lg mb-3 text-[#E8E1CF]">Leia a proposta a seguir:</h3>
+                        <p class="italic text-sm text-[#E8E1CF] opacity-70 mb-4">
+                            "Sendo assim, o Ministério da Saúde deve, por meio de campanhas informativas na televisão, conscientizar a população sobre a importância da vacinação."
+                        </p>
+                        <h3 class="font-bold text-lg mb-3 text-[#E8E1CF]">Qual elemento da Proposta de Intervenção está faltando?</h3>
+                        <div class="space-y-2">
+                            <label
+                                class="block bg-[#5A3E9D] p-3 rounded-lg cursor-pointer hover:bg-[#7254B4] transition-colors">
+                                <input type="radio" name="resposta" value="a" class="mr-2 accent-[#A78BFA]">
+                                <span>A) Agente</span>
+                            </label>
+                            <label
+                                class="block bg-[#5A3E9D] p-3 rounded-lg cursor-pointer hover:bg-[#7254B4] transition-colors">
+                                <input type="radio" name="resposta" value="b" class="mr-2 accent-[#A78BFA]">
+                                <span>B) Modo/Meio</span>
+                            </label>
+                            <label
+                                class="block bg-[#5A3E9D] p-3 rounded-lg cursor-pointer hover:bg-[#7254B4] transition-colors">
+                                <input type="radio" name="resposta" value="c" class="mr-2 accent-[#A78BFA]">
+                                <span>C) Detalhamento</span>
+                            </label>
+                        </div>
+                        <button type="submit"
+                            class="mt-4 px-6 py-2 bg-[#A78BFA] text-[#2A0F5E] font-bold rounded-full hover:brightness-110 transition-all duration-200">
+                            Responder
+                        </button>
+                        <div id="quiz-feedback" class="mt-4 hidden p-3 rounded-lg"></div>
+                    </form>
+                </section>
+
+                <section id="prair" class="bg-[#3D1E8D] p-6 sm:p-8 rounded-2xl shadow-xl">
+                    <h2 class="text-3xl font-semibold mb-4 text-[#A78BFA]">4. Pra Ir Além! 🌟</h2>
+                    <p class="mb-4 text-[#E8E1CF] opacity-90 leading-relaxed">
+                        Para quem quer se aprofundar ainda mais, separamos materiais extras.
+                    </p>
+                    <ul class="space-y-3">
+                        <li
+                            class="flex items-center space-x-3 text-[#E8E1CF] opacity-90 hover:opacity-100 transition-opacity duration-200">
+                            <span class="text-[#A78BFA]">🔗</span>
+                            <a href="https://www.youtube.com/watch?v=zU0sC6SeJz8" target="_blank"
+                                class="underline">COMO ESCREVER A PROPOSTA DE INTERVENÇÃO NA REDAÇÃO DO ENEM</a>
+                        </li>
+                        <li
+                            class="flex items-center space-x-3 text-[#E8E1CF] opacity-90 hover:opacity-100 transition-opacity duration-200">
+                            <span class="text-[#A78BFA]">🎬</span>
+                            <a href="https://www.youtube.com/watch?v=Zib3Xu75Dbo" target="_blank"
+                                class="underline">REDAÇÃO DO ENEM: COMO TIRAR 200 PONTOS NA PROPOSTA DE INTERVENÇÃO</a>
+                        </li>
+                        <li
+                            class="flex items-center space-x-3 text-[#E8E1CF] opacity-90 hover:opacity-100 transition-opacity duration-200">
+                            <span class="text-[#A78BFA]">✍️</span>
+                            <p>Desafio de Escrita: "Crie uma proposta de intervenção completa para o tema 'A importância da reciclagem na sociedade brasileira'."</p>
+                        </li>
+                    </ul>
+                </section>
+            </div>
+
+            <div class="flex-1 p-6 md:p-12 lg:p-16 pb-20 flex justify-center items-center">
+                <button
+                    class="px-10 py-4 bg-[#A78BFA] text-[#2A0F5E] text-lg font-bold rounded-full shadow-lg hover:bg-white hover:text-[#2A0F5E] transition-all duration-300 transform hover:scale-105">
+                    Concluir Aula e Ganhar XP! ✨
+                </button>
+            </div>
+        </section>
+
+    </main>
+
+    <script>
+        // Lógica do Header (pontos)
+        const currentPoints = 850;
+        document.getElementById('currentPointsHeader').innerText = currentPoints;
+
+        // Lógica da barra de progresso e navegação lateral
+        const mainContent = document.getElementById('main-content');
+        const topics = document.querySelectorAll('section[id]');
+        const progressBar = document.querySelector('#progress-bar div');
+        const navLinks = document.querySelectorAll('#topic-navigation a');
+
+        function updateProgressBar() {
+            const scrollPosition = mainContent.scrollTop;
+            const totalHeight = mainContent.scrollHeight - mainContent.clientHeight;
+            const scrollPercentage = (scrollPosition / totalHeight) * 100;
+            progressBar.style.width = scrollPercentage + '%';
+
+            let currentTopicId = '';
+            topics.forEach(topic => {
+                // top of the element relative to the scrolling container
+                const topicTop = topic.offsetTop;
+                if (scrollPosition >= topicTop - 100) {
+                    currentTopicId = topic.id;
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('bg-[#5A3E9D]');
+                if (link.getAttribute('href').substring(1) === currentTopicId) {
+                    link.classList.add('bg-[#5A3E9D]');
+                }
+            });
+        }
+
+        // Adiciona o listener de scroll ao elemento main-content
+        mainContent.addEventListener('scroll', updateProgressBar);
+        // Atualiza a barra de progresso no carregamento
+        document.addEventListener('DOMContentLoaded', updateProgressBar);
+
+        // Lógica do Quiz
+        const quizForm = document.getElementById('quiz-form');
+        const quizFeedback = document.getElementById('quiz-feedback');
+
+        quizForm.addEventListener('submit', function (event) {
+            event.preventDefault();
+            const selectedOption = document.querySelector('input[name="resposta"]:checked');
+            if (selectedOption) {
+                const userAnswer = selectedOption.value;
+                const correctAnswer = 'c'; // A resposta correta é a B
+
+                if (userAnswer === correctAnswer) {
+                    quizFeedback.classList.remove('hidden', 'bg-red-500', 'bg-yellow-500');
+                    quizFeedback.classList.add('bg-green-500');
+                    quizFeedback.innerHTML = '<p class="text-black font-bold">🎉Parabéns! A proposta está incompleta. O detalhamento, que daria mais especificidade e concretude à ação, está faltando. Você é um craque em propostas de intervenção!</p>';
+                } else {
+                    quizFeedback.classList.remove('hidden', 'bg-green-500', 'bg-yellow-500');
+                    quizFeedback.classList.add('bg-red-500');
+                    quizFeedback.innerHTML = '<p class="text-black font-bold">❌Quase! A resposta correta é a C. A proposta apresentada tem Agente, Ação, Modo/Meio e Finalidade, mas não tem o Detalhamento. Revise os 5 elementos, é treino!</p>';
+                }
+            } else {
+                quizFeedback.classList.remove('hidden', 'bg-green-500', 'bg-red-500');
+                quizFeedback.classList.add('bg-yellow-500');
+                quizFeedback.innerHTML = '<p class="text-black font-bold">⚠️ Por favor, selecione uma opção antes de responder!</p>';
+            }
+        });
+    </script>
+</body>
+
+</html>
