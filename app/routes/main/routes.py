@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint, request, render_template, session, redirect
+from flask import Flask, Blueprint, request, render_template, session, redirect, jsonify
 
 main = Blueprint('main', __name__, template_folder='templates')
 
@@ -33,6 +33,7 @@ def arguments():
         return render_template('arguments.html')
     else:
         return redirect('/login')
+
     
 @main.route('/examples', methods=['GET'])
 def examples():

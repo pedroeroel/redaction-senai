@@ -20,5 +20,5 @@ def create_app():
     app.register_blueprint(games)
     app.register_blueprint(classes)
 
-    
+
     return app
