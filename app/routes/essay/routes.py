@@ -3,8 +3,6 @@ from ...firebase import *
 
 essay = Blueprint('essay', __name__, template_folder='templates')
 
-session = True
-
 @essay.route('/new_essay', methods=['GET', 'POST'])
 def new_essay():
     if request.method == 'GET':
@@ -29,6 +27,8 @@ def new_essay():
 @essay.route('/my-essays')
 def my_essays(): #show user essays
     if request.method == 'GET':
+        
+        session['user_id'] = 1
 
         essays = get_all_essays(user_id=session.get('user_id'))
 
