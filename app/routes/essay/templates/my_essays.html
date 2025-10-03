@@ -15,42 +15,29 @@
       Minhas Redações
     </h1>
     <div class="flex flex-col gap-5 w-full max-w-4xl notas-container">
+
+      {% if essays|length == 0 %}
+        <p class="text-lg text-center text-[#e5d6d6]">Você ainda não enviou nenhuma redação.</p>
+      {% else %}
+
+      {% for essay in essays %}
+
       <div
         class="bg-[#5e2ccf] rounded-2xl p-6 sm:p-8 shadow-lg border-2 border-transparent transition-transform duration-200 ease-in-out hover:scale-105 hover:border-[#e5d6d6] nota-card"
       >
-        <h2 class="text-[22px] font-semibold mb-2 tema">Tema: A importância da educação</h2>
-        <p class="text-[20px] my-1 nota">Nota: <strong class="text-emerald-300 text-xl font-bold">920</strong></p>
-        <p class="text-[16px] text-[#d3c8f2] mb-4 data">Enviada em: 12/04/2025</p>
-        <a href="../RELATÓRIOS/relatorios.html"
+        <h2 class="text-[22px] font-semibold mb-2 tema">Tema: {{ essay['theme'] }}</h2>
+        <p class="text-[20px] my-1 nota">Nota: <strong class="text-emerald-300 text-xl font-bold">{{ essay['grade'] }}</strong></p>
+        <p class="text-[16px] text-[#d3c8f2] mb-4 data">Enviada em {{ essay['date'] }}</p>
+        <a href="/my-essays/{{ essay['id'] }}"
           class="inline-block bg-[#4c1aa6] text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200 hover:bg-[#7D5FB9] hover:text-white"
         >
           Ver Relatório
         </a>
       </div>
-      <div
-        class="bg-[#5e2ccf] rounded-2xl p-6 sm:p-8 shadow-lg border-2 border-transparent transition-transform duration-200 ease-in-out hover:scale-105 hover:border-[#e5d6d6] nota-card"
-      >
-        <h2 class="text-[22px] font-semibold mb-2 tema">Tema: Desafios da tecnologia</h2>
-        <p class="text-[20px] my-1 nota">Nota: <strong class="text-emerald-300 text-xl font-bold">880</strong></p>
-        <p class="text-[16px] text-[#d3c8f2] mb-4 data">Enviada em: 28/03/2025</p>
-        <a href="../RELATÓRIOS/relatorios.html"
-          class="inline-block bg-[#4c1aa6] text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200 hover:bg-[#7D5FB9] hover:text-white"
-        >
-          Ver Relatório
-        </a>
-      </div>
-      <div
-        class="bg-[#5e2ccf] rounded-2xl p-6 sm:p-8 shadow-lg border-2 border-transparent transition-transform duration-200 ease-in-out hover:scale-105 hover:border-[#e5d6d6] nota-card"
-      >
-        <h2 class="text-[22px] font-semibold mb-2 tema">Tema: Sustentabilidade no Brasil</h2>
-        <p class="text-[20px] my-1 nota">Nota: <strong class="text-emerald-300 text-xl font-bold">910</strong></p>
-        <p class="text-[16px] text-[#d3c8f2] mb-4 data">Enviada em: 10/03/2025</p>
-        <a href="../RELATÓRIOS/relatorios.html"
-          class="inline-block bg-[#4c1aa6] text-white font-bold py-2 px-4 rounded-lg transition-colors duration-200 hover:bg-[#7D5FB9] hover:text-white"
-        >
-          Ver Relatório
-        </a>
-      </div>
+
+    {% endfor %}
+    {% endif %}
+
     </div>
   </div>
 </main>

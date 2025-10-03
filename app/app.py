@@ -1,4 +1,4 @@
-from flask import Flask, Blueprint
+from flask import Flask, Blueprint, session
 from flask_cors import CORS
 from app.routes.main.routes import main
 from app.routes.auth.routes import auth
@@ -11,6 +11,7 @@ def create_app():
     sources = {r"/*": {"origins": "*"}}
 
     app = Flask(__name__)
+    app.secret_key = 'adm@adm'
 
     CORS(app, resources=sources)
 
