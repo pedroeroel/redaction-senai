@@ -23,12 +23,17 @@
         {% block pagetext %}{% endblock %}
     </p>
     <div class="flex items-center space-x-4">
+        {% if user %}
         <a href="/logout" class="invisible md:visible"><span class="font-semibold">Sair</span></a>
         <div class="avatar">
             <div class="overflow-hidden ring-[#E8E1CF] w-10 rounded-full ring-2">
                 <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
             </div>
         </div>
+        {% else %}
+        <a href="/login" class="invisible md:visible"><span class="font-semibold">Entrar</span></a>
+        <a href="/signup" class="invisible md:visible"><span class="font-semibold">Cadastrar</span></a>
+        {% endif %}
     </div>
 </header>
 {% else %}

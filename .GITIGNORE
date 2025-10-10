@@ -2,4 +2,6 @@ venv
 instance
 *.pyc
 __pycache__
-*.env
+.vscode
+.env
+.env.*

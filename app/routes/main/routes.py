@@ -2,8 +2,6 @@ from flask import Flask, Blueprint, request, render_template, session, redirect,
 
 main = Blueprint('main', __name__, template_folder='templates')
 
-session = True
-
 @main.route('/')
 def index():
 
