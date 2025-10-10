@@ -28,15 +28,15 @@ def get_essay_analysis(essay_text, title, theme):
 
 # --- FLASK ROUTES ---
 
-@essay.route('/new_essay', methods=['GET', 'POST'])
+@essay.route('/new-essay', methods=['GET', 'POST'])
 def new_essay():
     if request.method == 'GET':
-        print("LOG: Navigating to GET /new_essay")
+        print("LOG: Navigating to GET /new-essay")
         session['user_id'] = '1' 
         return render_template('new_essay.html')
 
     elif request.method == 'POST':
-        print("LOG: Received POST data on /new_essay (initial submission).")
+        print("LOG: Received POST data on /new-essay (initial submission).")
         
         session['user_id'] = session.get('user_id', '1')
 
@@ -61,10 +61,10 @@ def new_essay():
             print("LOG: Server successfully fetched and stored API analysis results in Flask session.")
         else:
             # Handle API failure
-            return redirect('/new_essay') 
+            return redirect('/new-essay') 
         
         print(f"LOG: Stored original essay data in session for user {session.get('user_id')}.")
-        return redirect('/essay_results') 
+        return redirect('/essay-results') 
 
 @essay.route('/my-essays')
 def my_essays():
@@ -75,7 +75,7 @@ def my_essays():
     user_id = session.get('user_id')
     if not user_id:
         print("LOG: User ID missing. Redirecting to /new_essay.")
-        return redirect('/new_essay') 
+        return redirect('/new-essay') 
 
     try:
         # FIX: Using the correct function name: get_all_essays
@@ -94,7 +94,7 @@ def view_essay(essay_id):
 
     if not user_id:
         print("LOG: User ID missing. Redirecting to /new_essay.")
-        return redirect('/new_essay') 
+        return redirect('/new-essay') 
 
     try:
         essay_data = get_essay_data(essay_id=str(essay_id), user_id=user_id)
@@ -109,16 +109,16 @@ def view_essay(essay_id):
     
     return render_template('view_essay.html', essay=essay_data, essay_id=essay_id)
 
-@essay.route('/essay_results')
+@essay.route('/essay-results')
 def essay_results():
-    print("LOG: Navigating to GET /essay_results (Performance page).")
+    print("LOG: Navigating to GET /essay-results (Performance page).")
     
     session['user_id'] = session.get('user_id', '1')
     
     # FIX: Enforce session integrity before showing the results page
     if 'original_essay_data' not in session or 'analysis_results' not in session:
         print("ERROR: Session data missing. Redirecting to start.")
-        return redirect('/new_essay') 
+        return redirect('/new-essay') 
 
     analysis_results_json = json.dumps(session['analysis_results'])
     
@@ -135,7 +135,7 @@ def handle_essay_action():
 
     if not user_id:
         print("LOG: User ID missing. Redirecting to /new_essay.")
-        return redirect('/new_essay') 
+        return redirect('/new-essay') 
         
     # --- DISMISS ACTION ---
     if action == 'dismiss':
@@ -151,7 +151,7 @@ def handle_essay_action():
         
         if not original_data or not results:
             print("ERROR: SAVE action failed. Original essay or analysis data missing from session.")
-            return redirect('/essay_results')
+            return redirect('/essay-results')
 
         try:
             raw_grade = results.get('generalGrade')
@@ -190,7 +190,7 @@ def handle_essay_action():
         except Exception as e:
             # This catch now traps any error in the get_all_essays/add_essay_data flow
             print(f"ERROR: Database or data aggregation error during SAVE: {e}")
-            return redirect('/essay_results')
+            return redirect('/essay-results')
     
     print("LOG: Unrecognized action received. Defaulting redirect to /my-essays.")
     return redirect('/my-essays')

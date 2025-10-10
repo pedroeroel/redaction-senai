@@ -45,7 +45,7 @@
                 
                 {% for i in range(1, 6) %}
                     <div class="competency-field text-lg border-l-4 pl-3 rounded-sm border-[#ff9933] bg-white/5 p-2">
-                        <strong>Competência {{ i }}:</strong>
+                        <strong>Competência {{ i }} ({{ essay.competencies[i-1] }}):</strong>
                         <span id="competency-comment-{{ i }}" class="block mt-1 text-gray-300">Carregando...</span>
                     </div>
                 {% endfor %}

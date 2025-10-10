@@ -6,128 +6,129 @@
 {% set main = True %}
 
 {% block content %}
-    <section class="performance-container max-w-3xl mx-auto py-10">
-        <form id="essayForm" action="/handle_essay_action" method="post"> 
-        
-            <input type="hidden" id="formAction" name="action" value="">
-        
-        <h1 class="text-3xl font-bold mb-8">Performance <span id="grade"></span></h1>
-        <div class="performance-box flex flex-col md:flex-row gap-8 bg-white/10 rounded-lg p-8 shadow">
-          
-          <div class="chart flex-1 flex items-center justify-center max-w-md mx-auto">
-            <canvas id="pieChart"></canvas>
-          </div>
-            
-          <div class="description flex-1">
-            <div class="text-and-bars">
-              <div class="competency-field mb-4">
-                <strong>Competência 1:</strong>
-                <span id="competency-comment-1"></span>
-              </div>
-              <div class="competency-field mb-4">
-                <strong>Competência 2:</strong>
-                <span id="competency-comment-2"></span>
-              </div>
-              <div class="competency-field mb-4">
-                <strong>Competência 3:</strong>
-                <span id="competency-comment-3"></span>
-              </div>
-              <div class="competency-field mb-4">
-                <strong>Competência 4:</strong>
-                <span id="competency-comment-4"></span>
-              </div>
-              <div class="competency-field mb-4">
-                <strong>Competência 5:</strong>
-                <span id="competency-comment-5"></span>
-              </div>
-              <div class="general-comment mb-4">
-                <strong>Comentário geral:</strong>
-                <span id="general-comment"></span>
-              </div>
-            </div>
-            
-                        <div class="flex gap-4 mt-8">
-                <button type="submit" onclick="setAction('save')" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-150 ease-in-out">
-                    ✅ Salvar Redação
-                </button>
-                <button type="submit" onclick="setAction('dismiss')" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-150 ease-in-out">
-                    🗑️ Descartar
-                </button>
-            </div>
-          </div>
-        </div>
-      </form>
-    </section>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="{{ url_for('static', filename='js/api.js') }}"></script>
-    <script>
+    <section class="performance-container max-w-3xl mx-auto py-10 px-4"> 
+        <form id="essayForm" action="/handle_essay_action" method="post"> 
+        
+            <input type="hidden" id="formAction" name="action" value="">
+        
+            <h1 class="text-3xl font-bold mb-8">Performance <span id="grade"></span></h1>
+            <div class="performance-box flex flex-col md:flex-row gap-8 bg-white/10 rounded-lg p-8 shadow">
+              
+              {# FIX APPLIED HERE: max-w-xs and aspect-square constrain the chart size #}
+              <div class="chart w-full max-w-xs aspect-square mx-auto md:max-w-none md:w-1/2 flex items-center justify-center">
+                <canvas id="pieChart"></canvas>
+              </div>
+                
+              <div class="description flex-1">
+                <div class="text-and-bars">
+                  <div class="competency-field mb-4">
+                    <strong>Competência 1:</strong>
+                    <span id="competency-comment-1"></span>
+                  </div>
+                  <div class="competency-field mb-4">
+                    <strong>Competência 2:</strong>
+                    <span id="competency-comment-2"></span>
+                  </div>
+                  <div class="competency-field mb-4">
+                    <strong>Competência 3:</strong>
+                    <span id="competency-comment-3"></span>
+                  </div>
+                  <div class="competency-field mb-4">
+                    <strong>Competência 4:</strong>
+                    <span id="competency-comment-4"></span>
+                  </div>
+                  <div class="competency-field mb-4">
+                    <strong>Competência 5:</strong>
+                    <span id="competency-comment-5"></span>
+                  </div>
+                  <div class="general-comment mb-4">
+                    <strong>Comentário geral:</strong>
+                    <span id="general-comment"></span>
+                  </div>
+                </div>
+                
+                      <div class="flex flex-col sm:flex-row gap-4 mt-8">
+                        <button type="submit" onclick="setAction('save')" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-150 ease-in-out">
+                          ✅ Salvar Redação
+                        </button>
+                        <button type="submit" onclick="setAction('dismiss')" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-150 ease-in-out">
+                          🗑️ Descartar
+                        </button>
+                    </div>
+              </div>
+            </div>
+          </form>
+    </section>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="{{ url_for('static', filename='js/api.js') }}"></script>
+    <script>
 // Initialize results using Jinja2 data passed from Flask
 const rawResults = JSON.parse('{{ analysis_results_json | safe }}'); 
 
 const pieChart = new Chart(document.getElementById('pieChart').getContext('2d'), {
-  type: 'pie',
-  data: {
-    labels: ['Competência 1', 'Competência 2', 'Competência 3', 'Competência 4', 'Competência 5'],
-    datasets: [{
-      label: 'Desempenho',
-      data: [0, 0, 0, 0, 0], 
-      backgroundColor: ['#ffb380', '#ff9933', '#cc5200', '#ff751a', '#ffa64d'],
-      borderColor: '#2a1035',
-      borderWidth: 2
-    }]
-  },
-  options: {
-    responsive: true,
-    maintainAspectRatio: false, 
-    plugins: {
-      legend: {
-        display: false
-      }
-    }
-  }
+    type: 'pie',
+    data: {
+      labels: ['Competência 1', 'Competência 2', 'Competência 3', 'Competência 4', 'Competência 5'],
+      datasets: [{
+        label: 'Desempenho',
+        data: [0, 0, 0, 0, 0], 
+        backgroundColor: ['#ffb380', '#ff9933', '#cc5200', '#ff751a', '#ffa64d'],
+        borderColor: '#2a1035',
+        borderWidth: 2
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false, // Set to false to allow the container to control size (since we are using aspect-square on the container) 
+      plugins: {
+        legend: {
+          display: false
+        }
+      }
+    }
 });
 
 function updatePageWithResults(results) {
-  if (results && Array.isArray(results.competencies)) {
-    const chartData = results.competencies.slice(0, 5).concat(new Array(5 - results.competencies.length).fill(0));
-    pieChart.data.datasets[0].data = chartData;
-    pieChart.update();
-  }
-  
-  if (results && Array.isArray(results.comments)) {
-    results.comments.forEach((comment, idx) => {
-      if (idx < 5) {
-        const commentField = document.getElementById(`competency-comment-${idx + 1}`);
-        if (commentField) {
-          commentField.textContent = comment;
-        }
-      } else if (idx === 5) {
-        const generalCommentField = document.getElementById('general-comment');
-        if (generalCommentField) {
-          generalCommentField.textContent = comment;
-        }
-      }
-    });
-  }
-  
-  if (results && typeof results.generalGrade !== 'undefined') {
-    const gradeField = document.getElementById('grade');
-    if (gradeField) {
-      gradeField.textContent = results.generalGrade;
-    }
-  }
+    if (results && Array.isArray(results.competencies)) {
+      const chartData = results.competencies.slice(0, 5).concat(new Array(5 - results.competencies.length).fill(0));
+      pieChart.data.datasets[0].data = chartData;
+      pieChart.update();
+    }
+    
+    if (results && Array.isArray(results.comments)) {
+      results.comments.forEach((comment, idx) => {
+        if (idx < 5) {
+          const commentField = document.getElementById(`competency-comment-${idx + 1}`);
+          if (commentField) {
+            commentField.textContent = comment;
+          }
+        } else if (idx === 5) {
+          const generalCommentField = document.getElementById('general-comment');
+          if (generalCommentField) {
+            generalCommentField.textContent = comment;
+          }
+        }
+      });
+    }
+    
+    if (results && typeof results.generalGrade !== 'undefined') {
+      const gradeField = document.getElementById('grade');
+      if (gradeField) {
+        gradeField.textContent = results.generalGrade;
+      }
+    }
 }
 
 // Sets the hidden 'action' field and submits the form
 function setAction(action) {
-    document.getElementById('formAction').value = action;
+    document.getElementById('formAction').value = action;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Use the rawResults variable defined by Jinja2
-    if (rawResults) {
-        updatePageWithResults(rawResults);
-    }
+    // Use the rawResults variable defined by Jinja2
+    if (rawResults) {
+        updatePageWithResults(rawResults);
+    }
 });
-    </script>
+    </script>
 {% endblock %}

@@ -20,13 +20,20 @@ def home():
     else:
         return redirect('/login')
     
-@main.route('/subjects', methods=['GET'])
+@main.route('/topics', methods=['GET'])
 def themes():
     if session:
-        return render_template('subjects.html')
+        return render_template('topics.html')
     else:
         return redirect('/login')
     
+@main.route('/topics/<int:topic_id>', methods=['GET'])
+def topic_detail(topic_id):
+    if session:
+        return render_template(f'/topics/{topic_id}.html')
+    else:
+        return redirect('/login')
+
 @main.route('/arguments', methods=['GET'])
 def arguments():
     if session:

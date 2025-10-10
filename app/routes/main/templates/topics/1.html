@@ -1,69 +1,72 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jornada da Desigualdade</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        /* Estilos personalizados com Tailwind para fontes e cores */
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #1A0B3D;
-            overflow-x: hidden; /* Evita scroll horizontal indesejado */
-        }
-        h1, h2, .section-title {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-        }
-        .main-content {
-            background-color: #1A0B3D; /* Fundo base para o parallax */
-            overflow: hidden; /* Garante que o parallax funcione bem */
-        }
+{% extends 'layout.html' %}
+{% block pagename %}Jornada da Desigualdade{% endblock %}
+{% set header = False %}
+{% set footer = False %}
+{% set main = False %}
 
-        /* Classes para animação de fade-in no scroll */
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-        }
-        .fade-in-section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
+{# Inclusão do CSS e JS customizados que estavam no <head> original #}
+{% block head_extra %}
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+    /* Estilos personalizados com Tailwind para fontes e cores */
+    body {
+        font-family: 'Roboto', sans-serif;
+        background-color: #1A0B3D;
+        overflow-x: hidden; /* Evita scroll horizontal indesejado */
+    }
+    h1, h2, .section-title {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 700;
+    }
+    .main-content {
+        background-color: #1A0B3D; /* Fundo base para o parallax */
+        overflow: hidden; /* Garante que o parallax funcione bem */
+    }
 
-        /* Para os números animados */
-        .count-up-number {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 800;
-            font-size: 3.5rem; /* Ajuste para o tamanho desejado */
-            line-height: 1;
-            color: #E8E1CF;
-        }
-        /* Estilo para a unidade (%, x) que acompanha o número, para que ela tenha o mesmo tamanho e cor */
-        .count-up-unit {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 800;
-            font-size: 3.5rem;
-            line-height: 1;
-            color: #E8E1CF;
-            margin-left: 0.2rem; /* Pequeno espaçamento entre número e unidade */
-        }
+    /* Classes para animação de fade-in no scroll */
+    .fade-in-section {
+        opacity: 0;
+        transform: translateY(20px);
+        transition: opacity 1s ease-out, transform 1s ease-out;
+    }
+    .fade-in-section.is-visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
 
-        /* Estilo para a barra de citação */
-        .quote-box {
-            border-left: 4px solid #5A3E9D; /* Cor da borda da citação */
-            padding-left: 1.5rem;
-            /* Reduzido de 2rem para 1.5rem */
-            margin-top: 1.5rem;
-            margin-bottom: 1.5rem;
-            font-style: italic;
-            color: #CFC5DD; /* Cor mais suave para a citação */
-        }
-    </style>
-</head>
-<body class="text-[#E8E1CF]">
+    /* Para os números animados */
+    .count-up-number {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 800;
+        font-size: 3.5rem; /* Ajuste para o tamanho desejado */
+        line-height: 1;
+        color: #E8E1CF;
+    }
+    /* Estilo para a unidade (%, x) que acompanha o número, para que ela tenha o mesmo tamanho e cor */
+    .count-up-unit {
+        font-family: 'Poppins', sans-serif;
+        font-weight: 800;
+        font-size: 3.5rem;
+        line-height: 1;
+        color: #E8E1CF;
+        margin-left: 0.2rem; /* Pequeno espaçamento entre número e unidade */
+    }
+
+    /* Estilo para a barra de citação */
+    .quote-box {
+        border-left: 4px solid #5A3E9D; /* Cor da borda da citação */
+        padding-left: 1.5rem;
+        margin-top: 1.5rem;
+        margin-bottom: 1.5rem;
+        font-style: italic;
+        color: #CFC5DD; /* Cor mais suave para a citação */
+    }
+</style>
+{% endblock %}
+
+{% block main_content %}
+    
+    {# O HEADER CUSTOMIZADO DA PÁGINA DE TEMA FOI MANTIDO AQUI #}
     <header class="bg-[#3D1E8D] h-20 shadow-lg flex justify-between items-center px-6 sm:px-8 lg:px-12 fixed w-full z-50 top-0">
         <div class="flex items-center space-x-4 md:space-x-5">
             <a href="../temasatuais.html" class="text-[#E8E1CF] hover:opacity-75 transition-opacity duration-300">
@@ -71,7 +74,7 @@
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                 </svg>
             </a>
-            <img src="../../logo.png" alt="Redaction" class="h-10 sm:h-12">
+            <img src="{{ url_for('static', filename='img/redaction-logo.png') }}" alt="Redaction" class="h-10 sm:h-12">
         </div>
         <div class="flex items-center space-x-4">
             <a href="#" class="text-sm text-[#E8E1CF] hover:opacity-75 transition-opacity duration-300">Sair</a>
@@ -194,6 +197,47 @@
 
         <section class="bg-[#2A0F5E] bg-opacity-90 flex items-center justify-center py-12">
             <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
+                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Disparidades no Mercado de Trabalho: Raça e Gênero</h2>
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
+                    <div class="bg-[#3D1E8D] p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
+                        <div class="flex items-end">
+                            <span class="count-up-number" data-target="39.2" data-float="true">0.0</span>
+                            <span class="count-up-unit">%</span>
+                        </div>
+                        <p class="text-xl mt-2">Rendimento Médio de Mulheres Negras</p>
+                        <p class="text-sm opacity-80">(em comparação ao de homens brancos)</p>
+                    </div>
+                    <div class="bg-[#3D1E8D] p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
+                        <div class="flex items-end">
+                            <span class="count-up-number" data-target="76.1" data-float="true">0.0</span>
+                            <span class="count-up-unit">%</span>
+                        </div>
+                        <p class="text-xl mt-2">Rendimento Médio de Mulheres Brancas</p>
+                        <p class="text-sm opacity-80">(em comparação ao de homens brancos)</p>
+                    </div>
+                    <div class="bg-[#3D1E8D] p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
+                        <div class="flex items-end">
+                            <span class="count-up-number" data-target="56.2" data-float="true">0.0</span>
+                            <span class="count-up-unit">%</span>
+                        </div>
+                        <p class="text-xl mt-2">Rendimento Médio de Homens Negros</p>
+                        <p class="text-sm opacity-80">(em comparação ao de homens brancos)</p>
+                    </div>
+                    <div class="bg-[#3D1E8D] p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
+                        <div class="flex items-end">
+                            <span class="count-up-number" data-target="2.7" data-float="true">0.0</span>
+                            <span class="count-up-unit">%</span>
+                        </div>
+                        <p class="text-xl mt-2">Representação de Mulheres Negras em Cargos Gerenciais</p>
+                        <p class="text-sm opacity-80">(no total de trabalhadores)</p>
+                    </div>
+                </div>
+                <p class="text-sm opacity-80 mt-6">Fonte: IBGE, Síntese de Indicadores Sociais (Valores aproximados do último relatório, referente a disparidades raciais e de gênero).</p>
+            </div>
+        </section>
+
+        <section class="bg-[#1A0B3D] bg-opacity-90 flex items-center justify-center py-12">
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
                 <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Construindo um Futuro Mais Justo</h2>
                 <p class="text-lg text-justify leading-relaxed mb-4">
                     Superar a desigualdade social no Brasil exige um esforço contínuo e multifacetado, com políticas públicas integradas, investimento em educação e saúde, e um compromisso com a equidade racial, de gênero e territorial.
@@ -282,7 +326,9 @@
 
                 if (hasFloat) {
                     // Para o Gini e 5.9%, precisamos de casas decimais
-                    element.textContent = currentValue.toFixed(currentValue < 1 ? 3 : 1); // 3 casas para Gini, 1 para 5.9
+                    // Ajustado para garantir precisão de uma casa decimal para a maioria dos novos dados (ex: 39.2%)
+                    const decimalPlaces = target < 1 ? 3 : 1; 
+                    element.textContent = currentValue.toFixed(decimalPlaces); 
                 } else {
                     // Para números inteiros
                     element.textContent = Math.floor(currentValue);
@@ -291,7 +337,8 @@
                 if (frame === totalFrames) {
                     clearInterval(counter);
                     // Garante o valor exato no final, com a formatação correta
-                    element.textContent = hasFloat ? (target < 1 ? target.toFixed(3) : target.toFixed(1)) : target;
+                    const decimalPlaces = target < 1 ? 3 : 1;
+                    element.textContent = hasFloat ? target.toFixed(decimalPlaces) : target;
                 }
             }, frameDuration);
         }
@@ -322,5 +369,4 @@
         });
 
     </script>
-</body>
-</html>
+{% endblock %}
