@@ -11,12 +11,14 @@ def login():
             return redirect('/')
         else:  
             return render_template('login.html')
+        
     elif request.method == 'POST':
         email = request.form.get('email')
         password = request.form.get('password')
 
         if email == "adm@adm" and password == "admin123":
-            session['user'] = email
+            session['email'] = email
+            session['user_id'] = 1
             return redirect('/')
 
 @auth.route('/register', methods=['GET', 'POST'])

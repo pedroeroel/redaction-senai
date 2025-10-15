@@ -5,16 +5,16 @@ main = Blueprint('main', __name__, template_folder='templates')
 @main.route('/')
 def index():
 
-    if  session:
+    if session:
         return redirect('/home')
     else:
-        return render_template('index.html')
+        return render_template('index.html', session=session)
     
 @main.route('/home', methods=['GET'])
 def home():
 
     if session:
-        return render_template('home.html')
+        return render_template('home.html', session=session)
     else:
         return redirect('/login')
     

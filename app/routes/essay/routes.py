@@ -66,26 +66,25 @@ def new_essay():
         print(f"LOG: Stored original essay data in session for user {session.get('user_id')}.")
         return redirect('/essay-results') 
 
-@essay.route('/my-essays')
+@essay.route('/my-essays', methods=['GET'])
 def my_essays():
+    user_id = str(session['user_id'])
+    
     if request.method == 'GET':
-        session['user_id'] = session.get('user_id', '1')
         print("LOG: Navigating to GET /my-essays.")
 
-    user_id = session.get('user_id')
-    if not user_id:
-        print("LOG: User ID missing. Redirecting to /new_essay.")
-        return redirect('/new-essay') 
+        if not user_id:
+            print("LOG: User ID missing. Redirecting to /new_essay.")
+            return redirect('/new-essay') 
 
-    try:
-        # FIX: Using the correct function name: get_all_essays
-        essays = get_all_essays(user_id=user_id)
-        print(f"LOG: Successfully fetched {len(essays)} essays for user {user_id}.")
-    except Exception as error:
-        print(f"ERROR: Error fetching essays: {error}")
-        essays = []
+        try:
+            essays = get_all_essays(user_id=user_id)
+            print(f"LOG: Successfully fetched {len(essays)} essays for user {user_id}.")
+        except Exception as error:
+            print(f"ERROR: Error fetching essays: {error}")
+            essays = []
 
-    return render_template('my_essays.html', essays=essays)
+        return render_template('my_essays.html', essays=essays)
 
 @essay.route('/my-essays/<essay_id>')
 def view_essay(essay_id):
