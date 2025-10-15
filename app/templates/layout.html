@@ -19,9 +19,14 @@
             >
         </a>
     </div>
-    <p class="w-fit h-fit text-[#E8E1CF]">
+    <p class="hidden lg:block w-fit h-fit text-[#E8E1CF]">
         {% block pagetext %}{% endblock %}
     </p>
+
+    {% if session['score'] is defined %}
+        <span class="hidden md:block ml-2">Seus Pontos: {{ session['score'] }}</span>
+    {% endif %}
+
     <div class="flex items-center space-x-4">
         {% if session %}
         <a href="/logout" class="invisible md:visible"><span class="font-semibold">Sair</span></a>
@@ -62,5 +67,7 @@
     &copy; 2024 AlphaTech. All rights reserved.
 </footer>
 {% endif %}
+
+{% block scripts %}{% endblock %}
 </body>
 </html>

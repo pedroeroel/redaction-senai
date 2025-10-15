@@ -69,3 +69,29 @@ def get_all_essays(user_id):
     # The printed empty list "[]" in your logs comes from this line, indicating no essays yet.
     print(essays) 
     return essays
+
+def get_score(user_id):
+    doc_ref = db.collection('register').document(user_id)
+    doc = doc_ref.get()
+    if doc.exists:
+        user_data = doc.to_dict()
+        return user_data.get('score', 0)  # Return score or 0 if not found
+    else:
+        return 0
+
+def update_score(user_id, points):
+    doc_ref = db.collection('register').document(user_id)
+    current_score = get_score(user_id)
+
+    try:
+        print(f"Current score for user {user_id}: {current_score}, updating...")
+        new_score = current_score + points
+        doc_ref.update({'score': new_score})
+    except Exception as e:
+        print(f"Error updating score for user {user_id}: {e}")
+
+    finally:
+        print(f"Score updated for user {user_id}: {current_score} -> {new_score}")
+
+    return
+

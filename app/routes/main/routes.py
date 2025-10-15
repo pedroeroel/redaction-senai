@@ -1,4 +1,5 @@
 from flask import Flask, Blueprint, request, render_template, session, redirect, jsonify
+from app.firebase import get_score
 
 main = Blueprint('main', __name__, template_folder='templates')
 
@@ -6,6 +7,7 @@ main = Blueprint('main', __name__, template_folder='templates')
 def index():
 
     if session:
+        session['score'] = get_score(session['user_id'])
         return redirect('/home')
     else:
         return render_template('index.html', session=session)
@@ -14,6 +16,7 @@ def index():
 def home():
 
     if session:
+        session['score'] = get_score(session['user_id'])
         return render_template('home.html', session=session)
     else:
         return redirect('/login')

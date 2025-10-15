@@ -1,3 +1,8 @@
+
+
+
+
+
 const argumentData = {
     educacao: [
         {
@@ -161,7 +166,6 @@ const argumentData = {
     ]
 };
 
-// Ícones SVG para os botões de tema (ajustei alguns para serem mais genéricos/simbólicos)
 const themeIcons = {
     educacao: `
         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6">
@@ -189,118 +193,3 @@ const themeIcons = {
         </svg>
     ` // Desigualdade - Balança ou Pessoas em desnível
 };
-
-// JavaScript para Parallax e Animações no Scroll
-const parallaxBg = document.getElementById('parallax-bg');
-if (parallaxBg) {
-    window.addEventListener('scroll', () => {
-        const scrollY = window.scrollY;
-        parallaxBg.style.setProperty('--translate-y', `${scrollY * 0.15}px`);
-    });
-}
-    
-// Funções para a interação da página, como renderizar botões e o modal
-const themeButtonsContainer = document.getElementById('themeButtonsContainer');
-const argumentsDisplayArea = document.getElementById('argumentsDisplayArea');
-const selectThemePrompt = document.getElementById('selectThemePrompt');
-
-function renderThemeButtons() {
-    for (const themeKey in argumentData) {
-        const button = document.createElement('button');
-        button.setAttribute('role', 'tab');
-        button.setAttribute('aria-controls', `${themeKey}-arguments`);
-        button.id = `tab-${themeKey}`;
-        button.className = "flex items-center justify-center space-x-2 px-6 py-3 rounded-full text-lg font-semibold bg-[#2A0F5E] text-[#E8E1CF] shadow-lg hover:bg-[#5A3E9D] hover:scale-105 transition-all duration-300 ease-in-out cursor-pointer whitespace-nowrap border-2 border-transparent min-w-[160px]";
-        button.innerHTML = `${themeIcons[themeKey]} <span>${themeKey.charAt(0).toUpperCase() + themeKey.slice(1).replace('-', ' ')}</span>`;
-        button.onclick = () => mostrarArgumentos(themeKey, button);
-        themeButtonsContainer.appendChild(button);
-    }
-}
-
-function mostrarArgumentos(tema, clickedButton) {
-    selectThemePrompt.style.display = 'none';
-
-    const buttons = document.querySelectorAll('.temas button');
-    buttons.forEach(button => {
-        button.classList.remove('active', 'bg-[#FCA311]', 'text-[#1A0B3D]', 'border-[#FCA311]', 'shadow-2xl', 'scale-105');
-        button.setAttribute('aria-selected', 'false');
-        button.classList.add('bg-[#2A0F5E]', 'text-[#E8E1CF]', 'border-transparent', 'shadow-lg');
-    });
-
-    if (clickedButton) {
-        clickedButton.classList.add('active', 'bg-[#FCA311]', 'text-[#1A0B3D]', 'border-[#FCA311]', 'shadow-2xl', 'scale-105');
-        clickedButton.classList.remove('bg-[#2A0F5E]', 'text-[#E8E1CF]');
-        clickedButton.setAttribute('aria-selected', 'true');
-    }
-
-    argumentsDisplayArea.innerHTML = '';
-
-    const args = argumentData[tema];
-    if (args) {
-        args.forEach((arg, index) => {
-            const card = document.createElement('button');
-            card.classList.add('argumento-card', 'bg-[#3D1E8D]', 'p-6', 'rounded-xl', 'shadow-lg', 'hover:brightness-110', 'active:brightness-90', 'transition-all', 'duration-200', 'ease-in-out', 'transform', 'hover:-translate-y-2', 'flex', 'flex-col', 'justify-between', 'text-center', 'cursor-pointer', 'relative', 'overflow-hidden');
-            card.setAttribute('role', 'button');
-            card.setAttribute('aria-label', `Ver detalhes do argumento ${arg.title}`);
-            card.innerHTML = `
-                <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF] mb-2 leading-snug">${arg.title}</h2>
-                <p class="type text-sm text-[#C4B5FD] opacity-80 mt-auto">${arg.type || 'Argumento Geral'}</p> `;
-            card.onclick = () => openModal(arg);
-            card.style.animationDelay = `${index * 0.1}s`;
-            argumentsDisplayArea.appendChild(card);
-        });
-    }
-}
-    
-const argumentoModalOverlay = document.getElementById('argumentoModalOverlay');
-const modalArgumentoTitle = document.getElementById('modalArgumentoTitle');
-const modalArgumentoContent = document.getElementById('modalArgumentoContent');
-const modalRepertoryContent = document.getElementById('modalRepertoryContent');
-const modalKeywordsContent = document.getElementById('modalKeywordsContent');
-const modalCopyButton = document.getElementById('modalCopyButton');
-
-function openModal(arg) {
-    modalArgumentoTitle.innerText = arg.title;
-    modalArgumentoContent.innerText = arg.content;
-    modalRepertoryContent.innerText = arg.repertory || 'Nenhum repertório sugerido para este argumento.';
-    modalKeywordsContent.innerText = arg.keywords || 'Nenhuma palavra-chave sugerida.';
-
-    modalCopyButton.dataset.copyContent = `Título: ${arg.title}\n\nArgumento: ${arg.content}\n\nRepertório: ${arg.repertory || 'Nenhum'}\n\nPalavras-chave: ${arg.keywords || 'Nenhuma'}`;
-
-    modalCopyButton.innerText = "Copiar Argumento";
-    modalCopyButton.classList.remove('copied');
-
-    argumentoModalOverlay.classList.add('open');
-    document.body.style.overflow = 'hidden';
-}
-
-function closeModal() {
-    argumentoModalOverlay.classList.remove('open');
-    document.body.style.overflow = 'auto';
-}
-
-async function copiarTexto(textToCopy, buttonElement) {
-    try {
-        await navigator.clipboard.writeText(textToCopy);
-        if (buttonElement) {
-            buttonElement.innerText = "Copiado!";
-            buttonElement.classList.add('copied');
-            setTimeout(() => {
-                buttonElement.innerText = "Copiar Argumento";
-                buttonElement.classList.remove('copied');
-            }, 1500);
-        }
-    } catch (err) {
-        console.error('Falha ao copiar: ', err);
-        alert('Erro ao copiar o texto. Por favor, tente novamente.');
-    }
-}
-
-function copiarArgumentoModal(buttonElement) {
-    const contentToCopy = buttonElement.dataset.copyContent;
-    copiarTexto(contentToCopy, buttonElement);
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    renderThemeButtons();
-});

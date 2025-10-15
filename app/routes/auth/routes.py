@@ -1,4 +1,5 @@
 from flask import Flask, Blueprint, request, render_template, session, redirect
+from app.firebase import get_score
 
 auth = Blueprint('auth', __name__, template_folder='templates')
 
@@ -19,6 +20,13 @@ def login():
         if email == "adm@adm" and password == "admin123":
             session['email'] = email
             session['user_id'] = 1
+            
+            try:
+                session['score'] = get_score(str(session['user_id']))
+            except Exception as e:
+                print(f"Error fetching score for admin: {e}")
+                session['score'] = 0
+            
             return redirect('/')
 
 @auth.route('/register', methods=['GET', 'POST'])
