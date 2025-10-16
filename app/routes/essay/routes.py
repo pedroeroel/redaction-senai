@@ -2,7 +2,7 @@ from flask import Flask, Blueprint, request, render_template, session, redirect,
 import json
 import requests # REQUIRED: For making the external API call
 # FIX: Use explicit imports for clarity and to avoid NameError
-from ...firebase import get_all_essays, add_essay_data, get_essay_data
+from ...firebase import get_all_essays, add_essay_data, get_essay_data, get_score, update_score
 
 essay = Blueprint('essay', __name__, template_folder='templates')
 
@@ -59,9 +59,10 @@ def new_essay():
         if analysis_results:
             session['analysis_results'] = analysis_results
             print("LOG: Server successfully fetched and stored API analysis results in Flask session.")
+            update_score(session['user_id'], -100) # Deduct 100 points for analysis
         else:
             # Handle API failure
-            return redirect('/new-essay') 
+            return redirect('/new-essay')   
         
         print(f"LOG: Stored original essay data in session for user {session.get('user_id')}.")
         return redirect('/essay-results') 
@@ -113,6 +114,7 @@ def essay_results():
     print("LOG: Navigating to GET /essay-results (Performance page).")
     
     session['user_id'] = session.get('user_id', '1')
+    session['score'] = get_score(session['user_id'])
     
     # FIX: Enforce session integrity before showing the results page
     if 'original_essay_data' not in session or 'analysis_results' not in session:
@@ -122,7 +124,7 @@ def essay_results():
     analysis_results_json = json.dumps(session['analysis_results'])
     
     # Pass the JSON string directly to the template
-    return render_template('essay_results.html', analysis_results_json=analysis_results_json)
+    return render_template('essay_results.html', session=session, analysis_results_json=analysis_results_json)
 
 @essay.route('/handle_essay_action', methods=['POST'])
 def handle_essay_action():
