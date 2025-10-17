@@ -2,26 +2,30 @@ import firebase_admin
 from firebase_admin import credentials, firestore
 from dotenv import load_dotenv
 import os
-import io
 import sys
+import json
 
 load_dotenv()
 
 key_source = None
 local_path = 'instance/serviceAccountKey.json'
+env_var_name = 'FIREBASE_SERVICE_KEY'
 
 if os.path.exists(local_path):
     key_source = local_path
 else:
-    key_source = os.getenv('FIREBASE_SERVICE_KEY') 
+    key_source = os.getenv(env_var_name)
     
 if not key_source:
     sys.exit('Firebase service account key not found in local path or environment variable.')
 
 if not firebase_admin._apps:
     if key_source.startswith('{'):
-        key_stream = io.StringIO(key_source)
-        cred = credentials.Certificate(key_stream)
+        try:
+            cert_dict = json.loads(key_source)
+            cred = credentials.Certificate(cert_dict)
+        except json.JSONDecodeError:
+            sys.exit('Error: FIREBASE_SERVICE_KEY is malformed JSON.')
     else:
         cred = credentials.Certificate(key_source)
 
