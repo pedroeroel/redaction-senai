@@ -9,7 +9,8 @@
     <section class="performance-container max-w-3xl mx-auto py-10 px-4"> 
         <form id="essayForm" action="/handle_essay_action" method="post"> 
         
-            <input type="hidden" id="formAction" name="action" value="">
+            {# This input is for the action (save/dismiss), NOT the essay data/results. #}
+            <input type="hidden" id="formAction" name="action" value=""> 
         
             <h1 class="text-3xl font-bold mb-8">Performance <span id="grade"></span></h1>
             <div class="performance-box flex flex-col md:flex-row gap-8 bg-white/10 rounded-lg p-8 shadow">
@@ -60,10 +61,10 @@
           </form>
     </section>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="{{ url_for('static', filename='js/api.js') }}"></script>
     <script>
-// Initialize results using Jinja2 data passed from Flask
-const rawResults = JSON.parse('{{ analysis_results_json | safe }}'); 
+
+const rawResults = JSON.parse('{{ analysis_results_json | safe}}'); 
+console.log('Raw Results:', rawResults);
 
 const pieChart = new Chart(document.getElementById('pieChart').getContext('2d'), {
     type: 'pie',
@@ -79,7 +80,7 @@ const pieChart = new Chart(document.getElementById('pieChart').getContext('2d'),
     },
     options: {
       responsive: true,
-      maintainAspectRatio: false, // Set to false to allow the container to control size (since we are using aspect-square on the container) 
+      maintainAspectRatio: false,
       plugins: {
         legend: {
           display: false
@@ -114,18 +115,16 @@ function updatePageWithResults(results) {
     if (results && typeof results.generalGrade !== 'undefined') {
       const gradeField = document.getElementById('grade');
       if (gradeField) {
-        gradeField.textContent = results.generalGrade;
+        gradeField.textContent = results.generalGrade; 
       }
     }
 }
 
-// Sets the hidden 'action' field and submits the form
 function setAction(action) {
     document.getElementById('formAction').value = action;
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-    // Use the rawResults variable defined by Jinja2
     if (rawResults) {
         updatePageWithResults(rawResults);
     }

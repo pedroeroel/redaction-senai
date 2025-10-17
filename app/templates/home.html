@@ -21,14 +21,18 @@
         </div>
 
         <div class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg mb-8 flex items-center justify-center">
-            <a 
-                id="ctaRedacao" 
-                href="/new-essay"  
-                class="bg-[#A78BFA] text-[#2A0F5E] font-bold py-3 px-6 rounded-lg shadow-md hover:bg-[#C4B5FD] transition-all duration-200 ease-in-out" 
-                aria-disabled="false"  
-            >
-                Nova Redação
-            </a>
+            <div class="flex gap-4">
+                <a id="ctaRedacao"
+                   {% if score >= 100 %}href="/new-essay"{% endif %}
+                   class="bg-[#A78BFA] text-[#2A0F5E] font-bold py-3 px-6 rounded-lg shadow-md hover:bg-[#C4B5FD] transition-all duration-200 ease-in-out {% if score < 100 %}opacity-50 cursor-not-allowed{% endif %}"
+                   aria-disabled="{% if score < 100 %}true{% else %}false{% endif %}"
+                   {% if score < 100 %}tabindex="-1"{% endif %}>
+                    Nova Redação
+                </a>
+                {% if score < 100 %}
+                 <span class="self-center text-[#E8E1CF]">Consiga 100 pontos para avaliar uma redação!</span>
+                {% endif %}
+            </div>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">

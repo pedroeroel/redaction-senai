@@ -30,41 +30,47 @@ def get_essay_analysis(essay_text, title, theme):
 
 @essay.route('/new-essay', methods=['GET', 'POST'])
 def new_essay():
-    if request.method == 'GET':
-        print("LOG: Navigating to GET /new-essay")
-        session['user_id'] = '1' 
-        return render_template('new_essay.html')
 
-    elif request.method == 'POST':
-        print("LOG: Received POST data on /new-essay (initial submission).")
-        
-        session['user_id'] = session.get('user_id', '1')
+    if not session['user_id']:
+        return redirect('/')
 
-        original_essay_data = {
-            'title': request.form['title'],
-            'content': request.form['text'],
-            'theme': request.form['theme']
-        }
-        # FIX: Store original data in session FIRST
-        session['original_essay_data'] = original_essay_data
-        
-        # 1. Call the external API using the server
-        analysis_results = get_essay_analysis(
-            original_essay_data['content'],
-            original_essay_data['title'],
-            original_essay_data['theme']
-        )
-        
-        # 2. Store the analysis results in the session
-        if analysis_results:
-            session['analysis_results'] = analysis_results
-            print("LOG: Server successfully fetched and stored API analysis results in Flask session.")
-            update_score(session['user_id'], -100) # Deduct 100 points for analysis
-        else:
-            # Handle API failure
-            return redirect('/new-essay')   
-        
-        print(f"LOG: Stored original essay data in session for user {session.get('user_id')}.")
+    elif get_score(session['user_id']) < 100:
+        return redirect('/')
+
+    else:
+
+        if request.method == 'GET':
+            print("LOG: Navigating to GET /new-essay")
+            session['user_id'] = '1' 
+            return render_template('new_essay.html')
+
+        elif request.method == 'POST':
+            print("LOG: Received POST data on /new-essay (initial submission).")
+            
+            session['user_id'] = session.get('user_id', '1')
+
+            original_essay_data = {
+                'title': request.form['title'],
+                'content': request.form['text'],
+                'theme': request.form['theme']
+            }
+            
+            session['original_essay_data'] = original_essay_data
+            
+            analysis_results = get_essay_analysis(
+                original_essay_data['content'],
+                original_essay_data['title'],
+                original_essay_data['theme']
+            )
+            
+            if analysis_results:
+                session['analysis_results'] = analysis_results
+                print("LOG: Server successfully fetched and stored API analysis results in Flask session.")
+                update_score(session['user_id'], -100)
+            else:
+                return redirect('/new-essay')   
+            
+            print(f"LOG: Stored original essay data in session for user {session.get('user_id')}.")
         return redirect('/essay-results') 
 
 @essay.route('/my-essays', methods=['GET'])
