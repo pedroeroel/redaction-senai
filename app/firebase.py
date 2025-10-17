@@ -3,17 +3,17 @@ from firebase_admin import credentials, firestore
 from dotenv import load_dotenv
 import os
 
-try:
+serviceAccountKey = None
 
-    load_dotenv()
-    if os.path.exists('instance/serviceAccountKey.json'):
-        serviceAccountKey = 'instance/serviceAccountKey.json'
+load_dotenv()
 
-except Exception as e:
-    serviceAccountKey = os.getenv('.env', 'serviceAccountKey')
-    if not serviceAccountKey:
-        raise Exception("Service account key not found in environment variables or .env file")
+if os.path.exists('instance/serviceAccountKey.json'):
+    serviceAccountKey = 'instance/serviceAccountKey.json'
+else:
+    serviceAccountKey = os.getenv('serviceAccountKey')
 
+if not serviceAccountKey:
+    raise Exception('Firebase service account key not found.')
 
 if not firebase_admin._apps:
     cred = credentials.Certificate(serviceAccountKey)
