@@ -19,9 +19,7 @@ if not firebase_admin._apps:
     cred = credentials.Certificate(serviceAccountKey)
     firebase_admin.initialize_app(cred)
 
-db = firestore.client() # Correct way to get the client after initialization
-
-# --- User Register/Fetch ---
+db = firestore.client()
 
 def get_user_data(user_id):
     user_id = str(user_id)
