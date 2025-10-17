@@ -13,7 +13,7 @@ local_path = 'instance/serviceAccountKey.json'
 if os.path.exists(local_path):
     key_source = local_path
 else:
-    key_source = os.getenv('serviceAccountKey') 
+    key_source = os.getenv('FIREBASE_SERVICE_KEY') 
     
 if not key_source:
     sys.exit('Firebase service account key not found in local path or environment variable.')
