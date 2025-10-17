@@ -4,7 +4,8 @@ import dotenv
 import os
 
 try:
-    serviceAccountKey = 'instance/serviceAccountKey.json'
+    if os.path.exists('instance/serviceAccountKey.json'):
+        serviceAccountKey = 'instance/serviceAccountKey.json'
 except Exception as e:
     serviceAccountKey = dotenv.get_key('.env', 'serviceAccountKey')
     if not serviceAccountKey:
