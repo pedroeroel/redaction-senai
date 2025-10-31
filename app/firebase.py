@@ -41,7 +41,36 @@ def get_user_data(user_id):
         return doc.to_dict()
     else:
         return None
+
+def get_user_by_fields(email, password):
+    users_ref = db.collection('register')
+    query = users_ref.where('email', '==', email).where('password', '==', password).limit(1)
+    results = query.stream()
+    for doc in results:
+        return doc.to_dict()
+    return None
     
+def register_user(email, password, username):
+    users_ref = db.collection('register')
+    new_user_ref = users_ref.document()
+    new_user_id = count_users() + 1
+    new_user_ref.set({
+        'email': email,
+        'password': password,
+        'username': username,
+        'score': 0,
+        'id': int(new_user_id)
+    })
+
+
+    return new_user_id
+
+def count_users():
+    users_ref = db.collection('register')
+    docs = users_ref.stream()
+    count = sum(1 for _ in docs)
+    return int(count)
+
 def add_user_data(user_id, data):
     user_id = str(user_id)
     doc_ref = db.collection('register').document(user_id)

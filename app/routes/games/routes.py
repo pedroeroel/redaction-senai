@@ -6,7 +6,10 @@ games = Blueprint('games', __name__, template_folder='templates')
 @games.route('/games', methods=['GET'])
 def games_list():
     if session:
-        return render_template('games.html')
+
+        session['score'] = get_score(session.get('user_id'))
+
+        return render_template('games.html', score=session['score'])
     else:
         return redirect('/login')
     

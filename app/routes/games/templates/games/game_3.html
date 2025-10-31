@@ -72,22 +72,37 @@
     const feedback = document.getElementById('feedback');
 
     // Lista de desafios
-    const challenges = [
-        {
-            id: 1,
-            prompt: "Organize as palavras para formar uma frase coerente.",
-            words: ["A", "importância", "da", "leitura", "é", "fundamental", "para", "o", "desenvolvimento", "do", "conhecimento."],
-            correctOrder: ["A", "importância", "da", "leitura", "é", "fundamental", "para", "o", "desenvolvimento", "do", "conhecimento."],
-            points: 50
-        },
-        {
-            id: 2,
-            prompt: "Crie uma frase que fale sobre a sustentabilidade.",
-            words: ["A", "sustentabilidade", "é", "necessária", "para", "a", "preservação", "do", "futuro", "do", "planeta."],
-            correctOrder: ["A", "sustentabilidade", "é", "necessária", "para", "a", "preservação", "do", "futuro", "do", "planeta."],
-            points: 75
-        }
-    ];
+const challenges = [
+    {
+        id: 1,
+        prompt: "Organize as palavras para formar uma frase coerente.",
+        words: ["A", "leitura", "é", "fundamental", "para", "o", "desenvolvimento", "do", "conhecimento."],
+        correctOrder: ["A",  "leitura", "é", "fundamental", "para", "o", "desenvolvimento", "do", "conhecimento."],
+        points: 5
+    },
+    {
+        id: 2,
+        prompt: "Forme uma frase sobre sustentabilidade e meio ambiente.",
+        words: ["A", "sustentabilidade", "é", "necessária", "para", "proteger", "o", "futuro", "do", "planeta", "e", "garantir", "qualidade", "de", "vida."],
+        correctOrder: ["A", "sustentabilidade", "é", "necessária", "para", "proteger", "o", "futuro", "do", "planeta", "e", "garantir", "qualidade", "de", "vida."],
+        points: 10
+    },
+    {
+        id: 3,
+        prompt: "Monte uma frase que explique a importância da educação.",
+        words: ["A", "educação", "desenvolve", "habilidades", "e", "conhecimentos", "que", "são", "essenciais", "para", "o", "futuro", "de", "cada", "indivíduo."],
+        correctOrder: ["A", "educação", "desenvolve", "habilidades", "e", "conhecimentos", "que", "são", "essenciais", "para", "o", "futuro", "de", "cada", "indivíduo."],
+        points: 15
+    },
+    {
+        id: 4,
+        prompt: "Forme uma frase sobre hábitos de leitura.",
+        words: ["Ler", "diariamente", "expande", "o", "vocabulário,", "melhora", "a", "concentração", "e", "estimula", "a", "criatividade."],
+        correctOrder: ["Ler", "diariamente", "expande", "o", "vocabulário,", "melhora", "a", "concentração", "e", "estimula", "a", "criatividade."],
+        points: 20
+    }
+];
+
 
     let currentChallengeIndex = 0;
     let currentChallenge;

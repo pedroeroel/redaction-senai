@@ -1,263 +1,257 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Corretor Fantasma - Redaction</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            overflow-y: hidden; 
-        }
-        #main-content {
-            height: calc(100vh - 5rem); /* 5rem = altura do header (h-20) */
-            overflow-y: auto; 
-        }
-        /* Estilos específicos para o jogo */
-        .error-word {
-            cursor: pointer;
-            text-decoration: underline wavy #EF4444; /* Vermelho para indicar erro potencial */
-            font-weight: bold;
-        }
-        .error-word:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            border-radius: 4px;
-        }
-        .error-word.corrected {
-            text-decoration: none;
-            color: #22C55E; /* Verde para indicar correção */
-        }
-    </style>
-</head>
-<body class="bg-[#2A0F5E] text-[#E8E1CF] font-sans">
+{% extends 'layout.html' %}
+{% block pagename %}Corretor Fantasma{% endblock %}
+{% block pagetext %}Clique nas palavras erradas e corrija-as!{% endblock %}
+{% set header = True %}
+{% set footer = True %}
+{% set main = True %}
 
-    <header class="bg-[#3D1E8D] h-20 shadow-md flex justify-between items-center px-6 sm:px-8 lg:px-12">
-        <div class="flex items-center space-x-4 md:space-x-5">
-            <a href="./index.html" class="text-[#E8E1CF] hover:opacity-75"> 
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                </svg>
-            </a>
-            <img src="../logo.png" alt="Redaction" class="h-10 sm:h-12">
+{% block content %}
+<main
+    id="main-content"
+    class="bg-no-repeat bg-cover bg-center"
+    style="background-image: url('../fundo-temas.png');">
+    
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+
+        <div class="max-w-4xl mx-auto mb-8 md:mb-12 text-center">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight text-[#E8E1CF]">
+                Corretor Fantasma 👻
+            </h1>
+            <p class="text-lg text-[#E8E1CF] opacity-90">
+                Clique nas palavras ou trechos que você considera errados e tente corrigi-los!
+            </p>
+            <hr class="border-t-2 border-[#E8E1CF] opacity-50 w-32 mx-auto mt-4">
         </div>
-        
-        <div class="flex items-center space-x-4 sm:space-x-6">
-            <div class="flex flex-col items-end text-right">
-                <p class="text-sm sm:text-base font-semibold text-[#E8E1CF] whitespace-nowrap">
-                    Pontos: <span id="currentPointsHeader">850</span> XP ✨
-                </p>
-                <div class="w-24 sm:w-32 bg-[#2A0F5E] rounded-full h-1.5 mt-0.5">
-                    <div class="bg-[#A78BFA] h-1.5 rounded-full" style="width: 85%"></div> 
-                </div>
+
+        <div class="max-w-4xl mx-auto bg-[#3D1E8D] p-6 rounded-xl shadow-lg">
+            <div id="instructions" class="mb-6 text-center text-lg text-[#E8E1CF]">
+                <p><strong>Nível 1:</strong> Encontre 3 erros de ortografia e concordância no texto abaixo.</p>
             </div>
 
-            <a href="#" class="text-sm text-[#E8E1CF] hover:opacity-75 hidden sm:block">Sair</a>
-            <a href="../CONFIGURACOES/index.html" class="w-9 h-9 bg-[#2A0F5E] rounded-full flex items-center justify-center ring-2 ring-[#5A3E9D] hover:ring-white transition-all duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#E8E1CF" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                </svg>
-            </a>
-        </div>
-    </header>
-
-    <main
-        id="main-content"
-        class="bg-no-repeat bg-cover bg-center"
-        style="background-image: url('../fundo-temas.png');">
-        
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
-
-            <div class="max-w-4xl mx-auto mb-8 md:mb-12 text-center">
-                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight text-[#E8E1CF]">
-                    Corretor Fantasma 👻
-                </h1>
-                <p class="text-lg text-[#E8E1CF] opacity-90">Clique nas palavras ou trechos que você considera errados e tente corrigi-los!</p>
-                <hr class="border-t-2 border-[#E8E1CF] opacity-50 w-32 mx-auto mt-4">
+            <div id="textContainer" class="bg-[#2A0F5E] p-6 rounded-lg mb-8 text-xl leading-relaxed text-[#E8E1CF]">
             </div>
 
-            <div class="max-w-4xl mx-auto bg-[#3D1E8D] p-6 rounded-xl shadow-lg">
-                <div id="instructions" class="mb-6 text-center text-lg text-[#E8E1CF]">
-                    <p><strong>Nível 1:</strong> Encontre 3 erros de ortografia e concordância no texto abaixo.</p>
-                </div>
-
-                <div id="textContainer" class="bg-[#2A0F5E] p-6 rounded-lg mb-8 text-xl leading-relaxed text-[#E8E1CF]">
-                    </div>
-
-                <div class="flex flex-col items-center gap-4">
-                    <div id="feedback" class="p-4 rounded-lg text-center text-lg font-bold w-full" style="display: none;">
-                        </div>
-                    
-                    <button id="checkButton" 
-                            class="bg-[#A78BFA] text-[#2A0F5E] font-bold py-3 px-6 rounded-lg shadow-md hover:bg-[#C4B5FD] transition-all duration-200 ease-in-out">
-                        Verificar Todos os Erros
-                    </button>
-                    <button id="nextChallengeButton" 
-                            class="bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-green-700 transition-all duration-200 ease-in-out"
-                            style="display: none;">
-                        Próximo Desafio
-                    </button>
-                    <button id="resetButton" 
-                            class="bg-gray-600 text-[#E8E1CF] font-bold py-3 px-6 rounded-lg shadow-md hover:bg-gray-700 transition-all duration-200 ease-in-out">
-                        Reiniciar Desafio
-                    </button>
-                </div>
+            <div class="flex flex-col items-center gap-4">
+                <div id="feedback" class="p-4 rounded-lg text-center text-lg font-bold w-full" style="display: none;"></div>
+                
+                <button id="checkButton" 
+                        class="bg-[#A78BFA] text-[#2A0F5E] font-bold py-3 px-6 rounded-lg shadow-md hover:bg-[#C4B5FD] transition-all duration-200 ease-in-out">
+                    Verificar Todos os Erros
+                </button>
+                <button id="nextChallengeButton" 
+                        class="bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-green-700 transition-all duration-200 ease-in-out"
+                        style="display: none;">
+                    Próximo Desafio
+                </button>
+                <button id="resetButton" 
+                        class="bg-gray-600 text-[#E8E1CF] font-bold py-3 px-6 rounded-lg shadow-md hover:bg-gray-700 transition-all duration-200 ease-in-out">
+                    Reiniciar Desafio
+                </button>
             </div>
         </div>
-    </main>
+    </div>
+</main>
+{% endblock %}
 
-    <script>
-        const textContainer = document.getElementById('textContainer');
-        const instructions = document.getElementById('instructions');
-        const feedback = document.getElementById('feedback');
-        const checkButton = document.getElementById('checkButton');
-        const nextChallengeButton = document.getElementById('nextChallengeButton');
-        const resetButton = document.getElementById('resetButton');
 
-        // Pontos no cabeçalho (mantido do seu código original)
-        const currentPoints = 850; 
-        document.getElementById('currentPointsHeader').innerText = currentPoints;
+{% block scripts %}
+<script>
+    const textContainer = document.getElementById('textContainer');
+    const instructions = document.getElementById('instructions');
+    const feedback = document.getElementById('feedback');
+    const checkButton = document.getElementById('checkButton');
+    const nextChallengeButton = document.getElementById('nextChallengeButton');
+    const resetButton = document.getElementById('resetButton');
 
-        // --- Dados do Jogo (Desafios) ---
-        const challenges = [
-            {
-                id: 1,
-                prompt: "Encontre os erros de **ortografia e concordância** no parágrafo.",
-                text: "A sustentabilidade é um tema fundamental. Muitas pessôas não compreendem a *importancia* de ações sustentaveis para o futuro do *planeta*. É preciso que a sociedáde se mobilizem para proteger o meio ambiente.",
-                errors: [
-                    { word: "pessôas", correction: "pessoas", explanation: "Erro de ortografia: 'pessoas' se escreve com 'ss'." },
-                    { word: "importancia", correction: "importância", explanation: "Erro de acentuação: 'importância' tem acento agudo no 'a'." },
-                    { word: "sustentaveis", correction: "sustentáveis", explanation: "Erro de acentuação: 'sustentáveis' tem acento agudo no 'a'." },
-                    { word: "sociedáde", correction: "sociedade", explanation: "Erro de ortografia: 'sociedade' se escreve sem acento." },
-                    { word: "mobilizem", correction: "mobilize", explanation: "Erro de concordância verbal: 'a sociedade' (singular) mobiliza (singular)." }
-                ],
-                points: 100
-            },
-            {
-                id: 2,
-                prompt: "Identifique erros de **coesão e uso de conectivos**.",
-                text: "O Brasil é um país rico em diversidade cultural, *no entanto*, muitos desafios sociais persistem. A educação é um caminho para a mudança, *assim, pois*, é fundamental investir nela. *Mesmo assim*, a população precisa se engajar.",
-                errors: [
-                    { word: "no entanto", correction: "e", explanation: "O conectivo 'no entanto' indica oposição. Aqui, 'e' ou 'e, no entanto' seriam mais adequados para ligar ideias que se complementam, não se opõem diretamente nesse contexto inicial." },
-                    { word: "assim, pois", correction: "portanto", explanation: "Duplicidade de conectivos e redundância. 'Portanto' ou 'desse modo' já expressam a consequência." },
-                    { word: "Mesmo assim", correction: "Além disso", explanation: "O conectivo 'mesmo assim' indica concessão. 'Além disso' ou 'Ademais' indicam adição de ideias, o que se encaixa melhor no contexto." }
-                ],
-                points: 150
-            }
-            // Adicione mais desafios aqui, com diferentes tipos de erros
-        ];
+    // --- Lista de desafios ---
+const challenges = [
+    {
+        id: 1,
+        prompt: "Encontre os erros de <strong>ortografia e acentuação</strong> no parágrafo.",
+        text: "A sustentabilidade é um tema fundamental. Muitas pessôas não compreendem a *importancia de ações sustentaveis para o futuro do planeta. É preciso que a sociedáde se mobilizem para proteger o meio ambiente.",
+        errors: [
+            { word: "pessôas", correction: "pessoas", explanation: "Erro de ortografia: 'pessoas' se escreve com 'ss'." },
+            { word: "importancia", correction: "importância", explanation: "Erro de acentuação: 'importância' tem acento agudo no 'a'." },
+            { word: "sustentaveis", correction: "sustentáveis", explanation: "Erro de acentuação: 'sustentáveis' tem acento agudo no 'a'." },
+            { word: "sociedáde", correction: "sociedade", explanation: "Erro de ortografia: 'sociedade' se escreve sem acento." },
+            { word: "mobilizem", correction: "mobilize", explanation: "Erro de concordância verbal: 'a sociedade' (singular) mobiliza (singular)." }
+        ],
+        points: 5
+    },
+    {
+        id: 2,
+        prompt: "Identifique erros de <strong>coesão e uso de conectivos</strong> no parágrafo.",
+        text: "O Brasil é um país rico em diversidade cultural, *no entanto*, muitos desafios sociais persistem. A educação é um caminho para a mudança, *assim, pois*, é fundamental investir nela. *Mesmo assim*, a população precisa se engajar.",
+        errors: [
+            { word: "no entanto", correction: "e", explanation: "O conectivo 'no entanto' indica oposição. Aqui, 'e' conecta melhor as ideias sem criar contraste." },
+            { word: "assim, pois", correction: "portanto", explanation: "Erro de redundância: 'portanto' já expressa consequência, dispensando 'assim, pois'." },
+            { word: "Mesmo assim", correction: "Além disso", explanation: "O conectivo 'mesmo assim' indica concessão; 'Além disso' é mais adequado para adição de informação." }
+        ],
+        points: 10
+    },
+    {
+        id: 3,
+        prompt: "Corrija erros de <strong>pontuação e concordância</strong> no texto.",
+        text: "As crianças adoram brincar no parque mas, muitas vezes esquecem de levar os brinquedos de casa. O professor e os alunos, precisa manter a organização durante a aula.",
+        errors: [
+            { word: "mas,", correction: "mas", explanation: "Erro de pontuação: a vírgula após 'mas' não é necessária aqui." },
+            { word: "e os alunos,", correction: "e os alunos", explanation: "Erro de pontuação: a vírgula após 'alunos' quebra a frase desnecessariamente." },
+            { word: "precisa", correction: "precisam", explanation: "Erro de concordância verbal: 'professor e os alunos' (plural) exige 'precisam'." }
+        ],
+        points: 15
+    },
+    {
+        id: 4,
+        prompt: "Corrija erros de <strong>coerência, conectivos e ortografia</strong> no parágrafo.",
+        text: "Maria estudou bastante, portanto, ela não passou na prova. Ela não se sentiu desanimada, pelo contrario, estava motivada para tentar novamente. Mesmo assim ela estudou pouco para a segunda avaliação.",
+        errors: [
+            { word: "portanto,", correction: "mas", explanation: "Erro de coerência: 'portanto' indica consequência, mas o sentido da frase é contraste." },
+            { word: "pelo contrario", correction: "pelo contrário", explanation: "Erro de ortografia: 'contrário' deve ter acento." },
+            { word: "Mesmo assim ela", correction: "No entanto, ela", explanation: "Erro de conectivo: 'No entanto' expressa melhor o contraste nesta frase." }
+        ],
+        points: 20
+    }
+];
 
-        let currentChallengeIndex = 0;
-        let currentChallenge;
-        let clickedErrors = new Set(); // Armazena os erros já clicados (índice da palavra)
+    let currentChallengeIndex = 0;
+    let currentChallenge;
+    let clickedErrors = new Set();
 
-        function loadChallenge() {
-            if (currentChallengeIndex >= challenges.length) {
-                displayCompletionMessage();
-                return;
-            }
+function loadChallenge() {
+    if (currentChallengeIndex >= challenges.length) {
+        showCompletionMessage();
+        return;
+    }
 
-            currentChallenge = challenges[currentChallengeIndex];
-            instructions.innerHTML = `<p><strong>Nível ${currentChallenge.id}:</strong> ${currentChallenge.prompt}</p>`;
-            
-            textContainer.innerHTML = ''; // Limpa o container
-            feedback.style.display = 'none'; // Esconde o feedback
-            feedback.className = 'p-4 rounded-lg text-center text-lg font-bold w-full'; // Reseta a classe
-            nextChallengeButton.style.display = 'none'; // Esconde o botão de próximo
-            checkButton.style.display = 'block'; // Mostra o botão de verificar
-            clickedErrors.clear(); // Limpa os erros clicados
-            
-            // Renderiza o texto, marcando as palavras com erro
-            let displayText = currentChallenge.text;
-            
-            // Substitui os erros no texto por spans clicáveis
-            currentChallenge.errors.forEach((error, index) => {
-                // Usamos uma expressão regular com 'g' para substituir todas as ocorrências
-                // E uma função de substituição para garantir que apenas a palavra correta seja clicável
-                // e para manter o caso original da palavra se necessário.
-                const regex = new RegExp(`\\b${error.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}\\b`, 'gi');
-                displayText = displayText.replace(regex, (match) => {
-                    // Adiciona um data-index para identificar qual erro foi clicado
-                    return `<span class="error-word" data-error-index="${index}">${match}</span>`;
+    currentChallenge = challenges[currentChallengeIndex];
+    instructions.innerHTML = `<p><strong>Nível ${currentChallenge.id}:</strong> ${currentChallenge.prompt}</p>`;
+    textContainer.innerHTML = '';
+    feedback.style.display = 'none';
+    nextChallengeButton.style.display = 'none';
+    checkButton.style.display = 'block';
+    clickedErrors.clear();
+
+    let displayText = currentChallenge.text;
+
+    currentChallenge.errors.forEach((error, index) => {
+        // Escapa caracteres especiais do regex
+        const escapedWord = error.word.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        // Regex para encontrar a palavra, com ou sem asteriscos
+        const regex = new RegExp(`\\*?${escapedWord}\\*?`, 'gi');
+
+        displayText = displayText.replace(regex, match => {
+            // Remove asteriscos do display
+            const cleanMatch = match.replace(/\*/g, '');
+            return `<span class="error-word" data-error-index="${index}">${cleanMatch}</span>`;
+        });
+    });
+
+    textContainer.innerHTML = displayText;
+
+    document.querySelectorAll('.error-word').forEach(wordElement => {
+        wordElement.addEventListener('click', handleWordClick);
+    });
+}
+
+function handleWordClick(event) {
+    const clicked = event.target;
+    const errorIndex = parseInt(clicked.dataset.errorIndex);
+    const error = currentChallenge.errors[errorIndex];
+
+    if (!error) return;
+
+    if (!clickedErrors.has(errorIndex)) {
+        clickedErrors.add(errorIndex);
+        clicked.classList.add('corrected');
+        feedback.style.display = 'block';
+        feedback.className = 'mt-6 p-4 rounded-lg text-center text-lg font-bold bg-green-500 text-white';
+        feedback.innerHTML = `🎉 Erro encontrado!<br>Correção: "${error.correction}"<br><em>${error.explanation}</em>`;
+
+        // Atualiza o texto no span para a correção
+        clicked.innerText = error.correction;
+
+    } else {
+        feedback.style.display = 'block';
+        feedback.className = 'mt-6 p-4 rounded-lg text-center text-lg font-bold bg-blue-500 text-white';
+        feedback.innerText = 'Você já corrigiu este erro!';
+    }
+}
+
+    // ✅ CHECK & REDEEM POINTS
+    checkButton.addEventListener('click', async () => {
+        const totalErrors = currentChallenge.errors.length;
+        const found = clickedErrors.size;
+
+        if (found === totalErrors) {
+            feedback.style.display = 'block';
+            feedback.className = 'mt-6 p-4 rounded-lg text-center text-xl font-bold bg-green-500 text-white';
+            feedback.innerText = `🥳 Excelente! Você encontrou todos os ${totalErrors} erros! +${currentChallenge.points} XP`;
+
+            // 🔹 Envia pontos ao backend Flask
+            try {
+                const response = await fetch('/points/redeem', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({ points: currentChallenge.points })
                 });
-            });
-            textContainer.innerHTML = displayText;
-
-            // Adiciona listeners para cada palavra com erro
-            document.querySelectorAll('.error-word').forEach(wordElement => {
-                wordElement.addEventListener('click', handleWordClick);
-            });
-        }
-
-        function handleWordClick(event) {
-            const clickedElement = event.target;
-            const errorIndex = parseInt(clickedElement.dataset.errorIndex);
-            
-            // Verifica se a palavra clicada é um erro esperado para o desafio
-            const isCorrectError = currentChallenge.errors.some(error => {
-                // Podemos verificar se o texto da palavra clicada corresponde a um erro esperado
-                // ou se o 'data-error-index' mapeia para um erro real.
-                return clickedElement.innerText.toLowerCase() === error.word.toLowerCase() && currentChallenge.errors[errorIndex] === error;
-            });
-
-            if (isCorrectError) {
-                if (!clickedErrors.has(errorIndex)) {
-                    clickedErrors.add(errorIndex);
-                    clickedElement.classList.add('corrected');
-                    feedback.style.display = 'block';
-                    feedback.className = 'mt-6 p-4 rounded-lg text-center text-lg font-bold bg-green-500 text-white';
-                    feedback.innerHTML = `🎉 **Erro encontrado!**<br>Correção: "${currentChallenge.errors[errorIndex].correction}"<br><em>${currentChallenge.errors[errorIndex].explanation}</em>`;
-                    
-                    // Opcional: Substituir a palavra no texto pelo texto corrigido
-                    // clickedElement.innerText = currentChallenge.errors[errorIndex].correction;
-                } else {
-                    feedback.style.display = 'block';
-                    feedback.className = 'mt-6 p-4 rounded-lg text-center text-lg font-bold bg-blue-500 text-white';
-                    feedback.innerText = 'Você já encontrou este erro!';
+                if (!response.ok) {
+                    console.error('Erro ao enviar pontos:', await response.text());
                 }
-            } else {
-                feedback.style.display = 'block';
-                feedback.className = 'mt-6 p-4 rounded-lg text-center text-lg font-bold bg-red-500 text-white';
-                feedback.innerText = 'Hmm, esta palavra parece correta. Continue procurando!';
+            } catch (err) {
+                console.error('Erro ao comunicar com o servidor:', err);
             }
-        }
 
-        checkButton.addEventListener('click', () => {
-            const totalErrors = currentChallenge.errors.length;
-            if (clickedErrors.size === totalErrors) {
-                feedback.style.display = 'block';
-                feedback.className = 'mt-6 p-4 rounded-lg text-center text-xl font-bold bg-green-500 text-white';
-                feedback.innerText = `🥳 Excelente! Você encontrou todos os ${totalErrors} erros deste desafio! +${currentChallenge.points} XP`;
-                // currentPoints += currentChallenge.points; // Adicionar pontos ao usuário
-                // document.getElementById('currentPointsHeader').innerText = currentPoints;
-                checkButton.style.display = 'none';
-                nextChallengeButton.style.display = 'block';
-            } else {
-                feedback.style.display = 'block';
-                feedback.className = 'mt-6 p-4 rounded-lg text-center text-xl font-bold bg-red-500 text-white';
-                feedback.innerText = `Você encontrou ${clickedErrors.size} de ${totalErrors} erros. Continue procurando!`;
-            }
-        });
-
-        nextChallengeButton.addEventListener('click', () => {
-            currentChallengeIndex++;
-            loadChallenge();
-        });
-
-        resetButton.addEventListener('click', () => {
-            loadChallenge(); // Recarrega o desafio atual
-        });
-
-        function displayCompletionMessage() {
-            textContainer.innerHTML = `<p class="text-3xl font-bold text-center">🎉 Parabéns! Você é um verdadeiro Corretor Fantasma e encontrou todos os erros!</p>`;
-            instructions.innerHTML = '';
-            feedback.style.display = 'none';
             checkButton.style.display = 'none';
-            nextChallengeButton.style.display = 'none';
-            resetButton.style.display = 'none';
-        }
+            nextChallengeButton.style.display = 'block';
 
-        // Carrega o primeiro desafio ao carregar a página
+        } else {
+            feedback.style.display = 'block';
+            feedback.className = 'mt-6 p-4 rounded-lg text-center text-xl font-bold bg-red-500 text-white';
+            feedback.innerText = `Você encontrou ${found} de ${totalErrors} erros. Continue procurando!`;
+        }
+    });
+
+    nextChallengeButton.addEventListener('click', () => {
+        currentChallengeIndex++;
         loadChallenge();
-    </script>
-</body>
-</html>
+    });
+
+    resetButton.addEventListener('click', () => loadChallenge());
+
+    function showCompletionMessage() {
+        textContainer.innerHTML = `<p class="text-3xl font-bold text-center">🎉 Parabéns! Você encontrou todos os erros e completou o jogo!</p>`;
+        instructions.innerHTML = '';
+        feedback.style.display = 'none';
+        checkButton.style.display = 'none';
+        nextChallengeButton.style.display = 'none';
+        resetButton.style.display = 'none';
+
+        // Redireciona com delay
+        setTimeout(() => {
+            window.location.href = '/games';
+        }, 2000);
+    }
+
+    loadChallenge();
+</script>
+
+<style>
+    body { overflow-y: hidden; }
+    #main-content { height: calc(100vh - 5rem); overflow-y: auto; }
+
+.error-word {
+    cursor: pointer;
+    text-decoration: none; /* sem underline */
+    font-weight: normal;    /* sem negrito */
+    color: inherit;         /* mesma cor do texto */
+}
+
+
+.error-word.corrected {
+    color: #22C55E;         /* verde para indicar correção */
+    font-weight: bold;       /* opcional */
+    text-decoration: none;
+}
+
+</style>
+{% endblock %}

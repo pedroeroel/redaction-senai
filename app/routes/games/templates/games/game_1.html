@@ -1,271 +1,221 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-    <title>Duelo de Conectivos - Redaction</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            overflow-y: hidden; 
-        }
-        #main-content {
-            height: calc(100vh - 5rem); /* 5rem = altura do header (h-20) */
-            overflow-y: auto; 
-        }
-        /* Estilos para os botões de conectivo */
-        .connective-button {
-            @apply bg-[#A78BFA] text-[#2A0F5E] font-bold py-3 px-6 rounded-lg shadow-md hover:bg-[#C4B5FD] transition-all duration-200 ease-in-out cursor-pointer;
-        }
-        .connective-button.selected {
-            @apply ring-4 ring-[#E8E1CF]; /* Anel branco para conectivo selecionado */
-        }
-        .connective-button.correct {
-            @apply bg-green-500 text-white;
-        }
-        .connective-button.incorrect {
-            @apply bg-red-500 text-white;
-        }
-    </style>
-</head>
-<body class="bg-[#2A0F5E] text-[#E8E1CF] font-sans">
+{% extends 'layout.html' %}
+{% block pagename %}Duelo de Conectivos{% endblock %}
+{% block pagetext %}Escolha os conectivos certos para vencer o duelo!{% endblock %}
+{% set header = True %}
+{% set footer = True %}
+{% set main = True %}
 
-    <header class="bg-[#3D1E8D] h-20 shadow-md flex justify-between items-center px-6 sm:px-8 lg:px-12">
-        <div class="flex items-center space-x-4 md:space-x-5">
-            <a href="./index.html" class="text-[#E8E1CF] hover:opacity-75"> 
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
-                </svg>
-            </a>
-            <img src="../logo.png" alt="Redaction" class="h-10 sm:h-12">
+{% block content %}
+<main
+    id="main-content"
+    class="bg-no-repeat bg-cover bg-center"
+    style="background-image: url('../fundo-temas.png');">
+
+    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
+
+        <div class="max-w-4xl mx-auto mb-8 md:mb-12 text-center">
+            <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight text-[#E8E1CF]">
+                Duelo de Conectivos ⚔️
+            </h1>
+            <p class="text-lg text-[#E8E1CF] opacity-90">
+                Escolha o conectivo mais adequado para completar cada frase!
+            </p>
+            <hr class="border-t-2 border-[#E8E1CF] opacity-50 w-32 mx-auto mt-4">
         </div>
-        
-        <div class="flex items-center space-x-4 sm:space-x-6">
-            <div class="flex flex-col items-end text-right">
-                <p class="text-sm sm:text-base font-semibold text-[#E8E1CF] whitespace-nowrap">
-                    Pontos: <span id="currentPointsHeader">850</span> XP ✨
-                </p>
-                <div class="w-24 sm:w-32 bg-[#2A0F5E] rounded-full h-1.5 mt-0.5">
-                    <div class="bg-[#A78BFA] h-1.5 rounded-full" style="width: 85%"></div> 
-                </div>
+
+        <div class="max-w-4xl mx-auto bg-[#3D1E8D] p-6 rounded-xl shadow-lg">
+            <div id="instructions" class="mb-6 text-center text-lg text-[#E8E1CF]">
+                <p><strong>Nível 1:</strong> Complete corretamente as frases com os conectivos adequados.</p>
             </div>
 
-            <a href="#" class="text-sm text-[#E8E1CF] hover:opacity-75 hidden sm:block">Sair</a>
-            <a href="../CONFIGURACOES/index.html" class="w-9 h-9 bg-[#2A0F5E] rounded-full flex items-center justify-center ring-2 ring-[#5A3E9D] hover:ring-white transition-all duration-200">
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#E8E1CF" class="w-6 h-6">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
-                </svg>
-            </a>
-        </div>
-    </header>
-
-    <main
-        id="main-content"
-        class="bg-no-repeat bg-cover bg-center"
-        style="background-image: url('../fundo-temas.png');">
-        
-        <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
-
-            <div class="max-w-4xl mx-auto mb-8 md:mb-12 text-center">
-                <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight text-[#E8E1CF]">
-                    Duelo de Conectivos ⚔️
-                </h1>
-                <p class="text-lg text-[#E8E1CF] opacity-90">Escolha o conectivo que melhor une as duas partes da frase.</p>
-                <hr class="border-t-2 border-[#E8E1CF] opacity-50 w-32 mx-auto mt-4">
+            <div id="questionsContainer" class="bg-[#2A0F5E] p-6 rounded-lg mb-8 text-xl leading-relaxed text-[#E8E1CF]">
             </div>
 
-            <div class="max-w-4xl mx-auto bg-[#3D1E8D] p-6 rounded-xl shadow-lg">
-                <div id="instructions" class="mb-6 text-center text-lg text-[#E8E1CF]">
-                    <p><strong>Desafio 1:</strong> Qual conectivo estabelece uma relação de <strong>causa e consequência</strong>?</p>
-                </div>
+            <div class="flex flex-col items-center gap-4">
+                <div id="feedback" class="p-4 rounded-lg text-center text-lg font-bold w-full" style="display: none;"></div>
 
-                <div class="flex flex-col md:flex-row items-center justify-center gap-4 text-2xl font-semibold mb-8 text-[#E8E1CF] text-center">
-                    <span id="phrasePart1" class="bg-[#2A0F5E] p-4 rounded-lg flex-1">O governo implementou novas políticas de incentivo à leitura.</span>
-                    <span class="text-4xl text-[#E8E1CF] font-bold">[...]</span>
-                    <span id="phrasePart2" class="bg-[#2A0F5E] p-4 rounded-lg flex-1">A taxa de analfabetismo funcional diminuiu consideravelmente.</span>
-                </div>
-
-                <div id="connectiveOptions" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mb-8">
-                    </div>
-
-                <div class="flex justify-center gap-4">
-                    <button id="checkButton" 
-                            class="bg-[#A78BFA] text-[#2A0F5E] font-bold py-3 px-6 rounded-lg shadow-md hover:bg-[#C4B5FD] transition-all duration-200 ease-in-out">
-                        Verificar Resposta
-                    </button>
-                    <button id="nextChallengeButton" 
-                            class="bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-green-700 transition-all duration-200 ease-in-out"
-                            style="display: none;">
-                        Próximo Desafio
-                    </button>
-                    <button id="resetButton" 
-                            class="bg-gray-600 text-[#E8E1CF] font-bold py-3 px-6 rounded-lg shadow-md hover:bg-gray-700 transition-all duration-200 ease-in-out">
-                        Reiniciar Desafio
-                    </button>
-                </div>
-
-                <div id="feedback" class="mt-6 p-4 rounded-lg text-center text-lg font-bold" style="display: none;">
-                    </div>
+                <button id="checkButton"
+                        class="bg-[#A78BFA] text-[#2A0F5E] font-bold py-3 px-6 rounded-lg shadow-md hover:bg-[#C4B5FD] transition-all duration-200 ease-in-out">
+                    Verificar Respostas
+                </button>
+                <button id="nextChallengeButton"
+                        class="bg-green-600 text-white font-bold py-3 px-6 rounded-lg shadow-md hover:bg-green-700 transition-all duration-200 ease-in-out"
+                        style="display: none;">
+                    Próximo Nível
+                </button>
+                <button id="resetButton"
+                        class="bg-gray-600 text-[#E8E1CF] font-bold py-3 px-6 rounded-lg shadow-md hover:bg-gray-700 transition-all duration-200 ease-in-out">
+                    Reiniciar Desafio
+                </button>
             </div>
         </div>
-    </main>
+    </div>
+</main>
+{% endblock %}
 
-    <script>
-        const phrasePart1 = document.getElementById('phrasePart1');
-        const phrasePart2 = document.getElementById('phrasePart2');
-        const connectiveOptions = document.getElementById('connectiveOptions');
-        const instructions = document.getElementById('instructions');
-        const feedback = document.getElementById('feedback');
-        const checkButton = document.getElementById('checkButton');
-        const nextChallengeButton = document.getElementById('nextChallengeButton');
-        const resetButton = document.getElementById('resetButton');
+{% block scripts %}
+<script>
+    const questionsContainer = document.getElementById('questionsContainer');
+    const instructions = document.getElementById('instructions');
+    const feedback = document.getElementById('feedback');
+    const checkButton = document.getElementById('checkButton');
+    const nextChallengeButton = document.getElementById('nextChallengeButton');
+    const resetButton = document.getElementById('resetButton');
 
-        // Pontos no cabeçalho (mantido do seu código original)
-        const currentPointsHeader = document.getElementById('currentPointsHeader');
-        let userPoints = parseInt(currentPointsHeader.innerText); 
+    const challenges = [
+        {
+            id: 1,
+            prompt: "Complete as frases com o conectivo mais adequado.",
+            questions: [
+                { sentence: "Eu queria sair, ______ estava chovendo.", options: ["mas", "portanto", "logo"], correct: "mas" },
+                { sentence: "Estude bastante, ______ terá bons resultados.", options: ["contudo", "logo", "embora"], correct: "logo" },
+                { sentence: "Não fomos ao parque, ______ começou a chover.", options: ["porque", "portanto", "porém"], correct: "porque" }
+            ],
+            points: 5
+        },
+        {
+            id: 2,
+            prompt: "Escolha os conectivos corretos para expressar causa, consequência e oposição.",
+            questions: [
+                { sentence: "Ele estava cansado, ______ continuou trabalhando.", options: ["mas", "portanto", "logo"], correct: "mas" },
+                { sentence: "Os alunos se dedicaram muito, ______ conquistaram boas notas.", options: ["porque", "embora", "portanto"], correct: "portanto" },
+                { sentence: "Não jogamos futebol, ______ estava chovendo.", options: ["pois", "entretanto", "logo"], correct: "pois" }
+            ],
+            points: 10
+        },
+        {
+            id: 3,
+            prompt: "Escolha o conectivo que melhor mantém a coesão e o sentido lógico das frases.",
+            questions: [
+                { sentence: "Ela não estudou, ______ passou na prova.", options: ["embora", "pois", "portanto"], correct: "embora" },
+                { sentence: "Farei o trabalho hoje, ______ amanhã não terei tempo.", options: ["porque", "contudo", "além disso"], correct: "porque" },
+                { sentence: "Gosto de ler romances, ______ também aprecio biografias.", options: ["mas", "portanto", "além disso"], correct: "além disso" }
+            ],
+            points: 15
+        },
+        {
+            id: 4,
+            prompt: "Complete com o conectivo adequado considerando o tipo de relação semântica (adição, explicação, conclusão, concessão).",
+            questions: [
+                { sentence: "O time jogou bem, ______ perdeu a partida.", options: ["contudo", "portanto", "logo"], correct: "contudo" },
+                { sentence: "As estradas estavam perigosas, ______ chovia sem parar.", options: ["pois", "embora", "logo"], correct: "pois" },
+                { sentence: "Terminamos cedo, ______ pudemos descansar mais.", options: ["assim", "porém", "embora"], correct: "assim" }
+            ],
+            points: 20
+        },
+        {
+            id: 5,
+            prompt: "Desafio final: conectivos em contextos complexos e sutis.",
+            questions: [
+                { sentence: "A empresa obteve lucro, ______ reduziu gastos e aumentou as vendas.", options: ["porque", "pois", "já que"], correct: "porque" },
+                { sentence: "Ele foi promovido, ______ ainda enfrenta muitos desafios.", options: ["embora", "portanto", "assim"], correct: "embora" },
+                { sentence: "O trânsito estava intenso, ______ chegamos a tempo.", options: ["mesmo assim", "portanto", "por isso"], correct: "mesmo assim" }
+            ],
+            points: 20
+        }
+    ];
 
-        // --- Dados do Jogo (Desafios) ---
-        const challenges = [
-            {
-                id: 1,
-                prompt: "Qual conectivo estabelece uma relação de **causa e consequência**?",
-                part1: "O governo implementou novas políticas de incentivo à leitura,",
-                part2: "a taxa de analfabetismo funcional diminuiu consideravelmente.",
-                correctConnective: "portanto",
-                options: ["entretanto", "além disso", "portanto", "contudo"],
-                explanation: " 'Portanto' introduz uma conclusão ou consequência lógica da ideia anterior."
-            },
-            {
-                id: 2,
-                prompt: "Escolha o conectivo que indica **oposição** ou **contraste**.",
-                part1: "Apesar de todos os esforços da equipe,",
-                part2: "o projeto não alcançou os resultados esperados.",
-                correctConnective: "no entanto",
-                options: ["assim", "logo", "no entanto", "desse modo"],
-                explanation: " 'No entanto' expressa uma ideia de oposição ou ressalva em relação ao que foi dito anteriormente."
-            },
-            {
-                id: 3,
-                prompt: "Qual conectivo sugere **adição** de ideias?",
-                part1: "O estudo da história é fundamental para compreender o presente;",
-                part2: "permite antever desafios futuros.",
-                correctConnective: "ademais",
-                options: ["porque", "portanto", "porém", "ademais"],
-                explanation: " 'Ademais' ou 'Além disso' são usados para adicionar uma nova informação ou argumento."
-            }
-            // Adicione mais desafios aqui
-        ];
+    let currentChallengeIndex = 0;
+    let currentChallenge;
+    let totalPoints = 0;
 
-        let currentChallengeIndex = 0;
-        let selectedConnective = null;
-
-        function loadChallenge() {
-            if (currentChallengeIndex >= challenges.length) {
-                displayCompletionMessage();
-                return;
-            }
-
-            currentChallenge = challenges[currentChallengeIndex];
-            instructions.innerHTML = `<p><strong>Desafio ${currentChallenge.id}:</strong> ${currentChallenge.prompt}</p>`;
-            phrasePart1.innerText = currentChallenge.part1;
-            phrasePart2.innerText = currentChallenge.part2;
-            
-            // Limpa opções e feedback
-            connectiveOptions.innerHTML = '';
-            feedback.style.display = 'none';
-            feedback.className = 'mt-6 p-4 rounded-lg text-center text-lg font-bold'; // Reseta a classe
-            nextChallengeButton.style.display = 'none';
-            checkButton.style.display = 'block';
-            selectedConnective = null;
-
-            // Renderiza as opções de conectivos
-            const shuffledOptions = [...currentChallenge.options].sort(() => Math.random() - 0.5); // Embaralha
-            shuffledOptions.forEach(connective => {
-                const button = document.createElement('button');
-                button.classList.add('connective-button');
-                button.innerText = connective;
-                button.addEventListener('click', () => selectConnective(button, connective));
-                connectiveOptions.appendChild(button);
-            });
+    function loadChallenge() {
+        if (currentChallengeIndex >= challenges.length) {
+            showCompletionMessage();
+            return;
         }
 
-        function selectConnective(button, connective) {
-            // Remove a seleção de todos os botões
-            document.querySelectorAll('.connective-button').forEach(btn => {
-                btn.classList.remove('selected');
-                btn.classList.remove('correct'); // Limpa cores de verificação anteriores
-                btn.classList.remove('incorrect');
-            });
+        currentChallenge = challenges[currentChallengeIndex];
+        instructions.innerHTML = `<p><strong>Nível ${currentChallenge.id}:</strong> ${currentChallenge.prompt}</p>`;
+        feedback.style.display = 'none';
+        nextChallengeButton.style.display = 'none';
+        checkButton.style.display = 'block';
+        questionsContainer.innerHTML = '';
 
-            // Adiciona a seleção ao botão clicado
-            button.classList.add('selected');
-            selectedConnective = connective;
-        }
+        currentChallenge.questions.forEach((q, index) => {
+            const optionsHTML = q.options.map(opt => `
+                <label class="inline-flex items-center gap-2 mb-2 cursor-pointer">
+                    <input type="radio" name="q${index}" value="${opt}" class="accent-[#A78BFA]">
+                    <span>${opt}</span>
+                </label>
+            `).join('<br>');
 
-        checkButton.addEventListener('click', () => {
-            if (!selectedConnective) {
-                feedback.style.display = 'block';
-                feedback.className = 'mt-6 p-4 rounded-lg text-center text-lg font-bold bg-yellow-500 text-black';
-                feedback.innerText = 'Por favor, selecione um conectivo antes de verificar.';
-                return;
+            const questionHTML = `
+                <div class="mb-6">
+                    <p class="mb-3"><strong>${index + 1}.</strong> ${q.sentence.replace('______', '<span class="underline underline-offset-4 decoration-wavy decoration-[#EF4444]">______</span>')}</p>
+                    <div>${optionsHTML}</div>
+                </div>
+            `;
+            questionsContainer.insertAdjacentHTML('beforeend', questionHTML);
+        });
+    }
+
+    checkButton.addEventListener('click', async () => {
+        const total = currentChallenge.questions.length;
+        let correct = 0;
+
+        currentChallenge.questions.forEach((q, index) => {
+            const selected = document.querySelector(`input[name="q${index}"]:checked`);
+            if (selected && selected.value === q.correct) correct++;
+        });
+
+        feedback.style.display = 'block';
+
+        const pointsEarned = Math.floor((correct / total) * currentChallenge.points);
+        totalPoints += pointsEarned;
+
+        if (correct === total) {
+            feedback.className = 'mt-6 p-4 rounded-lg text-center text-xl font-bold bg-green-500 text-white';
+            feedback.innerText = `🎉 Parabéns! Você acertou todas! +${currentChallenge.points} XP (Total: ${totalPoints} XP)`;
+
+            try {
+                await fetch('/points/redeem', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams({ points: totalPoints })
+                });
+            } catch (err) {
+                console.error('Erro ao comunicar com o servidor:', err);
             }
 
-            // Marca o botão selecionado com feedback visual
-            const selectedButton = document.querySelector('.connective-button.selected');
-
-            if (selectedConnective === currentChallenge.correctConnective) {
-                userPoints += 50; // Exemplo de pontos
-                currentPointsHeader.innerText = userPoints;
-
-                feedback.style.display = 'block';
-                feedback.className = 'mt-6 p-4 rounded-lg text-center text-xl font-bold bg-green-500 text-white';
-                feedback.innerHTML = `🥳 **Correto!**<br> ${currentChallenge.explanation} +50 XP`;
-                selectedButton.classList.add('correct');
-                
-                checkButton.style.display = 'none';
-                nextChallengeButton.style.display = 'block';
-            } else {
-                feedback.style.display = 'block';
-                feedback.className = 'mt-6 p-4 rounded-lg text-center text-xl font-bold bg-red-500 text-white';
-                feedback.innerHTML = `❌ **Incorreto.**<br> ${currentChallenge.explanation}`;
-                selectedButton.classList.add('incorrect');
-                // Opcional: Mostrar qual seria o correto, ou permitir nova tentativa
-            }
-            // Desabilita os botões para evitar mais cliques até o próximo desafio/reset
-            document.querySelectorAll('.connective-button').forEach(btn => btn.disabled = true);
-        });
-
-        nextChallengeButton.addEventListener('click', () => {
-            currentChallengeIndex++;
-            loadChallenge();
-            // Reabilita os botões para o próximo desafio
-            document.querySelectorAll('.connective-button').forEach(btn => btn.disabled = false);
-        });
-
-        resetButton.addEventListener('click', () => {
-            loadChallenge(); // Recarrega o desafio atual
-            // Reabilita os botões
-            document.querySelectorAll('.connective-button').forEach(btn => btn.disabled = false);
-        });
-
-        function displayCompletionMessage() {
-            const finalMessage = document.createElement('div');
-            finalMessage.className = 'text-3xl font-bold text-center text-[#E8E1CF]';
-            finalMessage.innerHTML = `<p>🎉 Parabéns! Você dominou o uso dos conectivos!</p><p class="mt-4">Sua pontuação final: ${userPoints} XP</p>`;
-            
-            // Limpa o conteúdo principal e adiciona a mensagem final
-            document.querySelector('.max-w-4xl.mx-auto.bg-\\[\\#3D1E8D\\]').innerHTML = ''; 
-            document.querySelector('.max-w-4xl.mx-auto.bg-\\[\\#3D1E8D\\]').appendChild(finalMessage);
-
-            instructions.style.display = 'none';
-            feedback.style.display = 'none';
             checkButton.style.display = 'none';
-            nextChallengeButton.style.display = 'none';
-            resetButton.style.display = 'none';
+            nextChallengeButton.style.display = 'block';
+        } else {
+            feedback.className = 'mt-6 p-4 rounded-lg text-center text-xl font-bold bg-red-500 text-white';
+            feedback.innerText = `Você acertou ${correct} de ${total}. Pontos ganhos neste nível: ${pointsEarned} XP (Total: ${totalPoints} XP). Tente novamente!`;
         }
+    });
 
-        // Carrega o primeiro desafio ao carregar a página
+    nextChallengeButton.addEventListener('click', () => {
+        currentChallengeIndex++;
         loadChallenge();
-    </script>
-</body>
-</html>
+    });
+
+    resetButton.addEventListener('click', () => {
+        totalPoints = 0;
+        currentChallengeIndex = 0;
+        loadChallenge();
+    });
+
+    function showCompletionMessage() {
+        questionsContainer.innerHTML = `<p class="text-3xl font-bold text-center">🏆 Você completou o Duelo de Conectivos! Total de XP ganho: ${totalPoints}</p>`;
+        instructions.innerHTML = '';
+        feedback.style.display = 'none';
+        checkButton.style.display = 'none';
+        nextChallengeButton.style.display = 'none';
+        resetButton.style.display = 'none';
+
+        setTimeout(() => {
+            window.location.href = '/games';
+        }, 3000);
+    }
+
+    loadChallenge();
+</script>
+
+<style>
+    body { overflow-y: hidden; }
+    #main-content { height: calc(100vh - 5rem); overflow-y: auto; }
+    input[type="radio"] { transform: scale(1.2); }
+</style>
+{% endblock %}
