@@ -10,7 +10,7 @@ def index():
         session['score'] = get_score(session['user_id'])
         return redirect('/home')
     else:
-        return render_template('index.html', session=session, score=session['score'])
+        return render_template('index.html', session=session)
     
 @main.route('/home', methods=['GET'])
 def home():
