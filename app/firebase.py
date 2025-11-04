@@ -149,3 +149,51 @@ def update_score(user_id, points):
 
     return
 
+def get_classes_by_user(user_id):
+    user_id = str(user_id)
+    doc_ref = db.collection('register').document(user_id).collection('classes')
+    docs = doc_ref.stream()
+    classes = []
+    for doc in docs:
+        class_data = doc.to_dict()
+        class_data['id'] = doc.id
+        classes.append(class_data)
+    return classes
+
+def get_all_classes():
+    classes_ref = db.collection('classes')
+    docs = classes_ref.stream()
+    classes = []
+    for doc in docs:
+        class_data = doc.to_dict()
+        class_data['id'] = doc.id
+        classes.append(class_data)
+    return classes
+
+def add_class_to_user(user_id, class_id, class_data):
+    user_id = str(user_id)
+    class_id = str(class_id)
+    doc_ref = db.collection('register').document(user_id).collection('classes').document(class_id)
+    doc_ref.set(class_data)
+    return print(f"Class {class_id} added to user {user_id}.")
+
+def get_class_content(class_id):
+    class_id = str(class_id)
+    doc_ref = db.collection('classes').document(class_id)
+    doc = doc_ref.get()
+    if doc.exists:
+        return doc.to_dict()
+    else:
+        return None
+    
+def register_class(class_data):
+    try:
+        classes_ref = db.collection('classes')
+        new_class_ref = classes_ref.document()
+        class_data['id'] = new_class_ref.id
+        new_class_ref.set(class_data)
+        print(f"Class '{class_data['title']}' registered with ID: {new_class_ref.id}")
+        return True
+    except Exception as e:
+        print(f"Error registering class '{class_data.get('title', 'N/A')}': {e}")
+        return False

@@ -1,0 +1,112 @@
+{% extends "layout.html" %}
+{% set header = True %}
+{% set footer = True %}
+{% set main = True %}
+
+{% block pagename %}{{ class_content.title }}{% endblock %}
+{% block pagetext %}Mini-Aula Interativa{% endblock %}
+
+{% block content %}
+<main class="min-h-screen bg-[#2A0F5E] text-[#E8E1CF]">
+    <div class="container mx-auto px-6 py-10 md:py-16">
+
+        <!-- Header -->
+        <div class="mb-10 text-center">
+            <h1 class="text-4xl font-bold mb-3">{{ class_content.title }}</h1>
+            <p class="text-lg opacity-90">{{ class_content.description }}</p>
+            <div class="flex justify-center gap-4 mt-3 text-sm opacity-75">
+                <span>🕒 {{ class_content.duration }}</span>
+                <span>🎯 {{ class_content.level }}</span>
+                <span>📚 {{ class_content.category }}</span>
+            </div>
+        </div>
+
+        <!-- Introdução -->
+        <section class="bg-[#3D1E8D] p-6 sm:p-8 rounded-2xl shadow-xl mb-10">
+            <h2 class="text-2xl font-semibold mb-3 text-[#A78BFA]">Introdução 🌟</h2>
+            <p class="opacity-90 leading-relaxed">{{ class_content.content.intro }}</p>
+        </section>
+
+        <!-- Tópicos -->
+        <section class="bg-[#3D1E8D] p-6 sm:p-8 roundeda-2xl shadow-xl mb-10">
+            <h2 class="text-2xl font-semibold mb-3 text-[#A78BFA]">Tópicos da Aula 🧩</h2>
+            <ul class="list-disc list-inside space-y-2">
+                {% for topic in class_content.content.topics %}
+                <li>{{ topic }}</li>
+                {% endfor %}
+            </ul>
+        </section>
+
+        <!-- Atividade -->
+        <section class="bg-[#3D1E8D] p-6 sm:p-8 rounded-2xl shadow-xl mb-10">
+            <h2 class="text-2xl font-semibold mb-3 text-[#A78BFA]">Desafio Interativo 🎯</h2>
+            <p class="mb-4">{{ class_content.content.activity.question }}</p>
+
+            <form id="quiz-form" class="space-y-2">
+                {% set i = 0 %}
+                {% for value in class_content.content.activity.options %}
+                
+                <label class="block bg-[#5A3E9D] p-3 rounded-lg cursor-pointer hover:bg-[#7254B4] transition-colors">
+                    <input type="radio" name="resposta" value="{{ i }}" class="mr-2 accent-[#A78BFA]">
+                    <span>{{ value }}</span>
+                </label>
+                {% set i = i + 1 %}
+                {% endfor %}
+                <button type="submit"
+                        class="mt-4 px-6 py-2 bg-[#A78BFA] text-[#2A0F5E] font-bold rounded-full hover:brightness-110 transition-all duration-200">
+                    Responder
+                </button>
+                <div id="quiz-feedback" class="mt-4 hidden p-3 rounded-lg"></div>
+            </form>
+        </section>
+
+        <!-- Materiais Extras -->
+        <section class="bg-[#3D1E8D] p-6 sm:p-8 rounded-2xl shadow-xl">
+            <h2 class="text-2xl font-semibold mb-3 text-[#A78BFA]">Pra Ir Além! 🚀</h2>
+
+            <ul class="space-y-3 mb-4">
+                {% for video in class_content.content.extra.videos %}
+                <li>
+                    <a href="{{ video.url }}" target="_blank" class="underline hover:text-[#A78BFA]">
+                        🎬 {{ video.title }}
+                    </a>
+                </li>
+                {% endfor %}
+            </ul>
+
+            <p class="italic opacity-90">{{ class_content.content.extra.challenge }}</p>
+        </section>
+
+        <div class="text-center mt-10">
+            <button
+                class="px-10 py-4 bg-[#A78BFA] text-[#2A0F5E] text-lg font-bold rounded-full shadow-lg hover:bg-white hover:text-[#2A0F5E] transition-all duration-300 transform hover:scale-105">
+                Concluir Aula e Ganhar XP! ✨
+            </button>
+        </div>
+    </div>
+</main>
+
+<script>
+    const correctAnswer = "{{ class_content.content.activity.correct_answer }}";
+    const explanation = "{{ class_content.content.activity.explanation }}";
+    const feedback = document.getElementById("quiz-feedback");
+
+    document.getElementById("quiz-form").addEventListener("submit", function (e) {
+        e.preventDefault();
+        const selected = document.querySelector('input[name="resposta"]:checked');
+        if (!selected) {
+            feedback.className = "mt-4 p-3 rounded-lg bg-yellow-500";
+            feedback.innerText = "Por favor, selecione uma opção!";
+            return;
+        }
+
+        if (selected.value === correctAnswer) {
+            feedback.className = "mt-4 p-3 rounded-lg bg-green-500 text-[#E8E1CF]";
+            feedback.innerHTML = "✅ Correto! " + explanation;
+        } else {
+            feedback.className = "mt-4 p-3 rounded-lg bg-red-500 text-[#E8E1CF]";
+            feedback.innerHTML = "❌ Quase lá! " + explanation;
+        }
+    });
+</script>
+{% endblock %}
