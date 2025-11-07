@@ -35,31 +35,48 @@ def interactive_classes():
     return render_template('classes.html', classes=formatted_classes)
 
 
-@classes.route('/interactive-classes/<int:class_id>', methods=['GET'])
+@classes.route('/interactive-classes/<string:class_id>', methods=['GET'])
 def interactive_class(class_id):
     if not session:
         return redirect('/login')
 
     class_content = get_class_content(class_id)
+    print(f"Fetched class content for class {class_id}: {class_content}")
     
     if not class_content:
         return "Class not found", 404
 
+    # ✅ Correct indentation starts here
     formatted_content = {
         "id": class_content.get("id"),
         "title": class_content.get("title"),
         "description": class_content.get("description"),
         "duration": class_content.get("duration"),
+        "points": class_content.get("points"),
         "status": class_content.get("status"),
         "category": class_content.get("category"),
         "level": class_content.get("level"),
-        "thumbnail": class_content.get("thumbnail"),
-        "content": {
-            "intro": class_content.get("content", {}).get("intro"),
-            "topics": class_content.get("content", {}).get("topics", []),
-            "activity": class_content.get("content", {}).get("activity", {}),
-            "extra": class_content.get("content", {}).get("extra", {})
-        }
+        "thumbnail": class_content.get("thumbnail", ""),
+        "topics": []
     }
+
+    topics = class_content.get("topics", [])
+    for topic in topics:
+        topic_dict = {
+            "title": topic.get("title"),
+            "paragraphs": topic.get("content", {}).get("paragraphs", []),
+            "tip": topic.get("content", {}).get("tip"),
+            "list_items": topic.get("content", {}).get("list_items", []),
+            "question": topic.get("content", {}).get("question"),
+            "options": topic.get("content", {}).get("options"),
+            "correct_answer": topic.get("content", {}).get("correct_answer"),
+            "correct_feedback": topic.get("content", {}).get("correct_feedback"),
+            "wrong_feedback": topic.get("content", {}).get("wrong_feedback"),
+            "materials": topic.get("content", {}).get("materials", []),
+            "challenge": topic.get("content", {}).get("challenge"),
+        }
+        formatted_content["topics"].append(topic_dict)
+
+    print(f"Formatted class content for rendering: {formatted_content}")
 
     return render_template('class.html', class_content=formatted_content)
