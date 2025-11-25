@@ -1,134 +1,124 @@
 {% extends 'layout.html' %}
 {% block pagename %}Detalhes da Redação{% endblock %}
 {% block pagetext %}Análise completa da sua redação{% endblock %}
+{% set main = True %}
 {% set header = True %}
 {% set footer = True %}
-{% set main = True %}
 
 {% block content %}
-<section class="max-w-4xl mx-auto py-10 px-4">
-    
-    <div class="flex justify-between items-center mb-6">
-        <h1 class="text-4xl font-extrabold text-[#3D1E8D]">{{ essay.title | default('Redação Sem Título') }}</h1>
-        <a href="{{ url_for('essay.my_essays') }}" class="bg-gray-600 text-white font-semibold rounded px-4 py-2 hover:bg-gray-700 transition duration-200 shadow-md">
-            ← Voltar para Minhas Redações
+
+<div class="max-w-4xl mx-auto p-6 text-white">
+
+    <!-- HEADER -->
+    <div class="flex justify-between items-center mb-8">
+        <h1 class="text-4xl font-bold">{{ essay.title or "Redação Sem Título" }}</h1>
+
+        <a href="{{ url_for('essay.my_essays') }}"
+           class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg shadow transition font-semibold">
+            ←
         </a>
     </div>
 
-    <div class="bg-white/10 rounded-xl p-6 shadow-2xl mb-10 border border-white/20">
-        <h2 class="text-xl font-bold mb-3 text-white">Tema: {{ essay.theme | default('Indefinido') }}</h2>
-        
-        <!-- Essay Content Box -->
-        <div class="bg-gray-800 p-5 rounded-lg text-gray-200 whitespace-pre-wrap leading-relaxed max-h-96 overflow-y-auto border border-gray-700">
-            {{ essay.content | default('Conteúdo da redação indisponível.') }}
+    <!-- ESSAY SECTION -->
+    <div class="bg-[#3b2a52] p-6 rounded-xl shadow-lg mb-10">
+
+        <h2 class="text-2xl font-semibold mb-3">Tema</h2>
+        <p class="text-lg text-gray-200 mb-6">{{ essay.theme or "Indefinido" }}</p>
+
+        <div class="bg-[#2a1d3b] p-4 rounded-lg border border-white/10 max-h-96 overflow-y-auto whitespace-pre-wrap">
+            {{ essay.content or "Conteúdo indisponível." }}
         </div>
     </div>
 
-    <!-- Analysis Results Section -->
-    <div class="bg-white/10 rounded-xl p-6 shadow-2xl border border-white/20">
-        <div class="flex items-center justify-between border-b pb-4 mb-6 border-white/30">
-            <h2 class="text-2xl font-bold text-white">Análise de Desempenho</h2>
-            <div class="text-4xl font-extrabold p-3 rounded-lg bg-green-700 shadow-lg">
-                Nota: <span id="grade">{{ essay.grade | default('N/A') }}</span>
+    <!-- ANALYSIS SECTION -->
+    <div class="bg-[#3b2a52] p-6 rounded-xl shadow-lg">
+
+        <!-- TITLE + GRADE -->
+        <div class="flex justify-between items-center border-b border-white/20 pb-4 mb-6">
+            <h2 class="text-2xl font-bold">Análise de Desempenho</h2>
+
+            <div class="text-3xl bg-emerald-600 px-4 py-2 rounded-lg font-extrabold shadow">
+                {{ essay.grade or "N/A" }}/1000
             </div>
         </div>
 
-        <div class="flex flex-col lg:flex-row gap-8">
-            <!-- Chart Area (Left/Top) -->
-            <div class="lg:w-1/3 flex items-center justify-center min-h-[300px] bg-white/5 rounded-lg p-4 shadow-inner">
-                <canvas id="pieChart"></canvas>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+
+            <!-- PIE CHART -->
+            <div class="flex justify-center items-center">
+                <canvas id="competencyChart" width="300" height="300"></canvas>
             </div>
 
-            <!-- Comments Area (Right/Bottom) -->
-            <div class="lg:w-2/3 space-y-4">
-                <h3 class="text-xl font-semibold border-b pb-2 mb-4 text-white">Comentários Detalhados</h3>
-                
-                {% for i in range(1, 6) %}
-                    <div class="competency-field text-lg border-l-4 pl-3 rounded-sm border-[#ff9933] bg-white/5 p-2">
-                        <strong>Competência {{ i }} ({{ essay.competencies[i-1] }}):</strong>
-                        <span id="competency-comment-{{ i }}" class="block mt-1 text-gray-300">Carregando...</span>
+            <!-- COMMENTS -->
+            <div>
+                <h3 class="text-xl font-bold mb-4">Comentários por Competência</h3>
+
+                {% for score in essay.competencies %}
+                    <div class="bg-[#2a1d3b] p-4 rounded-lg border-l-4 border-emerald-400 mb-3">
+                        <p class="font-bold text-white">
+                            Competência {{ loop.index }}:
+                            <span class="text-emerald-300">{{ score }}/200</span>
+                        </p>
+
+                        {% if essay.comments[loop.index0] %}
+                            <p class="mt-2 text-gray-300">{{ essay.comments[loop.index0] }}</p>
+                        {% else %}
+                            <p class="mt-2 text-gray-400 italic">Sem comentário disponível.</p>
+                        {% endif %}
                     </div>
                 {% endfor %}
 
-                <div class="general-comment text-lg border-l-4 pl-3 rounded-sm border-[#3D1E8D] bg-white/5 p-2 mt-6">
-                    <strong>Comentário Geral:</strong>
-                    <span id="general-comment" class="block mt-1 text-gray-300">Carregando...</span>
+                <!-- GENERAL COMMENT -->
+                {% if essay.comments|length > 5 %}
+                <div class="bg-[#2a1d3b] p-4 rounded-lg border-l-4 border-purple-400 mt-6">
+                    <p class="font-bold text-white">Comentário Geral:</p>
+                    <p class="mt-2 text-gray-300">{{ essay.comments[5] }}</p>
                 </div>
+                {% endif %}
             </div>
         </div>
     </div>
-</section>
+</div>
 
-<!-- Chart.js Library -->
+
+<!-- CHART.JS -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-<script>
-    // Initialize results using the essay data passed from Flask
-    const rawResults = {
-        grade: "{{ essay.grade | default('N/A') }}",
-        comments: {{ essay.comments | tojson | safe }},
-        competencies: {{ essay.competencies | tojson | safe }}
-    };
 
-    const pieChart = new Chart(document.getElementById('pieChart').getContext('2d'), {
+<script>
+    const competencies = {{ essay.competencies | tojson }};
+    
+    new Chart(document.getElementById('competencyChart'), {
         type: 'pie',
         data: {
-            labels: ['Competência 1', 'Competência 2', 'Competência 3', 'Competência 4', 'Competência 5'],
+            labels: [
+                "Competência 1",
+                "Competência 2",
+                "Competência 3",
+                "Competência 4",
+                "Competência 5"
+            ],
             datasets: [{
-                label: 'Desempenho',
-                data: [], 
-                backgroundColor: ['#ffb380', '#ff9933', '#cc5200', '#ff751a', '#ffa64d'],
-                borderColor: '#2a1035',
-                borderWidth: 2
+                data: competencies,
+                borderWidth: 2,
+                backgroundColor: [
+                    "#10b981", // Emerald
+                    "#3b82f6", // Blue
+                    "#f59e0b", // Amber
+                    "#ef4444", // Red
+                    "#a855f7"  // Purple
+                ]
             }]
         },
         options: {
             responsive: true,
-            maintainAspectRatio: false, 
             plugins: {
                 legend: {
-                    display: true,
-                    labels: {
-                        color: '#f3f4f6' // Tailwind gray-100
-                    }
+                    position: "bottom",
+                    labels: { color: "white" }
                 }
             }
         }
     });
-
-    function updatePageWithResults(results) {
-        // 1. Update Chart Data
-        if (results && Array.isArray(results.competencies)) {
-            // Ensure we only take the first 5 competencies
-            const chartData = results.competencies.slice(0, 5).concat(new Array(5 - results.competencies.length).fill(0));
-            pieChart.data.datasets[0].data = chartData;
-            pieChart.update();
-        }
-        
-        // 2. Update Comments
-        if (results && Array.isArray(results.comments)) {
-            results.comments.forEach((comment, idx) => {
-                // Comments 0-4 map to Competencies 1-5
-                if (idx < 5) {
-                    const commentField = document.getElementById(`competency-comment-${idx + 1}`);
-                    if (commentField) {
-                        commentField.textContent = comment;
-                    }
-                // Comment 5 maps to the General Comment
-                } else if (idx === 5) { 
-                    const generalCommentField = document.getElementById('general-comment');
-                    if (generalCommentField) {
-                        generalCommentField.textContent = comment;
-                    }
-                }
-            });
-        }
-    }
-
-    document.addEventListener('DOMContentLoaded', () => {
-        // Run the update function using the data embedded by Jinja2
-        if (rawResults) {
-            updatePageWithResults(rawResults);
-        }
-    });
 </script>
+
 {% endblock %}

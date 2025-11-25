@@ -5,9 +5,12 @@ from app.routes.auth.routes import auth
 from app.routes.essay.routes import essay
 from app.routes.games.routes import games
 from app.routes.classes.routes import classes
+from app.routes.admin.routes import admin
+
 
 def create_app():
 
+    blueprints = [main, auth, essay, games, classes, admin]
     sources = {r"/*": {"origins": "*"}}
 
     app = Flask(__name__)
@@ -15,11 +18,7 @@ def create_app():
 
     CORS(app, resources=sources)
 
-    app.register_blueprint(main)
-    app.register_blueprint(auth)
-    app.register_blueprint(essay)
-    app.register_blueprint(games)
-    app.register_blueprint(classes)
-
+    for bluep in blueprints:
+        app.register_blueprint(bluep)
 
     return app

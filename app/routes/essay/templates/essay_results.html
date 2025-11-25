@@ -1,133 +1,121 @@
-{% extends 'layout.html' %}
-{% block pagename %}Performance{% endblock %}
-{% block pagetext %}Veja seu desempenho na redação{% endblock %}
-{% set header = True %}
-{% set footer = True %}
+{% extends "layout.html" %}
 {% set main = True %}
 
 {% block content %}
-    <section class="performance-container max-w-3xl mx-auto py-10 px-4"> 
-        <form id="essayForm" action="/handle_essay_action" method="post"> 
-        
-            {# This input is for the action (save/dismiss), NOT the essay data/results. #}
-            <input type="hidden" id="formAction" name="action" value=""> 
-        
-            <h1 class="text-3xl font-bold mb-8">Performance <span id="grade"></span></h1>
-            <div class="performance-box flex flex-col md:flex-row gap-8 bg-white/10 rounded-lg p-8 shadow">
-              
-              {# FIX APPLIED HERE: max-w-xs and aspect-square constrain the chart size #}
-              <div class="chart w-full max-w-xs aspect-square mx-auto md:max-w-none md:w-1/2 flex items-center justify-center">
-                <canvas id="pieChart"></canvas>
-              </div>
-                
-              <div class="description flex-1">
-                <div class="text-and-bars">
-                  <div class="competency-field mb-4">
-                    <strong>Competência 1:</strong>
-                    <span id="competency-comment-1"></span>
-                  </div>
-                  <div class="competency-field mb-4">
-                    <strong>Competência 2:</strong>
-                    <span id="competency-comment-2"></span>
-                  </div>
-                  <div class="competency-field mb-4">
-                    <strong>Competência 3:</strong>
-                    <span id="competency-comment-3"></span>
-                  </div>
-                  <div class="competency-field mb-4">
-                    <strong>Competência 4:</strong>
-                    <span id="competency-comment-4"></span>
-                  </div>
-                  <div class="competency-field mb-4">
-                    <strong>Competência 5:</strong>
-                    <span id="competency-comment-5"></span>
-                  </div>
-                  <div class="general-comment mb-4">
-                    <strong>Comentário geral:</strong>
-                    <span id="general-comment"></span>
-                  </div>
-                </div>
-                
-                      <div class="flex flex-col sm:flex-row gap-4 mt-8">
-                        <button type="submit" onclick="setAction('save')" class="bg-green-600 hover:bg-green-700 text-white font-bold py-3 px-6 rounded-lg transition duration-150 ease-in-out">
-                          ✅ Salvar Redação
-                        </button>
-                        <button type="submit" onclick="setAction('dismiss')" class="bg-red-600 hover:bg-red-700 text-white font-bold py-3 px-6 rounded-lg transition duration-150 ease-in-out">
-                          🗑️ Descartar
-                        </button>
-                    </div>
-              </div>
+
+<div class="max-w-4xl mx-auto p-6 text-white">
+
+    <h1 class="text-4xl font-bold mb-6 text-center">Resultado da Redação</h1>
+
+    <!-- GENERAL GRADE -->
+    <div class="bg-[#3b2a52] p-6 rounded-xl mb-6 shadow-md">
+        <h2 class="text-2xl font-bold mb-2">Nota Geral</h2>
+        <p class="text-3xl text-emerald-300 font-bold">{{ results.generalGrade }}/1000</p>
+    </div>
+
+    <!-- COMPETENCIES + PIE CHART -->
+    <div class="bg-[#3b2a52] p-6 rounded-xl mb-6 shadow-md">
+
+        <h2 class="text-2xl font-bold mb-4">Competências</h2>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+
+            <!-- CHART -->
+            <div class="flex justify-center items-center">
+                <canvas id="competencyChart" width="300" height="300"></canvas>
             </div>
-          </form>
-    </section>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script>
 
-const rawResults = JSON.parse('{{ analysis_results_json | safe}}'); 
-console.log('Raw Results:', rawResults);
+            <!-- VALUES -->
+            <div class="space-y-4">
 
-const pieChart = new Chart(document.getElementById('pieChart').getContext('2d'), {
-    type: 'pie',
-    data: {
-      labels: ['Competência 1', 'Competência 2', 'Competência 3', 'Competência 4', 'Competência 5'],
-      datasets: [{
-        label: 'Desempenho',
-        data: [0, 0, 0, 0, 0], 
-        backgroundColor: ['#ffb380', '#ff9933', '#cc5200', '#ff751a', '#ffa64d'],
-        borderColor: '#2a1035',
-        borderWidth: 2
-      }]
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: {
-        legend: {
-          display: false
+                {% for score in results.competencies %}
+                <div class="p-4 rounded-lg bg-[#2a1d3b] flex justify-between">
+                    <p class="font-bold">Competência {{ loop.index }}</p>
+                    <p class="text-xl text-emerald-300">{{ score }}/200</p>
+                </div>
+                {% endfor %}
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- COMMENTS -->
+    <div class="bg-[#3b2a52] p-6 rounded-xl mb-6 shadow-md">
+        <h2 class="text-2xl font-bold mb-4">Comentários do Avaliador</h2>
+
+        <ul class="list-disc ml-6 space-y-3">
+            {% for comment in results.comments %}
+            <li class="text-lg">{{ comment }}</li>
+            {% endfor %}
+        </ul>
+    </div>
+
+    <!-- BUTTONS -->
+    <form action="/handle_essay_action" method="POST" class="flex gap-4 justify-center mt-8">
+
+        <button
+            name="action"
+            value="dismiss"
+            class="px-6 py-3 bg-red-600 hover:bg-red-700 rounded-xl text-lg font-bold transition">
+            Descartar Redação
+        </button>
+
+        <button
+            name="action"
+            value="save"
+            class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 rounded-xl text-lg font-bold transition">
+            Salvar Redação
+        </button>
+
+    </form>
+
+</div>
+
+<!-- CHART.JS -->
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+    // Convert Python list to JS list
+    const competencies = {{ results.competencies | tojson }};
+
+    const ctx = document.getElementById('competencyChart');
+
+    new Chart(ctx, {
+        type: 'pie',
+        data: {
+            labels: [
+                'Competência 1',
+                'Competência 2',
+                'Competência 3',
+                'Competência 4',
+                'Competência 5'
+            ],
+            datasets: [{
+                data: competencies,
+                borderWidth: 2,
+                backgroundColor: [
+                    '#10b981', // emerald
+                    '#3b82f6', // blue
+                    '#f59e0b', // amber
+                    '#ef4444', // red
+                    '#a855f7'  // purple
+                ]
+            }]
+        },
+        options: {
+            responsive: true,
+            plugins: {
+                legend: {
+                    display: true,
+                    position: "bottom",
+                    labels: {
+                        color: "white"
+                    }
+                }
+            }
         }
-      }
-    }
-});
+    });
+</script>
 
-function updatePageWithResults(results) {
-    if (results && Array.isArray(results.competencies)) {
-      const chartData = results.competencies.slice(0, 5).concat(new Array(5 - results.competencies.length).fill(0));
-      pieChart.data.datasets[0].data = chartData;
-      pieChart.update();
-    }
-    
-    if (results && Array.isArray(results.comments)) {
-      results.comments.forEach((comment, idx) => {
-        if (idx < 5) {
-          const commentField = document.getElementById(`competency-comment-${idx + 1}`);
-          if (commentField) {
-            commentField.textContent = comment;
-          }
-        } else if (idx === 5) {
-          const generalCommentField = document.getElementById('general-comment');
-          if (generalCommentField) {
-            generalCommentField.textContent = comment;
-          }
-        }
-      });
-    }
-    
-    if (results && typeof results.generalGrade !== 'undefined') {
-      const gradeField = document.getElementById('grade');
-      if (gradeField) {
-        gradeField.textContent = results.generalGrade; 
-      }
-    }
-}
-
-function setAction(action) {
-    document.getElementById('formAction').value = action;
-}
-
-document.addEventListener('DOMContentLoaded', () => {
-    if (rawResults) {
-        updatePageWithResults(rawResults);
-    }
-});
-    </script>
 {% endblock %}

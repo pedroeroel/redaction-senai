@@ -1,0 +1,65 @@
+{% extends "layout.html" %}
+{% set header = True %}
+{% set footer = True %}
+{% set main = True %}
+
+{% block pagename %}Editar Usuário{% endblock %}
+{% block pagetext %}Editar Usuário{% endblock %}
+
+{% block content %}
+<div class="max-w-2xl mx-auto bg-[#3A1F7A] p-10 rounded-2xl shadow-xl space-y-8">
+
+    <h2 class="text-3xl font-bold text-[#E8E1CF] mb-6">Editar Usuário</h2>
+
+    <form method="POST" class="space-y-6">
+
+        <!-- Username -->
+        <div>
+            <label class="block mb-1 font-semibold">Nome de Usuário</label>
+            <input type="text" name="username" value="{{ user.username }}"
+                class="w-full p-3 rounded-lg bg-[#4C2DBF] text-white">
+        </div>
+
+        <!-- Email -->
+        <div>
+            <label class="block mb-1 font-semibold">Email</label>
+            <input type="email" name="email" value="{{ user.email }}"
+                class="w-full p-3 rounded-lg bg-[#4C2DBF] text-white">
+        </div>
+
+        <!-- Score -->
+        <div>
+            <label class="block mb-1 font-semibold">Pontuação</label>
+            <input type="number" name="score" value="{{ user.score }}"
+                class="w-full p-3 rounded-lg bg-[#4C2DBF] text-white">
+        </div>
+
+        <!-- New Password -->
+        <div>
+            <label class="block mb-1 font-semibold">Nova Senha</label>
+            <input type="password" name="password" placeholder="Digite uma nova senha (opcional)"
+                class="w-full p-3 rounded-lg bg-[#4C2DBF] text-white">
+            <p class="text-sm text-[#cfc6ff] mt-1">Deixe vazio para manter a senha atual.</p>
+        </div>
+
+        <!-- Admin checkbox -->
+        <div class="flex items-center gap-3">
+            <input type="checkbox" name="admin" class="h-5 w-5"
+                {% if user.admin %}checked{% endif %}>
+            <label class="font-semibold">Administrador</label>
+        </div>
+
+        <!-- Actions -->
+        <div class="flex justify-between mt-8">
+            <a href="/admin" class="text-[#E8E1CF] hover:underline">Voltar</a>
+
+            <button type="submit"
+                class="px-6 py-3 bg-green-600 hover:bg-green-700 rounded-xl font-semibold text-white">
+                Salvar Alterações
+            </button>
+        </div>
+
+    </form>
+
+</div>
+{% endblock %}

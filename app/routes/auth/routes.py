@@ -18,6 +18,7 @@ def login():
 
         try:
             user = get_user_by_fields(email, password)
+            
         except Exception as e:
             print(f"Error fetching user: {e}")
 
@@ -26,7 +27,7 @@ def login():
         else:
             session['email'] = user['email']
             session['user_id'] = user['id']
-            session['is_admin'] = user.get('is_admin', False)
+            session['admin'] = user.get('admin', False)
             session['username'] = user['username']      
             session['score'] = get_score(str(session['user_id']))
             
@@ -53,7 +54,7 @@ def register():
 
             session['email'] = email
             session['user_id'] = str(new_user_id)
-            session['is_admin'] = False
+            session['admin'] = False
             session['username'] = username
             session['score'] = 0
 

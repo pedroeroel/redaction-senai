@@ -7,7 +7,7 @@ main = Blueprint('main', __name__, template_folder='templates')
 def index():
 
     if session:
-        session['score'] = get_score(session['user_id'])
+        session['score'] = get_score(session.get('user_id'))
         return redirect('/home')
     else:
         return render_template('index.html', session=session)
@@ -16,7 +16,8 @@ def index():
 def home():
 
     if session:
-        session['score'] = get_score(session['user_id'])
+        session['score'] = get_score(session.get('user_id'))
+        print(session.get('user_id'))
         return render_template('home.html', session=session, score=session['score'])
     else:
         return redirect('/login')
@@ -42,10 +43,3 @@ def arguments():
     else:
         return redirect('/login')
 
-    
-@main.route('/examples', methods=['GET'])
-def examples():
-    if session:
-        return render_template('examples.html')
-    else:
-        return redirect('/login')
