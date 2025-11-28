@@ -112,6 +112,11 @@ document.addEventListener("DOMContentLoaded", () => {
   const finishBtn = document.getElementById("finish-btn");
   let correctAnswers = new Set();
 
+  // Convert numeric correctIndex → letter (0=a, 1=b...)
+  function numberToLetter(n) {
+    return String.fromCharCode(97 + Number(n)); // 97 = "a"
+  }
+
   function updateFinishButton() {
     if (quizForms.length > 0 && correctAnswers.size === quizForms.length) {
       finishBtn.className =
@@ -130,24 +135,20 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Convert index → letter (0=a, 1=b, 2=c...)
-  function indexToLetter(i) {
-    return String.fromCharCode(97 + Number(i)); // 97 = 'a'
-  }
-
   quizForms.forEach((form, index) => {
     const feedback = form.querySelector(".quiz-feedback");
 
     let rawCorrect = (form.dataset.correct ?? "").trim().toLowerCase();
+
+    // If rawCorrect is a number, convert to letter
+    if (/^\d+$/.test(rawCorrect)) {
+      rawCorrect = numberToLetter(rawCorrect);
+    }
+
     const correctFeedback = form.dataset.correctFeedback || "Boa!";
     const wrongFeedback = form.dataset.wrongFeedback || "Tente novamente!";
 
-    // If rawCorrect is numeric → convert to letter
-    if (/^\d+$/.test(rawCorrect)) {
-      rawCorrect = indexToLetter(rawCorrect);
-    }
-
-    console.log(`Quiz #${index} - CORRECT KEY = "${rawCorrect}"`);
+    console.log(`Quiz #${index} - Correct Answer = "${rawCorrect}"`);
 
     form.addEventListener("submit", e => {
       e.preventDefault();
@@ -163,7 +164,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
       feedback.classList.remove("hidden");
 
-      // Always check by KEY ONLY
       const selectedKey = selected.value.trim().toLowerCase();
       const isCorrect = selectedKey === rawCorrect;
 
@@ -178,57 +178,9 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       updateFinishButton();
-
-      /* ---------------- REDEEM LOGIC (unchanged) ---------------- */
-      if (isCorrect && !window.__redeemed && correctAnswers.size === quizForms.length) {
-        window.__redeemed = true;
-
-        const existingStatus = finishBtn.parentNode.querySelector('#redeem-status');
-        if (existingStatus) existingStatus.remove();
-
-        const status = document.createElement('div');
-        status.id = 'redeem-status';
-        status.className = 'mt-3 text-sm flex items-center gap-2 text-yellow-200';
-        status.innerHTML = `
-          <span class="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></span>
-          <span>Resgatando pontos...</span>
-        `;
-        finishBtn.parentNode.appendChild(status);
-
-        fetch('/interactive-classes/redeem', {
-          method: 'POST',
-          credentials: 'same-origin',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams({ points: '20' })
-        })
-        .then(async res => {
-          const st = finishBtn.parentNode.querySelector('#redeem-status');
-          if (st) st.remove();
-
-          if (res.ok) {
-            const msg = document.createElement('div');
-            msg.className = 'mt-3 text-sm text-green-300';
-            msg.innerText = '🎉 Parabéns — 20 pontos resgatados!';
-            finishBtn.parentNode.appendChild(msg);
-            window.location.href = '/interactive-classes';
-          } else {
-            const err = document.createElement('div');
-            err.className = 'mt-3 text-sm text-red-300';
-            err.innerText = 'Erro ao resgatar pontos.';
-            finishBtn.parentNode.appendChild(err);
-            window.__redeemed = false;
-          }
-        })
-        .catch(() => {
-          const st = finishBtn.parentNode.querySelector('#redeem-status');
-          if (st) st.remove();
-          window.__redeemed = false;
-        });
-      }
-      /* ---------------------------------------------------------- */
     });
 
-    // Auto-submit on selection
+    // Auto-submit when selecting an option
     form.querySelectorAll('input[name="resposta"]').forEach(radio => {
       radio.addEventListener("change", () => {
         form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
@@ -237,7 +189,58 @@ document.addEventListener("DOMContentLoaded", () => {
 
     updateFinishButton();
   });
+
+  // ⭐ REDEEM **ONLY** WHEN CLICKING FINISH BTN ⭐
+  finishBtn.addEventListener("click", () => {
+    if (finishBtn.disabled || window.__redeemed) return;
+
+    window.__redeemed = true;
+
+    // Loading animation
+    const status = document.createElement('div');
+    status.id = 'redeem-status';
+    status.className = 'mt-3 text-sm flex items-center gap-2 text-yellow-200';
+    status.innerHTML = `
+      <span class="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></span>
+      <span>Resgatando pontos...</span>
+    `;
+    finishBtn.parentNode.appendChild(status);
+
+    fetch('/interactive-classes/redeem', {
+      method: 'POST',
+      credentials: 'same-origin',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams({ points: '20' })
+    })
+      .then(async res => {
+        document.getElementById("redeem-status")?.remove();
+
+        if (res.ok) {
+          const msg = document.createElement('div');
+          msg.className = 'mt-3 text-sm text-green-300';
+          msg.innerText = '🎉 Parabéns — 20 pontos resgatados!';
+          finishBtn.parentNode.appendChild(msg);
+
+          // Redirect AFTER redeem
+          setTimeout(() => {
+            window.location.href = '/interactive-classes';
+          }, 800);
+        } else {
+          const err = document.createElement('div');
+          err.className = 'mt-3 text-sm text-red-300';
+          err.innerText = 'Erro ao resgatar pontos.';
+          finishBtn.parentNode.appendChild(err);
+          window.__redeemed = false;
+        }
+      })
+      .catch(() => {
+        document.getElementById("redeem-status")?.remove();
+        window.__redeemed = false;
+      });
+  });
+
 });
 </script>
+
 
 {% endblock %}

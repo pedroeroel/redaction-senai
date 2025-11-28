@@ -202,7 +202,7 @@ const challenges = [
 
             // 🔹 Envia pontos ao backend Flask
             try {
-                const response = await fetch('/points/redeem', {
+                const response = await fetch('/games/redeem', {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/x-www-form-urlencoded'

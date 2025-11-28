@@ -169,7 +169,7 @@
             feedback.innerText = `🎉 Parabéns! Você acertou todas! +${currentChallenge.points} XP (Total: ${totalPoints} XP)`;
 
             try {
-                await fetch('/points/redeem', {
+                await fetch('/games/redeem', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                     body: new URLSearchParams({ points: totalPoints })
