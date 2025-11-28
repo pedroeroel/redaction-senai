@@ -1,7 +1,7 @@
 from flask import Flask, Blueprint, request, render_template, session, redirect, url_for
 import json
 import requests
-from ...firebase import get_all_essays, add_essay_data, get_essay_data, get_score, update_score, get_example_essays
+from ...firebase import get_all_essays, add_essay_data, get_essay_data, get_score, update_score, get_example_essays, get_specific_essay
 
 essay = Blueprint('essay', __name__, template_folder='templates')
 
@@ -219,3 +219,12 @@ def handle_essay_action():
 def examples():
     results = get_example_essays()
     return render_template('examples.html', essays=results)
+
+@essay.route('/examples/<int:id>/<int:index>')
+def example(id, index):
+    essay_data = get_specific_essay(id, index)
+    
+    if not essay_data:
+        return redirect('/examples')
+    
+    return render_template('example_essay.html', essay=essay_data)

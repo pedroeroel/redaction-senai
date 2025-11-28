@@ -291,7 +291,7 @@ def register_class(class_data):
 
 def get_example_essays(min_grade=900):
     """
-    Returns all essays with generalGrade >= min_grade (default: 960)
+    Returns all essays with generalGrade >= min_grade (default: 900)
     for the examples.html page.
     """
     try:
@@ -300,34 +300,47 @@ def get_example_essays(min_grade=900):
         
         docs = users_ref.stream()
         for user in docs:
-            
-            print(user.id)
-            
             user_doc = get_user_doc_ref_by_user_id(user.id)
             essays_ref = user_doc.collection('essays')
             essays = essays_ref.stream()
             
-            print(essays)
-            
-            for essay in essays:
-                if essay.generalGrade >= 900:
+            for index, essay in enumerate(essays):
+                if essay.to_dict().get("generalGrade", 0) >= min_grade:
                     username = get_user_data(user.id)['username']
 
                     chosen_essays.append({
                         'user_id': user.id,
+                        'index': index,
                         'username': username,
                         'essay': {
-                        "title": essay.get("title", "Sem título"),
-                        "theme": essay.get("theme", "Indefinido"),
-                        "content": essay.get("content", ""),
-                        "generalGrade": essay.get("generalGrade", 0),
-                        "competencies": essay.get("competencies", []),
-                        "comments": essay.get("comments", [])
-                    }})
+                            "title": essay.get("title", "Sem título"),
+                            "theme": essay.get("theme", "Indefinido"),
+                            "content": essay.get("content", ""),
+                            "generalGrade": essay.get("generalGrade", 0),
+                            "competencies": essay.get("competencies", []),
+                            "comments": essay.get("comments", [])
+                        }
+                    })
                 
-        print(chosen_essays)
         return chosen_essays
 
     except Exception as e:
         print("Error fetching example essays:", e)
         return []
+
+def get_specific_essay(user_id, index):
+    """
+    Returns a specific essay for a given user_id and index.
+    """
+    user_doc_ref = _get_user_doc_ref_by_user_id(user_id)
+    if not user_doc_ref:
+        return None
+
+    essays_ref = user_doc_ref.collection('essays')
+    essays = essays_ref.stream()
+
+    for i, essay in enumerate(essays):
+        if i == index:
+            return essay.to_dict()
+
+    return None
