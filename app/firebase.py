@@ -96,8 +96,23 @@ def get_user_by_fields(email, password):
 
 def register_user(email, password, username):
     users_ref = db.collection('register')
+
+    # Find the highest numeric id among all users
+    max_id = 0
+    for doc in users_ref.stream():
+        data = doc.to_dict()
+        if not data:
+            continue
+        id_val = data.get('id')
+        try:
+            val = int(str(id_val))
+            if val > max_id:
+                max_id = val
+        except (ValueError, TypeError):
+            continue
+
+    new_user_id = max_id + 1
     new_user_ref = users_ref.document()
-    new_user_id = count_users() + 1
     new_user_ref.set({
         'email': email,
         'password': password,
