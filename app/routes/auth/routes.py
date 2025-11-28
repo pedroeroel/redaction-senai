@@ -52,6 +52,10 @@ def register():
                 print(f"Error registering user: {e}")
                 return render_template('register.html', error="Registration failed. Please try again.")
 
+            # If register_user returns False (or None) do not create a session or redirect
+            if new_user_id is False or new_user_id is None:
+                return render_template('register.html', error="Registration failed. Please try again.")
+
             session['email'] = email
             session['user_id'] = str(new_user_id)
             session['admin'] = False
