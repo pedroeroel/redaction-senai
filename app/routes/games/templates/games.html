@@ -6,24 +6,21 @@
 {% set main = True %}
 
 {% block content %}
-
 <main
     id="main-content"
-    class="bg-no-repeat bg-cover bg-center"
+    class="bg-no-repeat bg-cover bg-center rounded-xl overflow-hidden"
     style="background-image: url('../fundo-temas.png');">
     
     <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
-
-        <div class="max-w-3xl mx-auto md:mx-0 mb-8 md:mb-12">
+        <div class="max-w-3xl mx-auto md:mx-0 mb-8 md:mb-12 text-center md:text-left">
             <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight text-[#E8E1CF]">
                 Jogue e Aprenda! 🎮
             </h1>
-            <p class="text-lg text-[#E8E1CF] opacity-90">Desafie suas habilidades de redação com nossos jogos interativos!</p>
-            <hr class="border-t-2 border-[#E8E1CF] opacity-50 w-32 mt-4">
+            <p class="text-base sm:text-lg text-[#E8E1CF] opacity-90">Desafie suas habilidades de redação com nossos jogos interativos!</p>
+            <hr class="border-t-2 border-[#E8E1CF] opacity-50 w-32 mt-4 mx-auto md:mx-0">
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            
             <a href="/games/3" class="game-card bg-[#3D1E8D] p-6 rounded-xl shadow-lg transition-all duration-300 ease-in-out flex flex-col justify-between items-start text-left min-h-[180px]">
                 <div>
                     <h2 class="text-xl sm:text-2xl font-semibold mb-2 text-[#E8E1CF]">Montador de Frases</h2>
@@ -31,25 +28,22 @@
                 </div>
                 <span class="mt-4 px-4 py-1 bg-[#A78BFA] text-[#2A0F5E] rounded-full text-sm font-bold self-end">Jogar!</span>
             </a>
-
-            <a href="/games/2" class="game-card bg-[#3D1E8D] p-6 rounded-xl shadow-lg transition-all duration-300 ease-in-out flex flex-col justify-between items-start text-left min-h-[180px]">
+            <!-- Repeat structure for other games -->
+             <a href="/games/2" class="game-card bg-[#3D1E8D] p-6 rounded-xl shadow-lg transition-all duration-300 ease-in-out flex flex-col justify-between items-start text-left min-h-[180px]">
                 <div>
                     <h2 class="text-xl sm:text-2xl font-semibold mb-2 text-[#E8E1CF]">Corretor Fantasma</h2>
                     <p class="text-base text-[#E8E1CF] opacity-90">Encontre e corrija os erros escondidos nos textos.</p>
                 </div>
                 <span class="mt-4 px-4 py-1 bg-[#A78BFA] text-[#2A0F5E] rounded-full text-sm font-bold self-end">Jogar!</span>
             </a>
-
-            <a href="/games/1" class="game-card bg-[#3D1E8D] p-6 rounded-xl shadow-lg transition-all duration-300 ease-in-out flex flex-col justify-between items-start text-left min-h-[180px]">
+             <a href="/games/1" class="game-card bg-[#3D1E8D] p-6 rounded-xl shadow-lg transition-all duration-300 ease-in-out flex flex-col justify-between items-start text-left min-h-[180px]">
                 <div>
                     <h2 class="text-xl sm:text-2xl font-semibold mb-2 text-[#E8E1CF]">Duelo de Conectivos</h2>
                     <p class="text-base text-[#E8E1CF] opacity-90">Escolha o conectivo certo para unir as ideias e pontue!</p>
                 </div>
                 <span class="mt-4 px-4 py-1 bg-[#A78BFA] text-[#2A0F5E] rounded-full text-sm font-bold self-end">Jogar!</span>
             </a>
-
         </div>
     </div>
 </main>
-
 {% endblock %}

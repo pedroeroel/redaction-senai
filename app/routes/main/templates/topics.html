@@ -8,39 +8,28 @@
 {% block content %}
 <main
   id="main-content"
-  class="bg-no-repeat bg-cover bg-center"
+  class="bg-no-repeat bg-cover bg-center rounded-xl overflow-hidden"
   style="background-image: url('../fundo-temas.png');">
   <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
 
-    <div class="max-w-3xl mx-auto md:mx-0 mb-8 md:mb-12">
+    <div class="max-w-3xl mx-auto md:mx-0 mb-8 md:mb-12 text-center md:text-left">
       <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight text-[#E8E1CF]">
         Fique por dentro dos temas mais cobrados e relevantes!
       </h1>
       <p class="text-base sm:text-lg text-[#E8E1CF] mb-6 leading-relaxed">
         Explore assuntos atuais para treinar sua escrita de forma estratégica para o ENEM.
       </p>
-      <hr class="border-t-2 border-[#E8E1CF] opacity-50 w-32">
+      <hr class="border-t-2 border-[#E8E1CF] opacity-50 w-32 mx-auto md:mx-0">
     </div>
 
     <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 lg:gap-8">
-      <a href="/topics/1" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center min-h-[150px] sm:min-h-[180px]">
-        <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Desigualdade social no Brasil</h2>
+      <!-- Cards with consistent styling -->
+      {% for i in range(1, 7) %}
+      {% set titles = ["Desigualdade social no Brasil", "Inteligência Artificial e ética", "Desafios da educação pública", "Violência contra a mulher", "Inclusão de pessoas com deficiência", "Saúde mental entre os jovens"] %}
+      <a href="/topics/{{i}}" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center min-h-[150px] sm:min-h-[180px]">
+        <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">{{ titles[i-1] }}</h2>
       </a>
-      <a href="/topics/2" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center min-h-[150px] sm:min-h-[180px]">
-        <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Inteligência Artificial e ética</h2>
-      </a>
-      <a href="/topics/3" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center min-h-[150px] sm:min-h-[180px]">
-        <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Desafios da educação pública</h2>
-      </a>
-      <a href="/topics/4" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center min-h-[150px] sm:min-h-[180px]">
-        <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Violência contra a mulher</h2>
-      </a>
-      <a href="/topics/5" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center min-h-[150px] sm:min-h-[180px]">
-        <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Inclusão de pessoas com deficiência</h2>
-      </a>
-      <a href="/topics/6" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center min-h-[150px] sm:min-h-[180px]">
-        <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Saúde mental entre os jovens</h2>
-      </a>
+      {% endfor %}
     </div>
   </div>
 </main>

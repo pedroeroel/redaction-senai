@@ -9,46 +9,44 @@
 
 <main
     id="main-content"
-    class="bg-no-repeat bg-cover bg-center"
+    class="bg-no-repeat bg-cover bg-center rounded-xl overflow-hidden"
     style="background-image: url('../fundo-temas.png');">
     <div class="mx-auto px-4 sm:px-6 lg:px-8 py-10 md:py-16">
 
-        <div class="max-w-3xl mx-auto md:mx-0 mb-8 md:mb-12">
+        <div class="max-w-3xl mx-auto md:mx-0 mb-8 md:mb-12 text-center md:text-left">
             <h1 class="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 leading-tight text-[#E8E1CF]">
                 Otimize suas redações<br>com a Redaction!
             </h1>
-            <hr class="border-t-2 border-[#E8E1CF] opacity-50 w-32">
+            <hr class="border-t-2 border-[#E8E1CF] opacity-50 w-32 mx-auto md:mx-0">
         </div>
 
-        <div class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg mb-8 flex items-center justify-center">
-            <div class="flex gap-4">
-                <a id="ctaRedacao"
-                   {% if score >= 100 %}href="/new-essay"{% endif %}
-                   class="bg-[#A78BFA] text-[#2A0F5E] font-bold py-3 px-6 rounded-lg shadow-md hover:bg-[#C4B5FD] transition-all duration-200 ease-in-out {% if score < 100 %}opacity-50 cursor-not-allowed{% endif %}"
-                   aria-disabled="{% if score < 100 %}true{% else %}false{% endif %}"
-                   {% if score < 100 %}tabindex="-1"{% endif %}>
-                    Nova Redação
-                </a>
-                {% if score < 100 %}
-                 <span class="self-center text-[#E8E1CF]">Consiga 100 pontos para avaliar uma redação!</span>
-                {% endif %}
-            </div>
+        <div class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg mb-8 flex flex-col md:flex-row items-center justify-center gap-4 text-center">
+            <a id="ctaRedacao"
+                {% if score >= 100 %}href="/new-essay"{% endif %}
+                class="bg-[#A78BFA] text-[#2A0F5E] font-bold py-3 px-6 rounded-lg shadow-md hover:bg-[#C4B5FD] transition-all duration-200 ease-in-out w-full md:w-auto {% if score < 100 %}opacity-50 cursor-not-allowed{% endif %}"
+                aria-disabled="{% if score < 100 %}true{% else %}false{% endif %}"
+                {% if score < 100 %}tabindex="-1"{% endif %}>
+                Nova Redação
+            </a>
+            {% if score < 100 %}
+                <span class="text-[#E8E1CF] text-sm md:text-base">Consiga 100 pontos para avaliar uma redação!</span>
+            {% endif %}
         </div>
 
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
-            <a href="/my-essays" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-6 gap-4 md:gap-6 lg:gap-8">
+            <a href="/my-essays" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center lg:col-span-2">
                 <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Minhas redações</h2>
             </a>
-            <a href="/topics" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center">
+            <a href="/topics" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center lg:col-span-2">
                 <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Temas Atuais</h2>  
             </a>
-            <a href="../examples" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center">
+            <a href="../examples" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center lg:col-span-2">
                 <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Redações Exemplo</h2>
             </a>
-            <a href="/interactive-classes" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center">
+            <a href="/interactive-classes" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center lg:col-span-3">
                 <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Aulas Interativas</h2>
             </a>
-            <a href="../games" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center">
+            <a href="../games" class="bg-[#3D1E8D] p-6 rounded-xl shadow-lg hover:brightness-110 active:brightness-90 transition-all duration-200 ease-in-out transform hover:-translate-y-1 flex flex-col justify-center items-center text-center lg:col-span-3">
             <h2 class="text-lg sm:text-xl font-semibold text-[#E8E1CF]">Joguinhos de Redação</h2>
             </a>
         </div>
