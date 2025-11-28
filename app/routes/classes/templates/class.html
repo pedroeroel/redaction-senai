@@ -198,32 +198,33 @@ document.addEventListener("DOMContentLoaded", () => {
 
       let isCorrect = false;
 
-      // 1) If data-correct looks like a letter (a, b, c, ...): interpret as option position (first, second, ...) OR match by key embedded in value
-      const letterIndex = letterToIndex(rawCorrect);
-      if (letterIndex >= 0) {
-        const selectedIndex = radios.findIndex(r => r === selected); // 0-based index by displayed order
-        if (selectedIndex === letterIndex || selectedValue === rawCorrect.toLowerCase() || selectedValueKey === rawCorrect.toLowerCase()) {
-          isCorrect = true;
-        }
-      }
-      // 2) If data-correct is numeric -> treat as 0-based index only
-      else if (isIntegerString(rawCorrect)) {
-        const correctIndex = parseInt(rawCorrect, 10);
-        const selectedIndex = radios.findIndex(r => r === selected); // 0-based index
-        if (!Number.isNaN(correctIndex) && selectedIndex === correctIndex) {
-          isCorrect = true;
-        }
+      // Check if the correct answer is a key (a, b, c...)
+      if (rawCorrect.match(/^[a-z]$/)) {
+        isCorrect = selectedValueKey === rawCorrect.toLowerCase();
       } else {
-        // 3) Otherwise compare as string (e.g., full text) OR match by key embedded in value
-        if (selectedValue === rawCorrect.toLowerCase() || selectedValueKey === rawCorrect.toLowerCase()) {
-          isCorrect = true;
-        } else {
-          // If rawCorrect looks like an option label (e.g., 'Ler os textos...'), allow matching by label text
-          const selectedLabel = selected.closest("label");
-          if (selectedLabel) {
-            const labelText = selectedLabel.innerText.replace(/\s+/g, " ").trim().toLowerCase();
-            if (labelText.startsWith(rawCorrect.toLowerCase()) || labelText.includes(rawCorrect.toLowerCase())) {
+        // Handle numeric or string comparisons as before
+        const letterIndex = letterToIndex(rawCorrect);
+        if (letterIndex >= 0) {
+          const selectedIndex = radios.findIndex(r => r === selected); // 0-based index by displayed order
+          if (selectedIndex === letterIndex || selectedValue === rawCorrect.toLowerCase() || selectedValueKey === rawCorrect.toLowerCase()) {
+            isCorrect = true;
+          }
+        } else if (isIntegerString(rawCorrect)) {
+          const correctIndex = parseInt(rawCorrect, 10);
+          const selectedIndex = radios.findIndex(r => r === selected); // 0-based index
+          if (!Number.isNaN(correctIndex) && selectedIndex === correctIndex) {
+            isCorrect = true;
+          } else {
+            if (selectedValue === rawCorrect.toLowerCase() || selectedValueKey === rawCorrect.toLowerCase()) {
               isCorrect = true;
+            } else {
+              const selectedLabel = selected.closest("label");
+              if (selectedLabel) {
+                const labelText = selectedLabel.innerText.replace(/\s+/g, " ").trim().toLowerCase();
+                if (labelText.startsWith(rawCorrect.toLowerCase()) || labelText.includes(rawCorrect.toLowerCase())) {
+                  isCorrect = true;
+                }
+              }
             }
           }
         }
@@ -243,6 +244,23 @@ document.addEventListener("DOMContentLoaded", () => {
 
       if (isCorrect && !window.__redeemed && correctAnswers.size === quizForms.length) {
         window.__redeemed = true;
+
+        // remove any previous status messages
+        const existingStatus = finishBtn.parentNode.querySelector('#redeem-status');
+        if (existingStatus) existingStatus.remove();
+
+        // show animated "Resgatando pontos..." status (spinner + text)
+        const status = document.createElement('div');
+        status.id = 'redeem-status';
+        status.className = 'mt-3 text-sm flex items-center gap-2 text-yellow-200';
+        const spinner = document.createElement('span');
+        spinner.className = 'inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin';
+        const label = document.createElement('span');
+        label.innerText = 'Resgatando pontos...';
+        status.appendChild(spinner);
+        status.appendChild(label);
+        finishBtn.parentNode.appendChild(status);
+
         fetch('/interactive-classes/redeem', {
           method: 'POST',
           credentials: 'same-origin',
@@ -250,37 +268,44 @@ document.addEventListener("DOMContentLoaded", () => {
           body: new URLSearchParams({ points: '20' })
         })
           .then(async res => {
-            if (res.ok) {
-              const msg = document.createElement('div');
-              msg.className = 'mt-3 text-sm text-green-300';
-              msg.innerText = '🎉 Parabéns — 20 pontos resgatados!';
-              finishBtn.parentNode.appendChild(msg);
-            } else {
-              const err = document.createElement('div');
-              err.className = 'mt-3 text-sm text-red-300';
-              err.innerText = 'Erro ao resgatar pontos.';
-              finishBtn.parentNode.appendChild(err);
-              window.__redeemed = false;
-            }
+        // remove the animated status
+        const st = finishBtn.parentNode.querySelector('#redeem-status');
+        if (st) st.remove();
+
+        if (res.ok) {
+          const msg = document.createElement('div');
+          msg.className = 'mt-3 text-sm text-green-300';
+          msg.innerText = '🎉 Parabéns — 20 pontos resgatados!';
+          finishBtn.parentNode.appendChild(msg);
+        } else {
+          const err = document.createElement('div');
+          err.className = 'mt-3 text-sm text-red-300';
+          err.innerText = 'Erro ao resgatar pontos.';
+          finishBtn.parentNode.appendChild(err);
+          window.__redeemed = false;
+        }
           })
           .catch(() => {
-            window.__redeemed = false;
+        // remove animated status and allow retry
+        const st = finishBtn.parentNode.querySelector('#redeem-status');
+        if (st) st.remove();
+        window.__redeemed = false;
           });
       }
-    });
+        });
 
-    form.querySelectorAll('input[name="resposta"]').forEach(radio => {
+        form.querySelectorAll('input[name="resposta"]').forEach(radio => {
       radio.addEventListener("change", () => {
         const selected = form.querySelector('input[name="resposta"]:checked');
         if (!selected) return;
         form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
       });
-    });
-  });
+        });
+      });
 
-  // initialize
-  updateFinishButton();
-});
+      // initialize
+      updateFinishButton();
+    });
 </script>
 
 {% endblock %}
