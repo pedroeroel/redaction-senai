@@ -300,7 +300,7 @@ def get_example_essays(min_grade=900):
         
         docs = users_ref.stream()
         for user in docs:
-            user_doc = get_user_doc_ref_by_user_id(user.id)
+            user_doc = _get_user_doc_ref_by_user_id(user.id)
             essays_ref = user_doc.collection('essays')
             essays = essays_ref.stream()
             
