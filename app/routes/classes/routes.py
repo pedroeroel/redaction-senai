@@ -33,9 +33,9 @@ def interactive_classes():
             "link": f"/interactive-classes/{c.get('id')}"
         })
 
-    score = get_score(user_id)
+    session['score'] = get_score(user_id)
 
-    return render_template('classes.html', classes=formatted_classes, score=score)
+    return render_template('classes.html', classes=formatted_classes, session=session)
 
 
 @classes.route('/interactive-classes/<string:class_id>', methods=['GET'])
