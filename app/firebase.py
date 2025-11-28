@@ -303,15 +303,16 @@ def get_example_essays(min_grade=900):
         for user in users:
             user_data = user.to_dict()
 
-            # ensure user doc exists
             if not user_data:
                 continue
 
-            # Which one is your TRUE uid?
-            # Many of your functions use 'user_id' stored inside the doc
-            uid = user_data.get("user_id") or user.id
-
-            user_doc = _get_user_doc_ref_by_user_id(uid)
+            uid = user_data.get("id")
+            
+            if not uid:
+                user_doc = db.collection("register").document(user.id)
+                continue
+            else:
+                user_doc = _get_user_doc_ref_by_user_id(uid)
 
             if not user_doc:
                 print(f"⚠ WARNING: user_doc not found for uid={uid}")
