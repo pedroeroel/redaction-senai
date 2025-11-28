@@ -26,14 +26,16 @@
                 </h2>
 
                 <p class="text-sm text-gray-400 mb-1">
-                    Autor: <span class="font-semibold">{{ entry.username }}</span> &middot; ID: {{ entry.user_id }}
+                    Autor: <span class="font-semibold">{{ entry.username }}</span> &middot;
+                    User ID: {{ entry.user_id }}
                 </p>
 
-                <p class="text-lg">
-                    Nota: <span class="text-emerald-300 font-bold">{{ entry.essay.generalGrade }}</span>
+                <p class="text-lg mb-3">
+                    Nota geral:
+                    <span class="text-emerald-300 font-bold">{{ entry.essay.generalGrade }}</span>
                 </p>
 
-                <p class="text-gray-300 mb-4">
+                <p class="text-gray-300 mb-2">
                     Tema: {{ entry.essay.theme or "Indefinido" }}
                 </p>
 
@@ -45,8 +47,9 @@
 
                 <a href="/examples/{{ entry.user_id }}/{{ entry.index }}"
                    class="inline-block mt-2 bg-purple-700 hover:bg-purple-600 text-white font-semibold px-5 py-2 rounded-lg">
-                    Ver Redação
+                    Ver Redação Completa
                 </a>
+
             </div>
             {% endfor %}
 

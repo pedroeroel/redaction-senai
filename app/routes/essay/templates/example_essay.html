@@ -5,23 +5,6 @@
 {% set header = True %}
 {% set footer = True %}
 
-{# Example essay data (used when no dynamic essay provided) #}
-{% set essay = essay or {
-    'title': 'A Tecnologia como Aliada da Educação',
-    'theme': 'Os impactos da tecnologia no processo educativo',
-    'content': "Vivemos em um momento histórico em que a tecnologia transforma hábitos e amplia possibilidades. No campo da educação, soluções digitais têm promovido acesso e personalização do ensino, reduzindo barreiras geográficas e oferecendo recursos que atendem diferentes ritmos de aprendizagem.\n\nEntretanto, a mera disponibilidade de ferramentas não resolve desigualdades. É necessário investimento em infraestrutura, formação docente e políticas públicas que garantam conectividade e conteúdos de qualidade para todos. Só assim a tecnologia efetivamente potencia a inclusão e a construção de competências essenciais ao século XXI.\n\nPor fim, a integração entre responsáveis, escolas e plataformas digitais deve priorizar princípios éticos e a proteção de dados pessoais, preservando o bem-estar do estudante. A tecnologia, quando orientada por políticas sólidas e práticas pedagógicas adequadas, revela-se uma poderosa parceira na missão de educar.",
-    'grade': 920,
-    'competencies': [185, 185, 180, 185, 185],
-    'comments': [
-        "Boa compreensão e desenvolvimento do tema; ideias claras e pertinentes.",
-        "Coesão e coerência consistentes com uso adequado de conectivos.",
-        "Variação lexical e precisão vocabular destacadas sem erros relevantes.",
-        "Estrutura convincente e organização lógica dos parágrafos.",
-        "Adequação ao padrão formal; registro e normatividade bem observados.",
-        "Observação global: redação muito equilibrada, demonstra domínio do tema e excelentes condições de nota elevada."
-    ]
-} %}
-
 {% block content %}
 <div class="max-w-4xl mx-auto p-6 text-white">
 
@@ -29,10 +12,15 @@
     <div class="flex justify-between items-center mb-8">
         <div>
             <h1 class="text-4xl font-bold">{{ essay.title }}</h1>
-            <p class="text-sm text-gray-300 mt-1">Tema: <span class="font-semibold text-gray-200">{{ essay.theme }}</span></p>
+            <p class="text-sm text-gray-300 mt-1">
+                Tema:
+                <span class="font-semibold text-gray-200">
+                    {{ essay.theme }}
+                </span>
+            </p>
         </div>
 
-        <a href="{{ url_for('essay.my_essays') }}"
+        <a href="{{ url_for('essay.examples') }}"
            class="px-4 py-2 bg-gray-700 hover:bg-gray-600 rounded-lg shadow transition font-semibold">
             ← voltar
         </a>
@@ -41,7 +29,9 @@
     <!-- SAMPLE BADGE -->
     <div class="flex items-center gap-4 mb-6">
         <div class="rounded-full bg-amber-500 text-black px-3 py-1 font-bold">Exemplo</div>
-        <div class="rounded-full bg-emerald-600 px-3 py-1 font-bold shadow">Nota: {{ essay.grade }}/1000</div>
+        <div class="rounded-full bg-emerald-600 px-3 py-1 font-bold shadow">
+            Nota: {{ essay.grade }}/1000
+        </div>
         <div class="text-sm text-gray-300">Desempenho: Excelente (900+)</div>
     </div>
 
@@ -54,6 +44,7 @@
 
     <!-- ANALYSIS -->
     <div class="bg-[#3b2a52] p-6 rounded-xl shadow-lg">
+
         <div class="flex justify-between items-center border-b border-white/20 pb-4 mb-6">
             <h2 class="text-2xl font-bold">Análise técnica — Exemplo Modelo</h2>
             <div class="text-3xl bg-emerald-600 px-4 py-2 rounded-lg font-extrabold shadow">
@@ -62,35 +53,45 @@
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <!-- Chart -->
+
+            <!-- CHART -->
             <div class="flex justify-center items-center">
                 <canvas id="exampleCompetencyChart" width="300" height="300"></canvas>
             </div>
 
-            <!-- Per-competency comments -->
+            <!-- COMMENTS -->
             <div>
-                <h3 class="text-xl font-bold mb-4">Comentários por competência</h3>
+                <h3 class="text-xl font-bold mb-4">Comentários por Competência</h3>
 
                 {% for score in essay.competencies %}
-                    <div class="bg-[#2a1d3b] p-4 rounded-lg border-l-4 border-emerald-400 mb-3">
-                        <p class="font-bold text-white">
-                            Competência {{ loop.index }}:
-                            <span class="text-emerald-300">{{ score }}/200</span>
-                        </p>
-                        <p class="mt-2 text-gray-300">{{ essay.comments[loop.index0] }}</p>
-                    </div>
+                <div class="bg-[#2a1d3b] p-4 rounded-lg border-l-4 border-emerald-400 mb-3">
+                    <p class="font-bold text-white">
+                        Competência {{ loop.index }}:
+                        <span class="text-emerald-300">{{ score }}/200</span>
+                    </p>
+
+                    <p class="mt-2 text-gray-300">
+                        {{ essay.comments[loop.index0] }}
+                    </p>
+                </div>
                 {% endfor %}
 
+                <!-- General Comment -->
                 <div class="bg-[#2a1d3b] p-4 rounded-lg border-l-4 border-purple-400 mt-6">
                     <p class="font-bold text-white">Comentário geral</p>
-                    <p class="mt-2 text-gray-300">{{ essay.comments[5] }}</p>
+                    <p class="mt-2 text-gray-300">
+                        {{ essay.comments[5] }}
+                    </p>
                 </div>
+
             </div>
+
         </div>
     </div>
+
 </div>
 
-<!-- CHART.JS -->
+<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 <script>
     const competencies = {{ essay.competencies | tojson }};
@@ -126,9 +127,7 @@
                 },
                 tooltip: {
                     callbacks: {
-                        label: function(context) {
-                            return context.label + ": " + context.parsed + "/200";
-                        }
+                        label: (context) => context.label + ": " + context.parsed + "/200"
                     }
                 }
             }

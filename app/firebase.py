@@ -291,42 +291,67 @@ def register_class(class_data):
 
 def get_example_essays(min_grade=900):
     """
-    Returns all essays with generalGrade >= min_grade (default: 900)
-    for the examples.html page.
+    Returns all essays with generalGrade >= min_grade (default = 900)
     """
-    try:
-        users_ref = db.collection('register')
-        chosen_essays = []
-        
-        docs = users_ref.stream()
-        for user in docs:
-            user_doc = _get_user_doc_ref_by_user_id(user.id)
-            essays_ref = user_doc.collection('essays')
-            essays = essays_ref.stream()
-            
-            for index, essay in enumerate(essays):
-                if essay.to_dict().get("generalGrade", 0) >= min_grade:
-                    username = get_user_data(user.id)['username']
 
-                    chosen_essays.append({
-                        'user_id': user.id,
-                        'index': index,
-                        'username': username,
-                        'essay': {
-                            "title": essay.get("title", "Sem título"),
-                            "theme": essay.get("theme", "Indefinido"),
-                            "content": essay.get("content", ""),
-                            "generalGrade": essay.get("generalGrade", 0),
-                            "competencies": essay.get("competencies", []),
-                            "comments": essay.get("comments", [])
-                        }
-                    })
-                
+    chosen_essays = []
+
+    try:
+        users_ref = db.collection("register")
+        users = users_ref.stream()
+
+        for user in users:
+            user_data = user.to_dict()
+
+            # ensure user doc exists
+            if not user_data:
+                continue
+
+            # Which one is your TRUE uid?
+            # Many of your functions use 'user_id' stored inside the doc
+            uid = user_data.get("user_id") or user.id
+
+            user_doc = _get_user_doc_ref_by_user_id(uid)
+
+            if not user_doc:
+                print(f"⚠ WARNING: user_doc not found for uid={uid}")
+                continue
+
+            essays_ref = user_doc.collection("essays")
+            essays = essays_ref.stream()
+
+            for index, essay in enumerate(essays):
+                essay_data = essay.to_dict()
+
+                if not essay_data:
+                    continue
+
+                grade = essay_data.get("generalGrade", 0)
+                if grade < min_grade:
+                    continue
+
+                username = user_data.get("username", "Usuário")
+
+                chosen_essays.append({
+                    "user_id": uid,
+                    "index": index,
+                    "username": username,
+                    "essay": {
+                        "title": essay_data.get("title", "Sem título"),
+                        "theme": essay_data.get("theme", "Indefinido"),
+                        "content": essay_data.get("content", ""),
+                        "generalGrade": grade,
+                        "competencies": essay_data.get("competencies", []),
+                        "comments": essay_data.get("comments", [])
+                    }
+                })
+
         return chosen_essays
 
     except Exception as e:
-        print("Error fetching example essays:", e)
+        print("❌ Error fetching example essays:", e)
         return []
+
 
 def get_specific_essay(user_id, index):
     """
