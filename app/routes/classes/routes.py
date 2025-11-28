@@ -1,7 +1,6 @@
 from flask import Blueprint, render_template, session, redirect
-from ...firebase import get_classes_by_user, get_class_content, get_all_classes, register_class
+from ...firebase import get_classes_by_user, get_class_content, get_all_classes, register_class, get_score, update_score
 from flask import request, jsonify
-from ...firebase import update_score
 
 classes = Blueprint('classes', __name__, template_folder='templates')
 
@@ -34,7 +33,9 @@ def interactive_classes():
             "link": f"/interactive-classes/{c.get('id')}"
         })
 
-    return render_template('classes.html', classes=formatted_classes)
+    score = get_score(user_id)
+
+    return render_template('classes.html', classes=formatted_classes, score=score)
 
 
 @classes.route('/interactive-classes/<string:class_id>', methods=['GET'])

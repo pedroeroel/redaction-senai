@@ -22,28 +22,78 @@
     </div>
 
     <!-- Tópicos -->
-    {% for topic in class_content.topics %}
-    {% set c = topic.content if topic.content is defined else topic %}
-    <section class="bg-[#3D1E8D] p-6 sm:p-8 rounded-2xl shadow-xl mb-10">
-      <h2 class="text-2xl font-semibold mb-4 text-[#A78BFA]">{{ topic.title }}</h2>
+{% for topic in class_content.topics %}
+{% set c = topic.content if topic.content is defined else topic %}
 
-      {% if c.paragraphs %}
-      {% for p in c.paragraphs %}
-      <p class="mb-3 leading-relaxed opacity-90">{{ p }}</p>
+<section class="bg-[#3D1E8D] p-6 sm:p-8 rounded-2xl shadow-xl mb-10">
+  <h2 class="text-2xl font-semibold mb-4 text-[#A78BFA]">{{ topic.title }}</h2>
+
+  {% if c.paragraphs %}
+  {% for p in c.paragraphs %}
+  <p class="mb-3 leading-relaxed opacity-90">{{ p }}</p>
+  {% endfor %}
+  {% endif %}
+
+  {% if c.tip %}
+  <div class="mt-4 p-4 bg-[#5A3E9D] rounded-lg italic text-sm opacity-90">
+    💡 {{ c.tip }}
+  </div>
+  {% endif %}
+
+  {% if c.list_items %}
+  <ul class="list-disc list-inside space-y-2 mt-4">
+    {% for item in c.list_items %}
+    <li><strong>{{ item.title }}:</strong> {{ item.text }}</li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+
+  {% if c.question %}
+  <div class="mt-6">
+    <h3 class="text-xl font-semibold mb-3">🎯 Desafio Interativo</h3>
+    <p class="mb-4">{{ c.question }}</p>
+
+    <!-- FIXED: options sorted (a,b,c...) -->
+    <form class="quiz-form"
+          data-correct="{{ c.correct_answer }}"
+          data-correct-feedback="{{ c.correct_feedback }}"
+          data-wrong-feedback="{{ c.wrong_feedback }}">
+
+      {% for key, value in c.options|dictsort %}
+      <label class="block bg-[#5A3E9D] p-3 rounded-lg cursor-pointer hover:bg-[#7254B4] transition-colors">
+        <input type="radio" name="resposta" value="{{ key }}" class="mr-2 accent-[#A78BFA]">
+        <span>{{ key }}) {{ value }}</span>
+      </label>
       {% endfor %}
-      {% endif %}
 
-      {% if c.tip %}
-      <div class="mt-4 p-4 bg-[#5A3E9D] rounded-lg italic text-sm opacity-90">
-        💡 {{ c.tip }}
-      </div>
-      {% endif %}
+      <div class="quiz-feedback mt-4 hidden p-3 rounded-lg"></div>
+    </form>
+  </div>
+  {% endif %}
 
-      {% if c.list_items %}
-      <ul class="list-disc list-inside space-y-2 mt-4">
-        {% for item in c.list_items %}
-        <li><strong>{{ item.title }}:</strong> {{ item.text }}</li>
-        {% endfor %}
+  {% if c.materials %}
+  <div class="mt-6">
+    <h3 class="text-xl font-semibold mb-3">📖 Materiais</h3>
+    <ul class="space-y-2">
+      {% for material in c.materials %}
+      <li>
+        <a href="{{ material.link }}" target="_blank" class="underline hover:text-[#A78BFA]">
+          🎬 {{ material.title }} ({{ material.type }})
+        </a>
+      </li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  {% if c.challenge %}
+  <div class="mt-4 p-4 bg-[#5A3E9D] rounded-lg italic text-sm opacity-90">
+    🚀 {{ c.challenge }}
+  </div>
+  {% endif %}
+</section>
+
+{% endfor %}
       </ul>
       {% endif %}
 
@@ -128,57 +178,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Helper: is numeric string (integer)
-  function isIntegerString(s) {
-    if (s === null || s === undefined) return false;
-    const n = Number(s);
-    return Number.isInteger(n);
-  }
-
-  // Helper: map letter (a,b,c...) to 0-based index. Returns -1 if not a letter.
-  function letterToIndex(s) {
-    if (!s) return -1;
-    const m = s.toString().trim().toLowerCase().match(/^([a-z])/);
-    if (!m) return -1;
-    return m[1].charCodeAt(0) - 97;
-  }
-
-  // Helper: extract a single-letter key from option value (handles values like "a|text", "a - text", "a: text", or starting single letter)
-  function extractLeadingKeyFromValue(s) {
-    if (!s) return "";
-    const v = s.toString().trim().toLowerCase();
-    if (!v) return "";
-
-    // If pipe-separated, take the first token
-    if (v.includes("|")) {
-      const first = v.split("|", 1)[0].trim();
-      if (/^[a-z]$/.test(first)) return first;
-    }
-
-    // If starts with single letter followed by non-word char or end
-    const m = v.match(/^\s*([a-z])(?=\W|$)/);
-    if (m) return m[1];
-
-    // Try other separators like ":" or "-"
-    const toks = v.split(/[:\-]/);
-    if (toks.length > 1) {
-      const t = toks[0].trim();
-      if (/^[a-z]$/.test(t)) return t;
-    }
-
-    // If value itself is a single letter
-    if (/^[a-z]$/.test(v)) return v;
-
-    return "";
-  }
-
   quizForms.forEach((form, index) => {
     const feedback = form.querySelector(".quiz-feedback");
-    const rawCorrect = (form.dataset.correct ?? "").toString().trim();
+    const rawCorrect = (form.dataset.correct || "").trim().toLowerCase();
     const correctFeedback = form.dataset.correctFeedback || "Boa!";
     const wrongFeedback = form.dataset.wrongFeedback || "Tente novamente!";
-
-    console.log(`Quiz #${index} - Correct Answer: "${rawCorrect}"`);
 
     form.addEventListener("submit", e => {
       e.preventDefault();
@@ -192,44 +196,31 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      feedback.classList.remove("hidden");
-      const selectedValue = selected.value.toString().trim().toLowerCase();
-      const selectedValueKey = extractLeadingKeyFromValue(selected.value);
+      const optionKeys = radios.map(r => r.value.trim().toLowerCase());
+      const selectedValue = selected.value.trim().toLowerCase();
+      const selectedIndex = radios.findIndex(r => r === selected);
+      const selectedLabel = (selected.closest("label")?.innerText || "").toLowerCase();
 
       let isCorrect = false;
 
-      // Check if the correct answer is a key (a, b, c...)
-      if (rawCorrect.match(/^[a-z]$/)) {
-        isCorrect = selectedValueKey === rawCorrect.toLowerCase();
-      } else {
-        // Handle numeric or string comparisons as before
-        const letterIndex = letterToIndex(rawCorrect);
-        if (letterIndex >= 0) {
-          const selectedIndex = radios.findIndex(r => r === selected); // 0-based index by displayed order
-          if (selectedIndex === letterIndex || selectedValue === rawCorrect.toLowerCase() || selectedValueKey === rawCorrect.toLowerCase()) {
-            isCorrect = true;
-          }
-        } else if (isIntegerString(rawCorrect)) {
-          const correctIndex = parseInt(rawCorrect, 10);
-          const selectedIndex = radios.findIndex(r => r === selected); // 0-based index
-          if (!Number.isNaN(correctIndex) && selectedIndex === correctIndex) {
-            isCorrect = true;
-          } else {
-            if (selectedValue === rawCorrect.toLowerCase() || selectedValueKey === rawCorrect.toLowerCase()) {
-              isCorrect = true;
-            } else {
-              const selectedLabel = selected.closest("label");
-              if (selectedLabel) {
-                const labelText = selectedLabel.innerText.replace(/\s+/g, " ").trim().toLowerCase();
-                if (labelText.startsWith(rawCorrect.toLowerCase()) || labelText.includes(rawCorrect.toLowerCase())) {
-                  isCorrect = true;
-                }
-              }
-            }
-          }
-        }
+      // Case 1 — exact letter (a,b,c)
+      if (/^[a-z]$/.test(rawCorrect)) {
+        isCorrect = (selectedValue === rawCorrect);
       }
 
+      // Case 2 — numeric index (0 or 1-based)
+      if (!isCorrect && /^[0-9]+$/.test(rawCorrect)) {
+        const n = parseInt(rawCorrect, 10);
+        if (selectedIndex === n || selectedIndex === n - 1) isCorrect = true;
+      }
+
+      // Case 3 — label text matching
+      if (!isCorrect) {
+        if (selectedLabel.startsWith(rawCorrect)) isCorrect = true;
+        if (selectedLabel.includes(rawCorrect)) isCorrect = true;
+      }
+
+      // Apply result
       if (isCorrect) {
         feedback.className = "quiz-feedback mt-4 p-3 rounded-lg bg-green-500 text-[#E8E1CF]";
         feedback.innerHTML = "✅ " + correctFeedback;
@@ -241,71 +232,19 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       updateFinishButton();
-
-      if (isCorrect && !window.__redeemed && correctAnswers.size === quizForms.length) {
-        window.__redeemed = true;
-
-        // remove any previous status messages
-        const existingStatus = finishBtn.parentNode.querySelector('#redeem-status');
-        if (existingStatus) existingStatus.remove();
-
-        // show animated "Resgatando pontos..." status (spinner + text)
-        const status = document.createElement('div');
-        status.id = 'redeem-status';
-        status.className = 'mt-3 text-sm flex items-center gap-2 text-yellow-200';
-        const spinner = document.createElement('span');
-        spinner.className = 'inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin';
-        const label = document.createElement('span');
-        label.innerText = 'Resgatando pontos...';
-        status.appendChild(spinner);
-        status.appendChild(label);
-        finishBtn.parentNode.appendChild(status);
-
-        fetch('/interactive-classes/redeem', {
-          method: 'POST',
-          credentials: 'same-origin',
-          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-          body: new URLSearchParams({ points: '20' })
-        })
-          .then(async res => {
-        // remove the animated status
-        const st = finishBtn.parentNode.querySelector('#redeem-status');
-        if (st) st.remove();
-
-        if (res.ok) {
-          const msg = document.createElement('div');
-          msg.className = 'mt-3 text-sm text-green-300';
-          msg.innerText = '🎉 Parabéns — 20 pontos resgatados!';
-          finishBtn.parentNode.appendChild(msg);
-        } else {
-          const err = document.createElement('div');
-          err.className = 'mt-3 text-sm text-red-300';
-          err.innerText = 'Erro ao resgatar pontos.';
-          finishBtn.parentNode.appendChild(err);
-          window.__redeemed = false;
-        }
-          })
-          .catch(() => {
-        // remove animated status and allow retry
-        const st = finishBtn.parentNode.querySelector('#redeem-status');
-        if (st) st.remove();
-        window.__redeemed = false;
-          });
-      }
-        });
-
-        form.querySelectorAll('input[name="resposta"]').forEach(radio => {
-      radio.addEventListener("change", () => {
-        const selected = form.querySelector('input[name="resposta"]:checked');
-        if (!selected) return;
-        form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
-      });
-        });
-      });
-
-      // initialize
-      updateFinishButton();
     });
+
+    // Auto-submit when selecting
+    form.querySelectorAll('input[name="resposta"]').forEach(radio => {
+      radio.addEventListener("change", () => {
+        form.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+      });
+    });
+
+  });
+
+  updateFinishButton();
+});
 </script>
 
 {% endblock %}
