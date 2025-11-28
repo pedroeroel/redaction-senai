@@ -20,7 +20,7 @@ def games_page(id):
     else:
         return redirect('/login')
     
-@games.route('/points/redeem', methods=['POST'])
+@games.route('/games/redeem', methods=['POST'])
 def redeem_points():
     if not session:
         return redirect('/login')

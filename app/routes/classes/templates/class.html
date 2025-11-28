@@ -103,7 +103,7 @@
 </main>
 
 <!-- JS -->
- 
+
 <script>
 document.addEventListener("DOMContentLoaded", () => {
   const quizForms = document.querySelectorAll(".quiz-form");
@@ -240,6 +240,33 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       updateFinishButton();
+
+      if (isCorrect && !window.__redeemed && correctAnswers.size === quizForms.length) {
+        window.__redeemed = true;
+        fetch('/interactive-classes/redeem', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({ points: '20' })
+        })
+          .then(async res => {
+            if (res.ok) {
+              const msg = document.createElement('div');
+              msg.className = 'mt-3 text-sm text-green-300';
+              msg.innerText = '🎉 Parabéns — 20 pontos resgatados!';
+              finishBtn.parentNode.appendChild(msg);
+            } else {
+              const err = document.createElement('div');
+              err.className = 'mt-3 text-sm text-red-300';
+              err.innerText = 'Erro ao resgatar pontos.';
+              finishBtn.parentNode.appendChild(err);
+              window.__redeemed = false;
+            }
+          })
+          .catch(() => {
+            window.__redeemed = false;
+          });
+      }
     });
 
     form.querySelectorAll('input[name="resposta"]').forEach(radio => {

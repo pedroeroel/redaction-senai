@@ -1,5 +1,7 @@
 from flask import Blueprint, render_template, session, redirect
 from ...firebase import get_classes_by_user, get_class_content, get_all_classes, register_class
+from flask import request, jsonify
+from ...firebase import update_score
 
 classes = Blueprint('classes', __name__, template_folder='templates')
 
@@ -80,3 +82,32 @@ def interactive_class(class_id):
     print(f"Formatted class content for rendering: {formatted_content}")
 
     return render_template('class.html', class_content=formatted_content)
+
+@classes.route('/interactive-classes/redeem', methods=['POST'])
+def redeem_points():
+    # local imports so we don't need to modify top-of-file imports
+
+    if not session:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    try:
+        points_to_redeem = int(request.form.get('points', 0))
+    except (TypeError, ValueError):
+        return jsonify({"error": "Invalid points value"}), 400
+
+    if points_to_redeem <= 0:
+        return jsonify({"error": "Invalid points to redeem"}), 400
+
+    try:
+        result = update_score(user_id, points_to_redeem)
+    except Exception as e:
+        return jsonify({"error": "Failed to redeem points", "detail": str(e)}), 500
+
+    if result is False or result is None:
+        return jsonify({"error": "Redeem operation failed"}), 500
+
+    return jsonify({"message": "Points redeemed", "user_id": user_id, "points_redeemed": points_to_redeem}), 200
