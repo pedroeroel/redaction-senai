@@ -4,72 +4,11 @@
 {% set footer = False %}
 {% set main = False %}
 
-{# Inclusão do CSS e JS customizados que estavam no <head> original #}
-{% block head_extra %}
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-<style>
-    /* Estilos personalizados com Tailwind para fontes e cores */
-    body {
-        font-family: 'Roboto', sans-serif;
-        background-color: #1A0B3D;
-        overflow-x: hidden; /* Evita scroll horizontal indesejado */
-    }
-    h1, h2, .section-title {
-        font-family: 'Poppins', sans-serif;
-        font-weight: 700;
-    }
-    .main-content {
-        background-color: #1A0B3D; /* Fundo base para o parallax */
-        overflow: hidden; /* Garante que o parallax funcione bem */
-    }
-
-    /* Classes para animação de fade-in no scroll */
-    .fade-in-section {
-        opacity: 0;
-        transform: translateY(20px);
-        transition: opacity 1s ease-out, transform 1s ease-out;
-    }
-    .fade-in-section.is-visible {
-        opacity: 1;
-        transform: translateY(0);
-    }
-
-    /* Para os números animados */
-    .count-up-number {
-        font-family: 'Poppins', sans-serif;
-        font-weight: 800;
-        font-size: 3.5rem; /* Ajuste para o tamanho desejado */
-        line-height: 1;
-        color: #E8E1CF;
-    }
-    /* Estilo para a unidade (%, x) que acompanha o número, para que ela tenha o mesmo tamanho e cor */
-    .count-up-unit {
-        font-family: 'Poppins', sans-serif;
-        font-weight: 800;
-        font-size: 3.5rem;
-        line-height: 1;
-        color: #E8E1CF;
-        margin-left: 0.2rem; /* Pequeno espaçamento entre número e unidade */
-    }
-
-    /* Estilo para a barra de citação */
-    .quote-box {
-        border-left: 4px solid #5A3E9D; /* Cor da borda da citação */
-        padding-left: 1.5rem;
-        margin-top: 1.5rem;
-        margin-bottom: 1.5rem;
-        font-style: italic;
-        color: #CFC5DD; /* Cor mais suave para a citação */
-    }
-</style>
-{% endblock %}
-
 {% block main_content %}
-    
-    {# O HEADER CUSTOMIZADO DA PÁGINA DE TEMA FOI MANTIDO AQUI #}
+    <!-- Custom Header for Theme Page -->
     <header class="bg-[#3D1E8D] h-20 shadow-lg flex justify-between items-center px-6 sm:px-8 lg:px-12 fixed w-full z-50 top-0">
         <div class="flex items-center space-x-4 md:space-x-5">
-            <a href="../temasatuais.html" class="text-[#E8E1CF] hover:opacity-75 transition-opacity duration-300">
+            <a href="/temasatuais" class="text-[#E8E1CF] hover:opacity-75 transition-opacity duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                 </svg>
@@ -77,7 +16,7 @@
             <img src="{{ url_for('static', filename='img/redaction-logo.png') }}" alt="Redaction" class="h-10 sm:h-12">
         </div>
         <div class="flex items-center space-x-4">
-            <a href="#" class="text-sm text-[#E8E1CF] hover:opacity-75 transition-opacity duration-300">Sair</a>
+            <a href="/logout" class="text-sm text-[#E8E1CF] hover:opacity-75 transition-opacity duration-300">Sair</a>
             <div class="w-9 h-9 bg-[#2A0F5E] rounded-full flex items-center justify-center ring-2 ring-[#5A3E9D]">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#E8E1CF" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
@@ -86,107 +25,104 @@
         </div>
     </header>
 
-    <div class="main-content relative pt-20">
+    <div class="bg-[#1A0B3D] overflow-hidden min-h-screen relative pt-20">
+        <!-- Background Image -->
         <div class="absolute inset-0 bg-cover bg-center z-0" 
-             style="background-image: url('../../fundo-temas.png'); transform: translateY(var(--translate-y, 0));" 
+             style="background-image: url('../../fundo-temas.png');" 
              id="parallax-bg"></div>
         
         <div class="absolute inset-0 bg-black bg-opacity-40 z-10"></div>
 
         <div class="relative z-20 min-h-screen flex flex-col items-center justify-center text-center p-8">
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#E8E1CF] mb-2 drop-shadow-lg leading-tight animate-fade-in-up">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#E8E1CF] mb-2 drop-shadow-lg leading-tight">
                 A Desigualdade Social no Brasil: Uma Jornada de Conscientização
             </h1>
-            <p class="text-lg sm:text-xl text-[#E8E1CF] mb-6 opacity-90 animate-fade-in-up delay-200">
+            <p class="text-lg sm:text-xl text-[#E8E1CF] mb-6 opacity-90">
                 Explore as dimensões e desafios de um dos maiores problemas do nosso tempo.
             </p>
         </div>
 
         <section class="bg-[#1A0B3D] bg-opacity-90 flex items-center justify-center py-12">
-            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
-                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Raízes Profundas de um Problema Histórico</h2>
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Raízes Profundas de um Problema Histórico</h2>
                 <p class="text-lg text-justify leading-relaxed mb-3">
                     A desigualdade social no Brasil é um problema complexo e profundamente enraizado, com raízes históricas que se estendem desde o período colonial. Ela se manifesta de diversas formas, afetando a distribuição de renda, o acesso à educação, à saúde, à justiça e a oportunidades, perpetuando ciclos de pobreza e exclusão.
                 </p>
-                <div class="quote-box text-lg italic text-left">
+                <div class="border-l-4 border-[#5A3E9D] pl-6 mt-6 mb-6 italic text-[#CFC5DD] text-lg text-left">
                     "A desigualdade é a maior geradora de conflitos, de sofrimentos, de vidas ceifadas e de futuro bloqueado." - Dom Pedro Casaldáliga
                 </div>
             </div>
         </section>
 
         <section class="bg-[#2A0F5E] bg-opacity-90 flex items-center justify-center py-12">
-            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
-                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Números que Impactam: A Realidade Brasileira</h2>
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Números que Impactam: A Realidade Brasileira</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
                     <div class="bg-[#3D1E8D] p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
                         <div class="flex items-end">
-                            <span class="count-up-number" data-target="0.506" data-float="true">0.000</span>
+                            <span class="text-5xl font-extrabold text-[#E8E1CF]">0.518</span>
                         </div>
-                        <p class="text-xl mt-2">Índice de Gini (2024)</p>
-                        <p class="text-sm opacity-80">(menor valor desde 2012, mas ainda alto)</p>
+                        <p class="text-xl mt-2">Índice de Gini (2022)</p>
+                        <p class="text-sm opacity-80">(estável, mas ainda alto)</p>
                     </div>
                     <div class="bg-[#3D1E8D] p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
                         <div class="flex items-end">
-                            <span class="count-up-number" data-target="30">0</span>
-                            <span class="count-up-unit">%</span>
+                            <span class="text-5xl font-extrabold text-[#E8E1CF]">29.6</span>
+                            <span class="text-5xl font-extrabold text-[#E8E1CF] ml-1">%</span>
                         </div>
                         <p class="text-xl mt-2">da população vive em pobreza</p>
                     </div>
                     <div class="bg-[#3D1E8D] p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
                         <div class="flex items-end">
-                            <span class="count-up-number" data-target="5.9" data-float="true">0.0</span>
-                            <span class="count-up-unit">%</span>
+                            <span class="text-5xl font-extrabold text-[#E8E1CF]">5.9</span>
+                            <span class="text-5xl font-extrabold text-[#E8E1CF] ml-1">%</span>
                         </div>
                         <p class="text-xl mt-2">em extrema pobreza</p>
                     </div>
                     <div class="bg-[#3D1E8D] p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
                         <div class="flex items-end">
-                            <span class="count-up-number" data-target="36">0</span>
-                            <span class="count-up-unit">x</span>
+                            <span class="text-5xl font-extrabold text-[#E8E1CF]">30+</span>
+                            <span class="text-5xl font-extrabold text-[#E8E1CF] ml-1">x</span>
                         </div>
-                        <p class="text-xl mt-2">mais rico ganha o 1% top que os 40% mais pobres</p>
+                        <p class="text-xl mt-2">mais rico ganha o 1% top que os 50% mais pobres</p>
                     </div>
                 </div>
-                <p class="text-sm opacity-80 mt-6">Fonte: IBGE (2024), IPEA.</p>
+                <p class="text-sm opacity-80 mt-6">Fonte: IBGE, Síntese de Indicadores Sociais.</p>
             </div>
         </section>
 
         <section class="bg-[#1A0B3D] bg-opacity-90 flex items-center justify-center py-12">
-            <div class="max-w-5xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
-                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-6">As Faces da Desigualdade: Além da Renda</h2>
+            <div class="max-w-5xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-6">As Faces da Desigualdade: Além da Renda</h2>
                 <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
                     <div class="bg-[#3D1E8D] p-6 rounded-lg shadow-md text-left">
-                        <h3 class="text-2xl font-semibold mb-3 text-[#E8E1CF] flex items-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 mr-2 text-[#E8E1CF]">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M12 6v12m-3-2.818l.879.659c1.171.879 3.07.879 4.242 0 1.172-.879 1.172-2.303 0-3.182C13.597 12.803 12 11.31 12 9.5a1.5 1.5 0 01-3 0V9.284m7.5-8.625H9.75M7.5 12V5.25M12 12v-1.25M18.75 12V5.25M12 2.25c-1.892 0-3.75 0-3.75 0V3.75c0 1.036 0 1.875.225 2.569l.06.216M12 2.25c1.892 0 3.75 0 3.75 0V3.75c0 1.036 0 1.875-.225 2.569l-.06.216m-2.25 10.198l4.276 2.138A7.5 7.5 0 0012 14.25c-1.892 0-3.75-.634-3.75-1.5S10.108 12 12 12V2.25" />
-                              </svg>
-                              Desigualdade de Renda</h3>
+                        <h3 class="text-2xl font-semibold mb-3 text-[#E8E1CF] flex items-center">
+                            Desigualdade de Renda
+                        </h3>
                         <p class="text-base leading-relaxed">
                             A concentração de riqueza nas mãos de poucos é um dos pilares da desigualdade brasileira. O acesso a empregos de qualidade, salários justos e oportunidades de ascensão econômica são drasticamente desiguais.
                         </p>
                     </div>
                     <div class="bg-[#3D1E8D] p-6 rounded-lg shadow-md text-left">
-                        <h3 class="text-2xl font-semibold mb-3 text-[#E8E1CF] flex items-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 mr-2 text-[#E8E1CF]">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 0 0-.491 6.347m6.718-5.182a60.462 60.462 0 0 0-1.945 6.24M12 20.25a.75.75 0 0 0 .75-.75V19.5a.75.75 0 0 0-.75-.75H12a.75.75 0 0 0-.75.75v.75c0 .414.336.75.75.75ZM18.75 4.932a60.425 60.425 0 0 0-1.945-6.24m-6.718 5.182a60.462 60.462 0 0 1-.491-6.347m0 0A2.25 2.25 0 0 1 12 5.25c.828 0 1.5.672 1.5 1.5v3.625m-1.5 1.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6 3v-3.625c0-.828.672-1.5 1.5-1.5s1.5.672 1.5 1.5v3.625m-1.5 1.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
-                              </svg>
-                              Acesso à Educação</h3>
+                        <h3 class="text-2xl font-semibold mb-3 text-[#E8E1CF] flex items-center">
+                            Acesso à Educação
+                        </h3>
                         <p class="text-base leading-relaxed">
                             A qualidade da educação pública vs. privada, a evasão escolar e a falta de acesso à universidade para camadas mais pobres da população perpetuam a desigualdade de oportunidades.
                         </p>
                     </div>
                     <div class="bg-[#3D1E8D] p-6 rounded-lg shadow-md text-left">
-                        <h3 class="text-2xl font-semibold mb-3 text-[#E8E1CF] flex items-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 mr-2 text-[#E8E1CF]">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632Z" />
-                              </svg>
-                              Desigualdade Racial</h3>
+                        <h3 class="text-2xl font-semibold mb-3 text-[#E8E1CF] flex items-center">
+                            Desigualdade Racial
+                        </h3>
                         <p class="text-base leading-relaxed">
                             Populações negras e indígenas enfrentam barreiras históricas no mercado de trabalho, educação e representatividade, resultando em menor renda e acesso a direitos básicos.
                         </p>
                     </div>
                     <div class="bg-[#3D1E8D] p-6 rounded-lg shadow-md text-left">
-                        <h3 class="text-2xl font-semibold mb-3 text-[#E8E1CF] flex items-center"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-7 h-7 mr-2 text-[#E8E1CF]">
-                                <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 1 1-7.5 0 3.75 3.75 0 0 1 7.5 0ZM4.501 20.118a7.5 7.5 0 0 1 14.998 0A17.933 17.933 0 0 1 12 21.75c-2.676 0-5.216-.584-7.499-1.632ZM12 7.5c-1.657 0-3 1.343-3 3s1.343 3 3 3 3-1.343 3-3-1.343-3-3-3Z" />
-                              </svg>
-                              Desigualdade de Gênero</h3>
+                        <h3 class="text-2xl font-semibold mb-3 text-[#E8E1CF] flex items-center">
+                            Desigualdade de Gênero
+                        </h3>
                         <p class="text-base leading-relaxed">
                             Mulheres, especialmente mulheres negras, ainda recebem salários menores que homens para as mesmas funções e enfrentam barreiras para ascender em suas carreiras.
                         </p>
@@ -195,178 +131,36 @@
             </div>
         </section>
 
-        <section class="bg-[#2A0F5E] bg-opacity-90 flex items-center justify-center py-12">
-            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
-                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Disparidades no Mercado de Trabalho: Raça e Gênero</h2>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
-                    <div class="bg-[#3D1E8D] p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
-                        <div class="flex items-end">
-                            <span class="count-up-number" data-target="39.2" data-float="true">0.0</span>
-                            <span class="count-up-unit">%</span>
-                        </div>
-                        <p class="text-xl mt-2">Rendimento Médio de Mulheres Negras</p>
-                        <p class="text-sm opacity-80">(em comparação ao de homens brancos)</p>
-                    </div>
-                    <div class="bg-[#3D1E8D] p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
-                        <div class="flex items-end">
-                            <span class="count-up-number" data-target="76.1" data-float="true">0.0</span>
-                            <span class="count-up-unit">%</span>
-                        </div>
-                        <p class="text-xl mt-2">Rendimento Médio de Mulheres Brancas</p>
-                        <p class="text-sm opacity-80">(em comparação ao de homens brancos)</p>
-                    </div>
-                    <div class="bg-[#3D1E8D] p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
-                        <div class="flex items-end">
-                            <span class="count-up-number" data-target="56.2" data-float="true">0.0</span>
-                            <span class="count-up-unit">%</span>
-                        </div>
-                        <p class="text-xl mt-2">Rendimento Médio de Homens Negros</p>
-                        <p class="text-sm opacity-80">(em comparação ao de homens brancos)</p>
-                    </div>
-                    <div class="bg-[#3D1E8D] p-6 rounded-lg shadow-md flex flex-col items-center justify-center">
-                        <div class="flex items-end">
-                            <span class="count-up-number" data-target="2.7" data-float="true">0.0</span>
-                            <span class="count-up-unit">%</span>
-                        </div>
-                        <p class="text-xl mt-2">Representação de Mulheres Negras em Cargos Gerenciais</p>
-                        <p class="text-sm opacity-80">(no total de trabalhadores)</p>
-                    </div>
-                </div>
-                <p class="text-sm opacity-80 mt-6">Fonte: IBGE, Síntese de Indicadores Sociais (Valores aproximados do último relatório, referente a disparidades raciais e de gênero).</p>
-            </div>
-        </section>
-
         <section class="bg-[#1A0B3D] bg-opacity-90 flex items-center justify-center py-12">
-            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
-                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Construindo um Futuro Mais Justo</h2>
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Construindo um Futuro Mais Justo</h2>
                 <p class="text-lg text-justify leading-relaxed mb-4">
                     Superar a desigualdade social no Brasil exige um esforço contínuo e multifacetado, com políticas públicas integradas, investimento em educação e saúde, e um compromisso com a equidade racial, de gênero e territorial.
                 </p>
                 <ul class="text-left text-lg space-y-2">
-                    <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3 text-[#E8E1CF] flex-shrink-0 mt-1">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                        Fortalecimento de programas de transferência de renda.</li>
-                    <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3 text-[#E8E1CF] flex-shrink-0 mt-1">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                        Investimento em educação pública de qualidade.</li>
-                    <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3 text-[#E8E1CF] flex-shrink-0 mt-1">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                        Políticas de cotas e ações afirmativas.</li>
-                    <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3 text-[#E8E1CF] flex-shrink-0 mt-1">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                        Combate à discriminação e promoção da diversidade.</li>
+                    <li class="flex items-start">
+                        Fortalecimento de programas de transferência de renda.
+                    </li>
+                    <li class="flex items-start">
+                        Investimento em educação pública de qualidade.
+                    </li>
+                    <li class="flex items-start">
+                        Políticas de cotas e ações afirmativas.
+                    </li>
+                    <li class="flex items-start">
+                        Combate à discriminação e promoção da diversidade.
+                    </li>
                 </ul>
             </div>
         </section>
 
         <section class="bg-[#1A0B3D] bg-opacity-90 flex flex-col items-center justify-center py-12">
-            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
-                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Seja Parte da Mudança</h2>
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Seja Parte da Mudança</h2>
                 <p class="text-lg leading-relaxed mb-6">
                     Compreender a desigualdade é o primeiro passo para agir. Eduque-se, participe e apoie iniciativas que buscam um Brasil mais justo e equitativo para todos.
                 </p>
-                </div>
+            </div>
         </section>
-
     </div>
-
-    <script>
-        // JavaScript para Parallax e Animações no Scroll
-
-        // 1. Parallax
-        const parallaxBg = document.getElementById('parallax-bg');
-        if (parallaxBg) {
-            window.addEventListener('scroll', () => {
-                const scrollY = window.scrollY;
-                // Ajuste o fator para controlar a velocidade do parallax
-                parallaxBg.style.setProperty('--translate-y', `${scrollY * 0.3}px`); // 0.3 = 30% da velocidade de rolagem
-            });
-        }
-
-        // 2. Fade-in Sections
-        const fadeSections = document.querySelectorAll('.fade-in-section');
-        const observerOptions = {
-            root: null, // viewport como root
-            rootMargin: '0px',
-            threshold: 0.15 // quando 15% do elemento estiver visível
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target); // Para animar apenas uma vez
-                }
-            });
-        }, observerOptions);
-
-        fadeSections.forEach(section => {
-            observer.observe(section);
-        });
-
-        // 3. Count Up Numbers (animação de números)
-        function animateCountUp(element, target) {
-            let start = 0;
-            const duration = 2000; // 2 segundos
-            const frameDuration = 1000 / 60; // 60 frames por segundo
-            const totalFrames = Math.round(duration / frameDuration);
-            let frame = 0;
-
-            // Verifica se o número deve ter casas decimais (agora com um atributo data-float)
-            const hasFloat = element.dataset.float === 'true'; 
-
-            const counter = setInterval(() => {
-                frame++;
-                const progress = frame / totalFrames;
-                let currentValue = target * progress;
-
-                if (hasFloat) {
-                    // Para o Gini e 5.9%, precisamos de casas decimais
-                    // Ajustado para garantir precisão de uma casa decimal para a maioria dos novos dados (ex: 39.2%)
-                    const decimalPlaces = target < 1 ? 3 : 1; 
-                    element.textContent = currentValue.toFixed(decimalPlaces); 
-                } else {
-                    // Para números inteiros
-                    element.textContent = Math.floor(currentValue);
-                }
-
-                if (frame === totalFrames) {
-                    clearInterval(counter);
-                    // Garante o valor exato no final, com a formatação correta
-                    const decimalPlaces = target < 1 ? 3 : 1;
-                    element.textContent = hasFloat ? target.toFixed(decimalPlaces) : target;
-                }
-            }, frameDuration);
-        }
-
-        const countUpElements = document.querySelectorAll('.count-up-number');
-        const countUpObserverOptions = {
-            root: null,
-            rootMargin: '0px',
-            threshold: 0.5 // Quando 50% do elemento estiver visível
-        };
-
-        const countUpObserver = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                // Apenas anime se o elemento for visível e ainda não tiver sido contado
-                if (entry.isIntersecting && !entry.target.classList.contains('counted')) {
-                    const targetValue = parseFloat(entry.target.dataset.target);
-                    // Certifica-se de que targetValue é um número válido antes de animar
-                    if (!isNaN(targetValue)) { 
-                        animateCountUp(entry.target, targetValue);
-                        entry.target.classList.add('counted'); // Marca como contado para não animar de novo
-                    }
-                }
-            });
-        }, countUpObserverOptions);
-
-        countUpElements.forEach(el => {
-            countUpObserver.observe(el);
-        });
-
-    </script>
 {% endblock %}

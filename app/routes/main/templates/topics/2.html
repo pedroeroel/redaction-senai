@@ -1,68 +1,21 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Jornada da IA Responsável</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        /* Estilos personalizados com Tailwind para fontes e cores */
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #1A0B3D; /* Fundo geral */
-            overflow-x: hidden; /* Evita scroll horizontal indesejado */
-        }
-        h1, h2, .section-title {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-        }
-        .main-content {
-            background-color: #1A0B3D; /* Fundo base para o parallax */
-            overflow: hidden; /* Garante que o parallax funcione bem */
-            min-height: 100vh; /* Garante que o main-content ocupe a tela para o scroll */
-        }
+{% extends 'layout.html' %}
+{% block pagename %}Jornada da IA Responsável{% endblock %}
+{% set header = False %}
+{% set footer = False %}
+{% set main = False %}
 
-        /* Classes para animação de fade-in no scroll */
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-        }
-        .fade-in-section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* Estilo para a caixa de destaque/alerta */
-        .alert-box {
-            border-left: 4px solid #FCA311; /* Amarelo/Laranja para alerta */
-            padding-left: 1.5rem;
-            /* Reduzi a margem superior e inferior do alert-box */
-            margin-top: 1.5rem; /* Era 2rem */
-            margin-bottom: 1.5rem; /* Era 2rem */
-            background-color: rgba(252, 163, 17, 0.1); /* Fundo suave para o alerta */
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            color: #E8E1CF;
-        }
-        .alert-box strong {
-            color: #FCA311; /* Cor mais forte para o texto destacado */
-        }
-    </style>
-</head>
-<body class="text-[#E8E1CF]">
+{% block main_content %}
     <header class="bg-[#3D1E8D] h-20 shadow-lg flex justify-between items-center px-6 sm:px-8 lg:px-12 fixed w-full z-50 top-0">
         <div class="flex items-center space-x-4 md:space-x-5">
-            <a href="../temasatuais.html" class="text-[#E8E1CF] hover:opacity-75 transition-opacity duration-300">
+            <a href="/temasatuais" class="text-[#E8E1CF] hover:opacity-75 transition-opacity duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                 </svg>
             </a>
-            <img src="../../logo.png" alt="Redaction" class="h-10 sm:h-12">
+            <img src="{{ url_for('static', filename='img/redaction-logo.png') }}" alt="Redaction" class="h-10 sm:h-12">
         </div>
         <div class="flex items-center space-x-4">
-            <a href="#" class="text-sm text-[#E8E1CF] hover:opacity-75 transition-opacity duration-300">Sair</a>
+            <a href="/logout" class="text-sm text-[#E8E1CF] hover:opacity-75 transition-opacity duration-300">Sair</a>
             <div class="w-9 h-9 bg-[#2A0F5E] rounded-full flex items-center justify-center ring-2 ring-[#5A3E9D]">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#E8E1CF" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
@@ -71,25 +24,25 @@
         </div>
     </header>
 
-    <div class="main-content relative pt-20">
+    <div class="bg-[#1A0B3D] overflow-hidden min-h-screen relative pt-20">
         <div class="absolute inset-0 bg-cover bg-center z-0" 
-             style="background-image: url('../../fundo-temas.png'); transform: translateY(var(--translate-y, 0));" 
+             style="background-image: url('../../fundo-temas.png');" 
              id="parallax-bg"></div>
         
         <div class="absolute inset-0 bg-black bg-opacity-40 z-10"></div>
 
         <div class="relative z-20 min-h-screen flex flex-col items-center justify-center text-center p-8">
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#E8E1CF] mb-2 drop-shadow-lg leading-tight animate-fade-in-up">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#E8E1CF] mb-2 drop-shadow-lg leading-tight">
                 Inteligência Artificial e Ética: Navegando no Futuro
             </h1>
-            <p class="text-lg sm:text-xl text-[#E8E1CF] mb-6 opacity-90 animate-fade-in-up delay-200">
+            <p class="text-lg sm:text-xl text-[#E8E1CF] mb-6 opacity-90">
                 Explore o impacto da IA e a importância da responsabilidade no seu desenvolvimento.
             </p>
         </div>
 
         <section class="bg-[#1A0B3D] bg-opacity-90 flex items-center justify-center py-16">
-            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
-                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">A Revolução da Inteligência Artificial</h2>
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">A Revolução da Inteligência Artificial</h2>
                 <p class="text-lg text-justify leading-relaxed mb-3">
                     A Inteligência Artificial (IA) é uma tecnologia que permite que máquinas simulem capacidades humanas, como aprender, raciocinar, resolver problemas e tomar decisões. Ela está presente em diversas áreas do nosso dia a dia, transformando setores inteiros e prometendo um futuro com inovações contínuas.
                 </p>
@@ -129,28 +82,30 @@
         </section>
 
         <section class="bg-[#2A0F5E] bg-opacity-90 flex items-center justify-center py-16">
-            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
-                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">O Lado Sombrio da IA: Desafios Éticos</h2>
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">O Lado Sombrio da IA: Desafios Éticos</h2>
                 <p class="text-lg text-justify leading-relaxed mb-3">
                     Com o avanço acelerado da IA, surgem também importantes discussões sobre a ética envolvida no seu desenvolvimento e uso. Garantir que essa tecnologia seja utilizada de forma justa, segura e responsável é um desafio central.
                 </p>
-                <div class="alert-box text-left">
-                    <h3 class="text-2xl font-semibold mb-3 flex items-center text-[#FCA311]"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 mr-2">
+                <div class="border-l-4 border-[#FCA311] bg-[#FCA311]/10 rounded-lg p-6 mt-6 mb-6 text-left">
+                    <h3 class="text-2xl font-semibold mb-3 flex items-center text-[#FCA311]">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 mr-2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.731 0 2.813-1.874 1.948-3.374L13.948 3.374c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
                         </svg>
                         Viés Algorítmico
                     </h3>
-                    <p class="text-base leading-relaxed">
+                    <p class="text-base leading-relaxed text-[#E8E1CF]">
                         Se a IA for treinada com dados preconceituosos ou incompletos, ela poderá tomar decisões discriminatórias, como rejeitar currículos com base em gênero, raça ou localização. Isso perpetua e amplifica desigualdades existentes.
                     </p>
                 </div>
-                <div class="alert-box text-left">
-                    <h3 class="text-2xl font-semibold mb-3 flex items-center text-[#FCA311]"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 mr-2">
+                <div class="border-l-4 border-[#FCA311] bg-[#FCA311]/10 rounded-lg p-6 mt-6 mb-6 text-left">
+                    <h3 class="text-2xl font-semibold mb-3 flex items-center text-[#FCA311]">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 mr-2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M13.5 10.5V6.75a4.5 4.5 0 1 1 9 0v3.75M3.75 21.75h16.5a2.25 2.25 0 0 0 2.25-2.25V6.75A2.25 2.25 0 0 0 20.25 4.5H3.75A2.25 2.25 0 0 0 1.5 6.75v12.75a2.25 2.25 0 0 0 2.25 2.25Z" />
                         </svg>
                         Privacidade de Dados
                     </h3>
-                    <p class="text-base leading-relaxed">
+                    <p class="text-base leading-relaxed text-[#E8E1CF]">
                         Muitos sistemas de IA dependem da coleta e processamento de grandes quantidades de dados pessoais. O uso indevido ou a falha na proteção desses dados podem levar a graves violações de privacidade.
                     </p>
                 </div>
@@ -158,8 +113,8 @@
         </section>
 
         <section class="bg-[#1A0B3D] bg-opacity-90 flex items-center justify-center py-16">
-            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
-                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Automação e Responsabilidade: Questões Cruciais</h2>
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Automação e Responsabilidade: Questões Cruciais</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
                     <div class="bg-[#3D1E8D] p-6 rounded-lg shadow-md text-left">
                         <h3 class="text-2xl font-semibold mb-3 text-[#E8E1CF] flex items-center">
@@ -189,15 +144,16 @@
         </section>
 
         <section class="bg-[#2A0F5E] bg-opacity-90 flex items-center justify-center py-16">
-            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
-                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">A IA e a Manipulação da Informação</h2>
-                <div class="alert-box text-left">
-                    <h3 class="text-2xl font-semibold mb-3 flex items-center text-[#FCA311]"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 mr-2">
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">A IA e a Manipulação da Informação</h2>
+                <div class="border-l-4 border-[#FCA311] bg-[#FCA311]/10 rounded-lg p-6 mt-6 mb-6 text-left">
+                    <h3 class="text-2xl font-semibold mb-3 flex items-center text-[#FCA311]">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 mr-2">
                         <path stroke-linecap="round" stroke-linejoin="round" d="M12 7.5h1.5m-1.5 3h1.5m-7.5 3h7.5m-7.5 3h7.5m3-9h3.375c.621 0 1.125.504 1.125 1.125V18a2.25 2.25 0 0 1-2.25 2.25M16.5 7.5V18a2.25 2.25 0 0 0 2.25 2.25H21M7.5 10.5h2.25m-2.25 3h2.25m-3-6h3m-3 9h3M21 7.5V18a2.25 2.25 0 0 1-2.25 2.25H15M7.5 7.5h-.75A2.25 2.25 0 0 0 4.5 9.75v10.5a2.25 2.25 0 0 1-2.25 2.25H1.5M12 7.5h-.75m-6 9h3" />
                         </svg>
                         Notícias Falsas e Deepfakes
                     </h3>
-                    <p class="text-base leading-relaxed">
+                    <p class="text-base leading-relaxed text-[#E8E1CF]">
                         A IA pode ser usada para gerar conteúdos falsos e altamente realistas (como vídeos e imagens chamados "deepfakes") ou manipular opiniões públicas através da disseminação de notícias falsas, impactando a democracia e a sociedade.
                     </p>
                 </div>
@@ -205,80 +161,35 @@
         </section>
 
         <section class="bg-[#1A0B3D] bg-opacity-90 flex items-center justify-center py-16">
-            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
-                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Construindo uma IA Responsável</h2>
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Construindo uma IA Responsável</h2>
                 <p class="text-lg text-justify leading-relaxed mb-4">
                     É fundamental que o desenvolvimento e o uso da inteligência artificial sejam guiados por princípios éticos para garantir que seus benefícios sejam distribuídos de forma equilibrada e sem causar danos à sociedade.
                 </p>
                 <ul class="text-left text-lg space-y-3">
-                    <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3 text-[#E8E1CF] flex-shrink-0 mt-1">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                        **Transparência:** Entender como a IA toma decisões.</li>
-                    <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3 text-[#E8E1CF] flex-shrink-0 mt-1">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                        **Justiça e Equidade:** Evitar vieses e discriminação.</li>
-                    <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3 text-[#E8E1CF] flex-shrink-0 mt-1">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                        **Responsabilidade:** Definir quem é responsável por ações da IA.</li>
-                    <li class="flex items-start"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3 text-[#E8E1CF] flex-shrink-0 mt-1">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
-                        **Respeito aos Direitos Humanos:** Garantir que a IA promova o bem-estar social.</li>
+                    <li class="flex items-start">
+                        **Transparência:** Entender como a IA toma decisões.
+                    </li>
+                    <li class="flex items-start">
+                        **Justiça e Equidade:** Evitar vieses e discriminação.
+                    </li>
+                    <li class="flex items-start">
+                        **Responsabilidade:** Definir quem é responsável por ações da IA.
+                    </li>
+                    <li class="flex items-start">
+                        **Respeito aos Direitos Humanos:** Garantir que a IA promova o bem-estar social.
+                    </li>
                 </ul>
             </div>
         </section>
 
         <section class="bg-[#2A0F5E] bg-opacity-90 flex flex-col items-center justify-center py-16">
-            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
-                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">O Futuro Consciente da IA</h2>
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">O Futuro Consciente da IA</h2>
                 <p class="text-lg leading-relaxed mb-6">
                     A ética deve andar junto com a tecnologia para garantir que os imensos benefícios da IA sejam distribuídos de forma equilibrada, segura e sem causar danos à sociedade. É um caminho de aprendizado contínuo e colaboração global.
                 </p>
             </div>
         </section>
-
     </div>
-
-    <script>
-        // JavaScript para Parallax e Animações no Scroll
-
-        // 1. Parallax
-        const parallaxBg = document.getElementById('parallax-bg');
-        if (parallaxBg) {
-            window.addEventListener('scroll', () => {
-                const scrollY = window.scrollY;
-                // Ajuste o fator para controlar a velocidade do parallax
-                parallaxBg.style.setProperty('--translate-y', `${scrollY * 0.3}px`); // 0.3 = 30% da velocidade de rolagem
-            });
-        }
-
-        // 2. Fade-in Sections
-        const fadeSections = document.querySelectorAll('.fade-in-section');
-        const observerOptions = {
-            root: null, // viewport como root
-            rootMargin: '0px',
-            threshold: 0.15 // quando 15% do elemento estiver visível
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target); // Para animar apenas uma vez
-                }
-            });
-        }, observerOptions);
-
-        fadeSections.forEach(section => {
-            observer.observe(section);
-        });
-
-        // NOTA: Para esta página, não temos números animados, então o código JS de "Count Up Numbers" não é necessário.
-        // Se no futuro você quiser adicionar números para IA (ex: % de crescimento, etc.), podemos reativá-lo.
-        // Apenas o código relevante para parallax e fade-in foi mantido.
-    </script>
-</body>
-</html>
+{% endblock %}

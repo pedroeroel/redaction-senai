@@ -1,102 +1,21 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inclusão das Pessoas com Deficiência</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Roboto:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <style>
-        /* Estilos personalizados com Tailwind para fontes e cores */
-        body {
-            font-family: 'Roboto', sans-serif;
-            background-color: #1A0B3D; /* Fundo geral */
-            overflow-x: hidden; /* Evita scroll horizontal indesejado */
-            color: #E8E1CF; /* Cor de texto padrão */
-        }
-        h1, h2, .section-title {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 700;
-        }
-        .main-content {
-            background-color: #1A0B3D; /* Fundo base para o parallax */
-            overflow: hidden; /* Garante que o parallax funcione bem */
-            min-height: 100vh; /* Garante que o main-content ocupe a tela para o scroll */
-        }
+{% extends 'layout.html' %}
+{% block pagename %}Inclusão das Pessoas com Deficiência{% endblock %}
+{% set header = False %}
+{% set footer = False %}
+{% set main = False %}
 
-        /* HEADER - Idêntico ao seu exemplo de IA Responsável */
-        header {
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 50;
-            height: 5rem; /* h-20, para combinar com seu exemplo */
-            background-color: #3D1E8D;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -2px rgba(0, 0, 0, 0.06);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding-left: 1.5rem; /* px-6 */
-            padding-right: 1.5rem; /* px-6 */
-        }
-        @media (min-width: 640px) { /* sm */
-            header { padding-left: 2rem; padding-right: 2rem; } /* sm:px-8 */
-        }
-        @media (min-width: 1024px) { /* lg */
-            header { padding-left: 3rem; padding-right: 3rem; } /* lg:px-12 */
-        }
-
-        /* Classes para animação de fade-in no scroll */
-        .fade-in-section {
-            opacity: 0;
-            transform: translateY(20px);
-            transition: opacity 1s ease-out, transform 1s ease-out;
-        }
-        .fade-in-section.is-visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-        
-        /* Estilo para a caixa de destaque/alerta - Idêntico ao seu exemplo de IA Responsável */
-        .alert-box {
-            border-left: 4px solid #FCA311; /* Amarelo/Laranja para alerta */
-            padding-left: 1.5rem;
-            margin-top: 1.5rem; 
-            margin-bottom: 1.5rem;
-            background-color: rgba(252, 163, 17, 0.1); /* Fundo suave para o alerta */
-            border-radius: 0.5rem;
-            padding: 1.5rem;
-            color: #E8E1CF;
-        }
-        .alert-box strong {
-            color: #FCA311; /* Cor mais forte para o texto destacado */
-        }
-        .alert-box h3 {
-            font-family: 'Poppins', sans-serif;
-            font-weight: 600;
-            color: #FCA311; /* Títulos do alert-box na cor de destaque */
-            display: flex; /* Para alinhar o ícone */
-            align-items: center; /* Para alinhar o ícone */
-            margin-bottom: 0.75rem; /* Espaço entre título e parágrafo no alert-box */
-        }
-        .alert-box h3 svg {
-            margin-right: 0.5rem; /* Espaço entre o ícone e o texto do título */
-            flex-shrink: 0; /* Impede que o ícone diminua em telas pequenas */
-        }
-    </style>
-</head>
-<body class="text-[#E8E1CF]">
+{% block main_content %}
     <header class="bg-[#3D1E8D] h-20 shadow-lg flex justify-between items-center px-6 sm:px-8 lg:px-12 fixed w-full z-50 top-0">
         <div class="flex items-center space-x-4 md:space-x-5">
-            <a href="../temasatuais.html" class="text-[#E8E1CF] hover:opacity-75 transition-opacity duration-300">
+            <a href="/temasatuais" class="text-[#E8E1CF] hover:opacity-75 transition-opacity duration-300">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" class="w-7 h-7">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 19.5L8.25 12l7.5-7.5" />
                 </svg>
             </a>
-            <img src="../../logo.png" alt="Redaction" class="h-10 sm:h-12">
+            <img src="{{ url_for('static', filename='img/redaction-logo.png') }}" alt="Redaction" class="h-10 sm:h-12">
         </div>
         <div class="flex items-center space-x-4">
-            <a href="#" class="text-sm text-[#E8E1CF] hover:opacity-75 transition-opacity duration-300">Sair</a>
+            <a href="/logout" class="text-sm text-[#E8E1CF] hover:opacity-75 transition-opacity duration-300">Sair</a>
             <div class="w-9 h-9 bg-[#2A0F5E] rounded-full flex items-center justify-center ring-2 ring-[#5A3E9D]">
                 <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="#E8E1CF" class="w-6 h-6">
                     <path stroke-linecap="round" stroke-linejoin="round" d="M15.75 6a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0zM4.501 20.118a7.5 7.5 0 0114.998 0A17.933 17.933 0 0112 21.75c-2.676 0-5.216-.584-7.499-1.632z" />
@@ -105,25 +24,25 @@
         </div>
     </header>
 
-    <div class="main-content relative pt-20">
+    <div class="bg-[#1A0B3D] overflow-hidden min-h-screen relative pt-20">
         <div class="absolute inset-0 bg-cover bg-center z-0" 
-             style="background-image: url('../../fundo-temas.png'); transform: translateY(var(--translate-y, 0));" 
+             style="background-image: url('../../fundo-temas.png');" 
              id="parallax-bg"></div>
         
         <div class="absolute inset-0 bg-black bg-opacity-40 z-10"></div>
 
         <div class="relative z-20 min-h-screen flex flex-col items-center justify-center text-center p-8">
-            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#E8E1CF] mb-2 drop-shadow-lg leading-tight animate-fade-in-up">
+            <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-[#E8E1CF] mb-2 drop-shadow-lg leading-tight">
                 Desafios da Inclusão das Pessoas com Deficiência
             </h1>
-            <p class="text-lg sm:text-xl text-[#E8E1CF] mb-6 opacity-90 animate-fade-in-up delay-200">
+            <p class="text-lg sm:text-xl text-[#E8E1CF] mb-6 opacity-90">
                 Construindo uma sociedade mais justa, igualitária e acessível para todos.
             </p>
         </div>
 
         <section class="bg-[#1A0B3D] bg-opacity-90 flex items-center justify-center py-16">
-            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
-                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Inclusão: Um Direito e um Caminho para a Equidade</h2>
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Inclusão: Um Direito e um Caminho para a Equidade</h2>
                 <p class="text-lg text-justify leading-relaxed mb-4">
                     A inclusão das pessoas com deficiência é um direito fundamental e um passo essencial para a construção de uma sociedade mais justa, igualitária e acessível. Significa garantir que todos, independentemente de suas limitações físicas, intelectuais, sensoriais ou múltiplas, tenham acesso pleno a todos os aspectos da vida em sociedade.
                 </p>
@@ -157,30 +76,30 @@
         </section>
 
         <section class="bg-[#2A0F5E] bg-opacity-90 flex items-center justify-center py-16">
-            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
-                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Os Desafios do Caminho: Barreiras para a Inclusão</h2>
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Os Desafios do Caminho: Barreiras para a Inclusão</h2>
                 <p class="text-lg text-justify leading-relaxed mb-3">
                     Apesar dos avanços, o caminho para a inclusão plena ainda é marcado por diversas barreiras que dificultam a participação das pessoas com deficiência na sociedade.
                 </p>
-                <div class="alert-box text-left">
+                <div class="border-l-4 border-[#FCA311] bg-[#FCA311]/10 rounded-lg p-6 mt-6 mb-6 text-left">
                     <h3 class="text-2xl font-semibold mb-3 flex items-center text-[#FCA311]">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 mr-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M12 9v3.75m-9.303 3.376c-.866 1.5.217 3.374 1.948 3.374h14.71c1.731 0 2.813-1.874 1.948-3.374L13.948 3.374c-.866-1.5-3.032-1.5-3.898 0L2.697 16.126ZM12 15.75h.007v.008H12v-.008Z" />
                         </svg>
                         Barreiras Arquitetônicas e de Transporte
                     </h3>
-                    <p class="text-base leading-relaxed">
+                    <p class="text-base leading-relaxed text-[#E8E1CF]">
                         Calçadas irregulares, falta de rampas adequadas, prédios sem acessibilidade e um transporte público deficiente são obstáculos físicos que limitam a mobilidade e a autonomia.
                     </p>
                 </div>
-                <div class="alert-box text-left">
+                <div class="border-l-4 border-[#FCA311] bg-[#FCA311]/10 rounded-lg p-6 mt-6 mb-6 text-left">
                     <h3 class="text-2xl font-semibold mb-3 flex items-center text-[#FCA311]">
                         <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-8 h-8 mr-2">
                             <path stroke-linecap="round" stroke-linejoin="round" d="M4.26 10.147a60.436 60.436 0 0 0-.491 6.347m6.579-4.593A28.318 28.318 0 0 1 15 11.25c2.31 0 4.514.06 6.74.179m-9.778 8.645-4.782-1.837M15 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Zm6.36-2.904c-3.517-.4-7.016-.8-10.513-1.2l-2.244-.224m4.242 1.224L10.5 18.75 8.25 21.75m4.997-15.01a6.002 6.002 0 0 0-4.78 2.36M14.25 10.5a3 3 0 1 1-6 0 3 3 0 0 1 6 0Z" />
                         </svg>
                         Falta de Preparo e Preconceito
                     </h3>
-                    <p class="text-base leading-relaxed">
+                    <p class="text-base leading-relaxed text-[#E8E1CF]">
                         Nas escolas, há carência de professores capacitados e materiais adaptados. No mercado de trabalho, o preconceito e a desinformação sobre as capacidades das pessoas com deficiência resultam em poucas oportunidades.
                     </p>
                 </div>
@@ -188,8 +107,8 @@
         </section>
 
         <section class="bg-[#1A0B3D] bg-opacity-90 flex items-center justify-center py-16">
-            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
-                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Leis e Caminhos: Promovendo a Acessibilidade</h2>
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Leis e Caminhos: Promovendo a Acessibilidade</h2>
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-8 mt-6">
                     <div class="bg-[#3D1E8D] p-6 rounded-lg shadow-md text-left">
                         <h3 class="text-2xl font-semibold mb-3 text-[#E8E1CF] flex items-center">
@@ -218,34 +137,22 @@
         </section>
 
         <section class="bg-[#2A0F5E] bg-opacity-90 flex items-center justify-center py-16">
-            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
-                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Um Compromisso Coletivo: Incluir é Transformar</h2>
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">Um Compromisso Coletivo: Incluir é Transformar</h2>
                 <p class="text-lg text-justify leading-relaxed mb-4">
                     Incluir não é favor, é dever e justiça social. Quando a sociedade reconhece e valoriza cada pessoa, com suas habilidades e diferenças, todos ganham.
                 </p>
                 <ul class="text-left text-lg space-y-3">
                     <li class="flex items-start">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3 text-[#E8E1CF] flex-shrink-0 mt-1">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
                         <strong>Conscientização e Respeito:</strong> Eliminar o capacitismo e promover a empatia, enxergando a pessoa antes da deficiência.
                     </li>
                     <li class="flex items-start">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3 text-[#E8E1CF] flex-shrink-0 mt-1">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
                         <strong>Acessibilidade Universal:</strong> Cobrar e implementar melhorias na infraestrutura e nos serviços para garantir o acesso de todos.
                     </li>
                     <li class="flex items-start">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3 text-[#E8E1CF] flex-shrink-0 mt-1">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
                         <strong>Inclusão no Mercado de Trabalho:</strong> Apoiar empresas que praticam a inclusão e lutar por mais oportunidades.
                     </li>
                     <li class="flex items-start">
-                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="1.5" stroke="currentColor" class="w-6 h-6 mr-3 text-[#E8E1CF] flex-shrink-0 mt-1">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="M9 12.75 11.25 15 15 9.75M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z" />
-                        </svg>
                         <strong>Voz e Representatividade:</strong> Amplificar as vozes das pessoas com deficiência e garantir que suas necessidades sejam ouvidas e atendidas.
                     </li>
                 </ul>
@@ -253,48 +160,12 @@
         </section>
 
         <section class="bg-[#1A0B3D] bg-opacity-90 flex flex-col items-center justify-center py-16">
-            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl fade-in-section text-center">
-                <h2 class="section-title text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">O Futuro é Inclusivo</h2>
+            <div class="max-w-4xl mx-auto p-6 sm:p-8 rounded-lg shadow-xl text-center">
+                <h2 class="text-3xl sm:text-4xl font-bold text-[#E8E1CF] mb-4">O Futuro é Inclusivo</h2>
                 <p class="text-lg leading-relaxed mb-6">
                     A inclusão é um processo contínuo que enriquece a todos. Ao derrubar barreiras e valorizar a diversidade, construímos um futuro onde cada indivíduo é reconhecido por seu potencial e tem a oportunidade de viver plenamente.
                 </p>
             </div>
         </section>
     </div>
-
-    <script>
-        // JavaScript para Parallax e Animações no Scroll
-
-        // 1. Parallax
-        const parallaxBg = document.getElementById('parallax-bg');
-        if (parallaxBg) {
-            window.addEventListener('scroll', () => {
-                const scrollY = window.scrollY;
-                // Mantendo o fator 0.3 como no seu código de exemplo de IA
-                parallaxBg.style.setProperty('--translate-y', `${scrollY * 0.3}px`); 
-            });
-        }
-
-        // 2. Fade-in Sections (com Intersection Observer)
-        const fadeSections = document.querySelectorAll('.fade-in-section');
-        const observerOptions = {
-            root: null, // viewport como root
-            rootMargin: '0px',
-            threshold: 0.15 // quando 15% do elemento estiver visível
-        };
-
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('is-visible');
-                    observer.unobserve(entry.target); // Para animar apenas uma vez
-                }
-            });
-        }, observerOptions);
-
-        fadeSections.forEach(section => {
-            observer.observe(section);
-        });
-    </script>
-</body>
-</html>
+{% endblock %}
