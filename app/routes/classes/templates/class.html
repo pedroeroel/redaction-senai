@@ -22,82 +22,32 @@
     </div>
 
     <!-- Tópicos -->
-{% for topic in class_content.topics %}
-{% set c = topic.content if topic.content is defined else topic %}
+    {% for topic in class_content.topics %}
+    {% set c = topic.content if topic.content is defined else topic %}
+    <section class="bg-[#3D1E8D] p-6 sm:p-8 rounded-2xl shadow-xl mb-10">
+      <h2 class="text-2xl font-semibold mb-4 text-[#A78BFA]">{{ topic.title }}</h2>
 
-<section class="bg-[#3D1E8D] p-6 sm:p-8 rounded-2xl shadow-xl mb-10">
-  <h2 class="text-2xl font-semibold mb-4 text-[#A78BFA]">{{ topic.title }}</h2>
-
-  {% if c.paragraphs %}
-  {% for p in c.paragraphs %}
-  <p class="mb-3 leading-relaxed opacity-90">{{ p }}</p>
-  {% endfor %}
-  {% endif %}
-
-  {% if c.tip %}
-  <div class="mt-4 p-4 bg-[#5A3E9D] rounded-lg italic text-sm opacity-90">
-    💡 {{ c.tip }}
-  </div>
-  {% endif %}
-
-  {% if c.list_items %}
-  <ul class="list-disc list-inside space-y-2 mt-4">
-    {% for item in c.list_items %}
-    <li><strong>{{ item.title }}:</strong> {{ item.text }}</li>
-    {% endfor %}
-  </ul>
-  {% endif %}
-
-  {% if c.question %}
-  <div class="mt-6">
-    <h3 class="text-xl font-semibold mb-3">🎯 Desafio Interativo</h3>
-    <p class="mb-4">{{ c.question }}</p>
-
-    <!-- FIXED: options sorted (a,b,c...) -->
-    <form class="quiz-form"
-          data-correct="{{ c.correct_answer }}"
-          data-correct-feedback="{{ c.correct_feedback }}"
-          data-wrong-feedback="{{ c.wrong_feedback }}">
-
-      {% for key, value in c.options|dictsort %}
-      <label class="block bg-[#5A3E9D] p-3 rounded-lg cursor-pointer hover:bg-[#7254B4] transition-colors">
-        <input type="radio" name="resposta" value="{{ key }}" class="mr-2 accent-[#A78BFA]">
-        <span>{{ key }}) {{ value }}</span>
-      </label>
+      {% if c.paragraphs %}
+      {% for p in c.paragraphs %}
+      <p class="mb-3 leading-relaxed opacity-90">{{ p }}</p>
       {% endfor %}
+      {% endif %}
 
-      <div class="quiz-feedback mt-4 hidden p-3 rounded-lg"></div>
-    </form>
-  </div>
-  {% endif %}
+      {% if c.tip %}
+      <div class="mt-4 p-4 bg-[#5A3E9D] rounded-lg italic text-sm opacity-90">
+        💡 {{ c.tip }}
+      </div>
+      {% endif %}
 
-  {% if c.materials %}
-  <div class="mt-6">
-    <h3 class="text-xl font-semibold mb-3">📖 Materiais</h3>
-    <ul class="space-y-2">
-      {% for material in c.materials %}
-      <li>
-        <a href="{{ material.link }}" target="_blank" class="underline hover:text-[#A78BFA]">
-          🎬 {{ material.title }} ({{ material.type }})
-        </a>
-      </li>
-      {% endfor %}
-    </ul>
-  </div>
-  {% endif %}
-
-  {% if c.challenge %}
-  <div class="mt-4 p-4 bg-[#5A3E9D] rounded-lg italic text-sm opacity-90">
-    🚀 {{ c.challenge }}
-  </div>
-  {% endif %}
-</section>
-
-{% endfor %}
+      {% if c.list_items %}
+      <ul class="list-disc list-inside space-y-2 mt-4">
+        {% for item in c.list_items %}
+        <li><strong>{{ item.title }}:</strong> {{ item.text }}</li>
+        {% endfor %}
       </ul>
       {% endif %}
 
-      <!-- Pergunta interativa -->
+      <!-- QUIZ -->
       {% if c.question %}
       <div class="mt-6">
         <h3 class="text-xl font-semibold mb-3">🎯 Desafio Interativo</h3>
@@ -107,13 +57,15 @@
           data-correct="{{ c.correct_answer }}"
           data-correct-feedback="{{ c.correct_feedback }}"
           data-wrong-feedback="{{ c.wrong_feedback }}">
-          {% for key, value in c.options.items() %}
-          <label
-            class="block bg-[#5A3E9D] p-3 rounded-lg cursor-pointer hover:bg-[#7254B4] transition-colors">
+
+          {# ALWAYS SORT OPTIONS BY KEY: a, b, c… #}
+          {% for key, value in c.options | dictsort %}
+          <label class="block bg-[#5A3E9D] p-3 rounded-lg cursor-pointer hover:bg-[#7254B4] transition-colors">
             <input type="radio" name="resposta" value="{{ key }}" class="mr-2 accent-[#A78BFA]">
-            <span>{{ value }}</span>
+            <span>{{ key }}) {{ value }}</span>
           </label>
           {% endfor %}
+
           <div class="quiz-feedback mt-4 hidden p-3 rounded-lg"></div>
         </form>
       </div>
@@ -142,7 +94,7 @@
     </section>
     {% endfor %}
 
-    <!-- Botão final -->
+    <!-- BOTÃO FINAL -->
     <div class="text-center mt-10">
       <button id="finish-btn"
         class="px-10 py-4 bg-gray-500 text-[#2A0F5E] text-lg font-bold rounded-full shadow-lg opacity-50 cursor-not-allowed transition-all duration-300">
@@ -152,7 +104,7 @@
   </div>
 </main>
 
-<!-- JS -->
+<!-- JS ============================================================= -->
 
 <script>
 document.addEventListener("DOMContentLoaded", () => {
@@ -180,9 +132,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
   quizForms.forEach((form, index) => {
     const feedback = form.querySelector(".quiz-feedback");
-    const rawCorrect = (form.dataset.correct || "").trim().toLowerCase();
+    const rawCorrect = (form.dataset.correct ?? "").trim().toLowerCase();
     const correctFeedback = form.dataset.correctFeedback || "Boa!";
     const wrongFeedback = form.dataset.wrongFeedback || "Tente novamente!";
+
+    console.log(`Quiz #${index} - Correct Answer (key): "${rawCorrect}"`);
 
     form.addEventListener("submit", e => {
       e.preventDefault();
@@ -196,31 +150,12 @@ document.addEventListener("DOMContentLoaded", () => {
         return;
       }
 
-      const optionKeys = radios.map(r => r.value.trim().toLowerCase());
-      const selectedValue = selected.value.trim().toLowerCase();
-      const selectedIndex = radios.findIndex(r => r === selected);
-      const selectedLabel = (selected.closest("label")?.innerText || "").toLowerCase();
+      feedback.classList.remove("hidden");
 
-      let isCorrect = false;
+      // REAL FIX → correctness must use the KEY, never the index
+      const selectedKey = selected.value.trim().toLowerCase();
+      const isCorrect = selectedKey === rawCorrect;
 
-      // Case 1 — exact letter (a,b,c)
-      if (/^[a-z]$/.test(rawCorrect)) {
-        isCorrect = (selectedValue === rawCorrect);
-      }
-
-      // Case 2 — numeric index (0 or 1-based)
-      if (!isCorrect && /^[0-9]+$/.test(rawCorrect)) {
-        const n = parseInt(rawCorrect, 10);
-        if (selectedIndex === n || selectedIndex === n - 1) isCorrect = true;
-      }
-
-      // Case 3 — label text matching
-      if (!isCorrect) {
-        if (selectedLabel.startsWith(rawCorrect)) isCorrect = true;
-        if (selectedLabel.includes(rawCorrect)) isCorrect = true;
-      }
-
-      // Apply result
       if (isCorrect) {
         feedback.className = "quiz-feedback mt-4 p-3 rounded-lg bg-green-500 text-[#E8E1CF]";
         feedback.innerHTML = "✅ " + correctFeedback;
@@ -232,18 +167,67 @@ document.addEventListener("DOMContentLoaded", () => {
       }
 
       updateFinishButton();
+
+      // REDEEM LOGIC (unchanged) ------------------------------------
+      if (isCorrect && !window.__redeemed && correctAnswers.size === quizForms.length) {
+        window.__redeemed = true;
+
+        const existingStatus = finishBtn.parentNode.querySelector('#redeem-status');
+        if (existingStatus) existingStatus.remove();
+
+        const status = document.createElement('div');
+        status.id = 'redeem-status';
+        status.className = 'mt-3 text-sm flex items-center gap-2 text-yellow-200';
+        const spinner = document.createElement('span');
+        spinner.className = 'inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin';
+        const label = document.createElement('span');
+        label.innerText = 'Resgatando pontos...';
+        status.appendChild(spinner);
+        status.appendChild(label);
+        finishBtn.parentNode.appendChild(status);
+
+        fetch('/interactive-classes/redeem', {
+          method: 'POST',
+          credentials: 'same-origin',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+          body: new URLSearchParams({ points: '20' })
+        })
+          .then(async res => {
+            const st = finishBtn.parentNode.querySelector('#redeem-status');
+            if (st) st.remove();
+
+            if (res.ok) {
+              const msg = document.createElement('div');
+              msg.className = 'mt-3 text-sm text-green-300';
+              msg.innerText = '🎉 Parabéns — 20 pontos resgatados!';
+              finishBtn.parentNode.appendChild(msg);
+              window.location.href = '/interactive-classes';
+            } else {
+              const err = document.createElement('div');
+              err.className = 'mt-3 text-sm text-red-300';
+              err.innerText = 'Erro ao resgatar pontos.';
+              finishBtn.parentNode.appendChild(err);
+              window.__redeemed = false;
+            }
+          })
+          .catch(() => {
+            const st = finishBtn.parentNode.querySelector('#redeem-status');
+            if (st) st.remove();
+            window.__redeemed = false;
+          });
+      }
+      // -------------------------------------------------------------
     });
 
-    // Auto-submit when selecting
+    // Auto-submit on choice
     form.querySelectorAll('input[name="resposta"]').forEach(radio => {
       radio.addEventListener("change", () => {
-        form.dispatchEvent(new Event("submit", { cancelable: true, bubbles: true }));
+        form.dispatchEvent(new Event('submit', { cancelable: true, bubbles: true }));
       });
     });
 
+    updateFinishButton();
   });
-
-  updateFinishButton();
 });
 </script>
 
