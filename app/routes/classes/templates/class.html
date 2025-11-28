@@ -159,12 +159,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       let isCorrect = false;
 
-      // 1) If data-correct is numeric -> treat as index (support both 0-based and 1-based)
+      // 1) If data-correct is numeric -> treat as 0-based index only
       if (isIntegerString(rawCorrect)) {
         const correctIndex = parseInt(rawCorrect, 10);
         const selectedIndex = radios.findIndex(r => r === selected); // 0-based index
-        // Accept either 0-based or 1-based numbering for flexibility
-        if (selectedIndex === correctIndex) {
+        if (!Number.isNaN(correctIndex) && selectedIndex === correctIndex) {
           isCorrect = true;
         }
       } else {
@@ -172,14 +171,13 @@ document.addEventListener("DOMContentLoaded", () => {
         if (selectedValue === rawCorrect.toLowerCase()) {
           isCorrect = true;
         } else {
-          // If rawCorrect looks like an option label (e.g., "Ler os textos..."), allow matching by value or by label text
-          // check if rawCorrect matches the label text of the selected radio (more forgiving)
+          // If rawCorrect looks like an option label (e.g., "Ler os textos..."), allow matching by label text
           const selectedLabel = selected.closest("label");
           if (selectedLabel) {
-            const labelText = selectedLabel.innerText.replace(/\s+/g, " ").trim().toLowerCase();
-            if (labelText.startsWith(rawCorrect.toLowerCase()) || labelText.includes(rawCorrect.toLowerCase())) {
-              isCorrect = true;
-            }
+        const labelText = selectedLabel.innerText.replace(/\s+/g, " ").trim().toLowerCase();
+        if (labelText.startsWith(rawCorrect.toLowerCase()) || labelText.includes(rawCorrect.toLowerCase())) {
+          isCorrect = true;
+        }
           }
         }
       }
