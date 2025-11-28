@@ -38,11 +38,6 @@
 
             {% if 'user_id' in session %}
             <a href="/logout" class="hidden md:block"><span class="font-semibold">Sair</span></a>
-            <div class="avatar shrink-0">
-                <div class="overflow-hidden ring-[#E8E1CF] w-8 md:w-10 rounded-full ring-2">
-                    <img src="https://img.daisyui.com/images/profile/demo/spiderperson@192.webp" />
-                </div>
-            </div>
             {% else %}
             <a href="/login" class="text-sm md:text-base"><span class="font-semibold">Entrar</span></a>
             <a href="/signup" class="text-sm md:text-base"><span class="font-semibold">Cadastrar</span></a>
