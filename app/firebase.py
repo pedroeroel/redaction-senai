@@ -66,7 +66,6 @@ def get_user_data(user_id):
 
     return None
 
-
 def update_user_data_by_user_id(user_id, update_data):
     doc_ref = _get_user_doc_ref_by_user_id(user_id)
     
@@ -296,28 +295,38 @@ def get_example_essays(min_grade=900):
     for the examples.html page.
     """
     try:
-        essays_ref = db.collection('essays')
+        users_ref = db.collection('register')
+        chosen_essays = []
         
-        # Firestore does not support >= for non-indexed fields
-        # Ensure generalGrade is indexed in Firebase console
-        query = essays_ref.where(filter=FieldFilter, "generalGrade", ">=", int(min_grade))
-        
-        results = []
-        for doc in query.stream():
-            data = doc.to_dict()
-            data["doc_id"] = doc.id
+        docs = users_ref.stream()
+        for user in docs:
+            
+            print(user.id)
+            
+            user_doc = get_user_doc_ref_by_user_id(user.id)
+            essays_ref = user_doc.collection('essays')
+            essays = essays_ref.stream()
+            
+            print(essays)
+            
+            for essay in essays:
+                if essay.generalGrade >= 900:
+                    username = get_user_data(user.id)['username']
 
-            # Ensure the fields exist before sending to template
-            results.append({
-                "title": data.get("title", "Sem título"),
-                "theme": data.get("theme", "Indefinido"),
-                "content": data.get("content", ""),
-                "generalGrade": data.get("generalGrade", 0),
-                "competencies": data.get("competencies", []),
-                "comments": data.get("comments", [])
-            })
-
-        return results
+                    chosen_essays.append({
+                        'user_id': user.id,
+                        'username': username,
+                        'essay': {
+                        "title": essay.get("title", "Sem título"),
+                        "theme": essay.get("theme", "Indefinido"),
+                        "content": essay.get("content", ""),
+                        "generalGrade": essay.get("generalGrade", 0),
+                        "competencies": essay.get("competencies", []),
+                        "comments": essay.get("comments", [])
+                    }})
+                
+        print(chosen_essays)
+        return chosen_essays
 
     except Exception as e:
         print("Error fetching example essays:", e)
