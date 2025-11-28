@@ -80,22 +80,48 @@ def update_user_data_by_user_id(user_id, update_data):
 
 def get_user_by_fields(email, password):
     users_ref = db.collection('register')
+    email_norm = email.strip().lower()
+
+    # Try direct query first (works for normalized stored emails)
     try:
         for doc in (
             users_ref
-                .where(filter=FieldFilter('email', '==', email))
+                .where(filter=FieldFilter('email', '==', email_norm))
                 .where(filter=FieldFilter('password', '==', password))
                 .limit(1)
                 .stream()
         ):
-            print(doc.to_dict())
-            return doc.to_dict( )
+            return doc.to_dict()
+    except Exception:
+        pass
+
+    # Fallback: iterate all users and compare case-insensitively
+    try:
+        for doc in users_ref.stream():
+            data = doc.to_dict()
+            if not data:
+                continue
+            if data.get("email", "").strip().lower() == email_norm and data.get("password") == password:
+                return data
     except Exception as e:
         print(f"Error querying user by fields: {e}")
+
     return False
+
 
 def register_user(email, password, username):
     users_ref = db.collection('register')
+    email_norm = email.strip().lower()
+
+    # Ensure no existing user has the same email (case-insensitive)
+    for doc in users_ref.stream():
+        data = doc.to_dict()
+        if not data:
+            continue
+        existing_email = data.get('email', '').strip().lower()
+        if existing_email == email_norm:
+            print(f"Registration failed: email '{email}' already in use.")
+            return None  # or return False depending on how you want to handle failures
 
     # Find the highest numeric id among all users
     max_id = 0
@@ -114,7 +140,7 @@ def register_user(email, password, username):
     new_user_id = max_id + 1
     new_user_ref = users_ref.document()
     new_user_ref.set({
-        'email': email,
+        'email': email_norm,  # store normalized email
         'password': password,
         'username': username,
         'score': 0,
@@ -122,6 +148,7 @@ def register_user(email, password, username):
     })
 
     return new_user_id
+
 
 def get_all_users():
     users_ref = db.collection('register')
