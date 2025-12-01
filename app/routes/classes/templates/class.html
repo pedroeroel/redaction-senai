@@ -7,78 +7,101 @@
 {% block pagetext %}Mini-Aula Interativa{% endblock %}
 
 {% block content %}
-<main class="min-h-screen bg-[#2A0F5E] text-[#E8E1CF]">
-  <div class="container mx-auto px-6 py-10 md:py-16">
+<main class="min-h-screen text-[#E8E1CF]">
+  <div class="container mx-auto px-4 sm:px-6 py-8 md:py-16 max-w-4xl">
 
     <!-- Header -->
-    <div class="mb-10 text-center">
-      <h1 class="text-4xl font-bold mb-3">{{ class_content.title }}</h1>
-      <p class="text-lg opacity-90">{{ class_content.description }}</p>
-      <div class="flex justify-center gap-4 mt-3 text-sm opacity-75">
-        <span>🕒 {{ class_content.duration }}</span>
-        <span>🎯 {{ class_content.level }}</span>
-        <span>📚 {{ class_content.category }}</span>
+    <div class="mb-8 md:mb-12 text-center">
+      <h1 class="text-3xl md:text-4xl lg:text-5xl font-bold mb-4 leading-tight">{{ class_content.title }}</h1>
+      <p class="text-base md:text-lg opacity-90 max-w-2xl mx-auto">{{ class_content.description }}</p>
+      
+      <!-- Meta Tags -->
+      <div class="flex flex-wrap justify-center gap-3 mt-6 text-sm md:text-base opacity-90">
+        <span class="bg-[#3D1E8D] px-4 py-2 rounded-full shadow-sm flex items-center gap-2">
+            🕒 {{ class_content.duration }}
+        </span>
+        <span class="bg-[#3D1E8D] px-4 py-2 rounded-full shadow-sm flex items-center gap-2 text-[#A78BFA] font-semibold">
+            🎯 {{ class_content.level }}
+        </span>
+        <span class="bg-[#3D1E8D] px-4 py-2 rounded-full shadow-sm flex items-center gap-2">
+            📚 {{ class_content.category }}
+        </span>
       </div>
     </div>
 
     <!-- Tópicos -->
     {% for topic in class_content.topics %}
     {% set c = topic.content if topic.content is defined else topic %}
-    <section class="bg-[#3D1E8D] p-6 sm:p-8 rounded-2xl shadow-xl mb-10">
-      <h2 class="text-2xl font-semibold mb-4 text-[#A78BFA]">{{ topic.title }}</h2>
+    
+    <section class="bg-[#3D1E8D] p-5 sm:p-8 rounded-2xl shadow-xl mb-8 md:mb-10 transition-all hover:shadow-2xl">
+      <h2 class="text-xl sm:text-2xl md:text-3xl font-bold mb-4 text-[#A78BFA] border-b border-[#5A3E9D] pb-2">
+        {{ topic.title }}
+      </h2>
 
       {% if c.paragraphs %}
-      {% for p in c.paragraphs %}
-      <p class="mb-3 leading-relaxed opacity-90">{{ p }}</p>
-      {% endfor %}
+      <div class="space-y-4 text-base sm:text-lg leading-relaxed opacity-90 text-justify sm:text-left">
+        {% for p in c.paragraphs %}
+        <p>{{ p }}</p>
+        {% endfor %}
+      </div>
       {% endif %}
 
       {% if c.tip %}
-      <div class="mt-4 p-4 bg-[#5A3E9D] rounded-lg italic text-sm opacity-90">
-        💡 {{ c.tip }}
+      <div class="mt-6 p-4 sm:p-5 bg-[#5A3E9D] rounded-xl italic text-sm sm:text-base opacity-90 border-l-4 border-[#A78BFA] flex gap-3">
+        <span class="text-xl not-italic">💡</span>
+        <div>{{ c.tip }}</div>
       </div>
       {% endif %}
 
       {% if c.list_items %}
-      <ul class="list-disc list-inside space-y-2 mt-4">
+      <ul class="list-disc list-outside ml-5 space-y-2 mt-4 text-base sm:text-lg opacity-90">
         {% for item in c.list_items %}
-        <li><strong>{{ item.title }}:</strong> {{ item.text }}</li>
+        <li class="pl-1"><strong class="text-[#E8E1CF]">{{ item.title }}:</strong> {{ item.text }}</li>
         {% endfor %}
       </ul>
       {% endif %}
 
       <!-- QUIZ -->
       {% if c.question %}
-      <div class="mt-6">
-        <h3 class="text-xl font-semibold mb-3">🎯 Desafio Interativo</h3>
-        <p class="mb-4">{{ c.question }}</p>
+      <div class="mt-8 pt-6 border-t border-[#5A3E9D]">
+        <h3 class="text-lg sm:text-xl font-bold mb-4 flex items-center gap-2 text-[#FCA311]">
+            🎯 Desafio Interativo
+        </h3>
+        <p class="mb-4 text-base sm:text-lg font-medium">{{ c.question }}</p>
 
-        <form class="quiz-form space-y-2"
+        <form class="quiz-form space-y-3"
           data-correct="{{ c.correct_answer }}"
           data-correct-feedback="{{ c.correct_feedback }}"
           data-wrong-feedback="{{ c.wrong_feedback }}">
 
           {# ALWAYS SORT OPTIONS BY KEY: a, b, c… #}
           {% for key, value in c.options | dictsort %}
-          <label class="block bg-[#5A3E9D] p-3 rounded-lg cursor-pointer hover:bg-[#7254B4] transition-colors">
-            <input type="radio" name="resposta" value="{{ key }}" class="mr-2 accent-[#A78BFA]">
-            <span>{{ key }}) {{ value }}</span>
+          <label class="group block w-full bg-[#2A0F5E] p-4 rounded-xl cursor-pointer hover:bg-[#4C2DBF] transition-all border-2 border-transparent hover:border-[#A78BFA] active:scale-[0.99]">
+            <div class="flex items-center gap-3">
+                <div class="relative flex items-center">
+                    <input type="radio" name="resposta" value="{{ key }}" class="peer appearance-none w-5 h-5 rounded-full border-2 border-[#A78BFA] checked:bg-[#A78BFA] checked:border-[#A78BFA] transition-all">
+                    <div class="absolute inset-0 m-auto w-2 h-2 rounded-full bg-[#2A0F5E] scale-0 peer-checked:scale-100 transition-transform"></div>
+                </div>
+                <span class="text-base sm:text-lg"><span class="font-bold text-[#A78BFA] uppercase mr-1">{{ key }})</span> {{ value }}</span>
+            </div>
           </label>
           {% endfor %}
 
-          <div class="quiz-feedback mt-4 hidden p-3 rounded-lg"></div>
+          <div class="quiz-feedback mt-4 hidden p-4 rounded-xl text-center font-bold text-lg animate-pulse"></div>
         </form>
       </div>
       {% endif %}
 
       {% if c.materials %}
-      <div class="mt-6">
-        <h3 class="text-xl font-semibold mb-3">📖 Materiais</h3>
-        <ul class="space-y-2">
+      <div class="mt-8 pt-6 border-t border-[#5A3E9D]">
+        <h3 class="text-lg sm:text-xl font-semibold mb-3">📖 Materiais Complementares</h3>
+        <ul class="space-y-3">
           {% for material in c.materials %}
           <li>
-            <a href="{{ material.link }}" target="_blank" class="underline hover:text-[#A78BFA]">
-              🎬 {{ material.title }} ({{ material.type }})
+            <a href="{{ material.link }}" target="_blank" class="flex items-center gap-2 p-3 bg-[#2A0F5E] rounded-lg hover:bg-[#4C2DBF] transition-colors group">
+              <span class="text-2xl group-hover:scale-110 transition-transform">🎬</span>
+              <span class="underline decoration-1 underline-offset-2 group-hover:text-[#A78BFA]">{{ material.title }}</span>
+              <span class="text-xs bg-[#5A3E9D] px-2 py-1 rounded text-gray-300 ml-auto">{{ material.type }}</span>
             </a>
           </li>
           {% endfor %}
@@ -87,17 +110,18 @@
       {% endif %}
 
       {% if c.challenge %}
-      <div class="mt-4 p-4 bg-[#5A3E9D] rounded-lg italic text-sm opacity-90">
-        🚀 {{ c.challenge }}
+      <div class="mt-6 p-5 bg-gradient-to-r from-[#5A3E9D] to-[#3D1E8D] rounded-xl text-sm sm:text-base opacity-90 border border-[#A78BFA]/30 shadow-inner">
+        <div class="font-bold text-[#A78BFA] mb-1 flex items-center gap-2">🚀 Missão Prática</div>
+        {{ c.challenge }}
       </div>
       {% endif %}
     </section>
     {% endfor %}
 
     <!-- BOTÃO FINAL -->
-    <div class="text-center mt-10">
+    <div class="text-center mt-12 pb-10">
       <button id="finish-btn"
-        class="px-10 py-4 bg-gray-500 text-[#2A0F5E] text-lg font-bold rounded-full shadow-lg opacity-50 cursor-not-allowed transition-all duration-300">
+        class="w-full sm:w-auto px-8 sm:px-12 py-4 bg-gray-600 text-[#E8E1CF] text-lg sm:text-xl font-bold rounded-full shadow-lg opacity-50 cursor-not-allowed transition-all duration-300 transform active:scale-95 disabled:hover:scale-100">
         Complete todos os desafios para concluir ✨
       </button>
     </div>
@@ -120,18 +144,14 @@ document.addEventListener("DOMContentLoaded", () => {
   function updateFinishButton() {
     if (quizForms.length > 0 && correctAnswers.size === quizForms.length) {
       finishBtn.className =
-        "px-10 py-4 bg-[#A78BFA] text-[#2A0F5E] text-lg font-bold rounded-full shadow-lg hover:bg-white hover:text-[#2A0F5E] transition-all duration-300 transform hover:scale-105";
+        "w-full sm:w-auto px-8 sm:px-12 py-4 bg-[#A78BFA] text-[#2A0F5E] text-lg sm:text-xl font-bold rounded-full shadow-[0_0_20px_rgba(167,139,250,0.5)] hover:bg-[#E8E1CF] hover:text-[#2A0F5E] transition-all duration-300 transform hover:scale-105 active:scale-95 cursor-pointer opacity-100";
       finishBtn.textContent = "Concluir Aula e Ganhar XP! ✨";
       finishBtn.disabled = false;
-      finishBtn.style.cursor = "pointer";
-      finishBtn.style.opacity = "1";
     } else {
       finishBtn.className =
-        "px-10 py-4 bg-gray-500 text-[#2A0F5E] text-lg font-bold rounded-full shadow-lg opacity-50 cursor-not-allowed transition-all duration-300";
+        "w-full sm:w-auto px-8 sm:px-12 py-4 bg-gray-600 text-[#E8E1CF] text-lg sm:text-xl font-bold rounded-full shadow-lg opacity-50 cursor-not-allowed transition-all duration-300";
       finishBtn.textContent = "Complete todos os desafios para concluir ✨";
       finishBtn.disabled = true;
-      finishBtn.style.cursor = "not-allowed";
-      finishBtn.style.opacity = "0.5";
     }
   }
 
@@ -157,8 +177,9 @@ document.addEventListener("DOMContentLoaded", () => {
       const selected = radios.find(r => r.checked);
 
       if (!selected) {
-        feedback.className = "quiz-feedback mt-4 p-3 rounded-lg bg-yellow-500";
-        feedback.innerText = "Por favor, selecione uma opção!";
+        feedback.className = "quiz-feedback mt-4 p-4 rounded-xl bg-yellow-600 text-white font-bold block";
+        feedback.innerText = "⚠️ Por favor, selecione uma opção!";
+        feedback.classList.remove("hidden");
         return;
       }
 
@@ -168,11 +189,15 @@ document.addEventListener("DOMContentLoaded", () => {
       const isCorrect = selectedKey === rawCorrect;
 
       if (isCorrect) {
-        feedback.className = "quiz-feedback mt-4 p-3 rounded-lg bg-green-500 text-[#E8E1CF]";
+        feedback.className = "quiz-feedback mt-4 p-4 rounded-xl bg-green-600 text-white font-bold block shadow-lg border border-green-400";
         feedback.innerHTML = "✅ " + correctFeedback;
         correctAnswers.add(index);
+        
+        // Disable inputs after correct answer to prevent changing
+        radios.forEach(r => r.disabled = true);
+        
       } else {
-        feedback.className = "quiz-feedback mt-4 p-3 rounded-lg bg-red-500 text-[#E8E1CF]";
+        feedback.className = "quiz-feedback mt-4 p-4 rounded-xl bg-red-600 text-white font-bold block shadow-lg border border-red-400";
         feedback.innerHTML = "❌ " + wrongFeedback;
         correctAnswers.delete(index);
       }
@@ -197,16 +222,32 @@ document.addEventListener("DOMContentLoaded", () => {
     window.__redeemed = true;
 
     // Loading animation
+    const statusContainer = document.createElement('div');
+    statusContainer.className = 'flex justify-center w-full';
+    
     const status = document.createElement('div');
     status.id = 'redeem-status';
-    status.className = 'mt-3 text-sm flex items-center gap-2 text-yellow-200';
+    status.className = 'mt-4 text-base flex items-center justify-center gap-2 text-[#FCA311] font-bold bg-[#2A0F5E] px-4 py-2 rounded-lg';
     status.innerHTML = `
-      <span class="inline-block w-4 h-4 border-2 border-current border-t-transparent rounded-full animate-spin"></span>
+      <span class="inline-block w-5 h-5 border-2 border-current border-t-transparent rounded-full animate-spin"></span>
       <span>Resgatando pontos...</span>
     `;
-    finishBtn.parentNode.appendChild(status);
+    
+    statusContainer.appendChild(status);
+    finishBtn.parentNode.appendChild(statusContainer);
+    
+    fetch('/interactive-classes/mark-done/{{ class_content.id }}', {
+      method: 'POST',
+      credentials: 'same-origin',
+    }).then( res => {
 
-    fetch('/interactive-classes/redeem', {
+      if (!res.ok) {
+        throw new Error('Failed to mark class as done');
+      }
+      return res;
+    })
+    .then(() => {
+      return fetch('/interactive-classes/redeem', {
       method: 'POST',
       credentials: 'same-origin',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -217,17 +258,17 @@ document.addEventListener("DOMContentLoaded", () => {
 
         if (res.ok) {
           const msg = document.createElement('div');
-          msg.className = 'mt-3 text-sm text-green-300';
+          msg.className = 'mt-4 text-lg text-green-400 font-bold animate-bounce';
           msg.innerText = '🎉 Parabéns — 20 pontos resgatados!';
           finishBtn.parentNode.appendChild(msg);
 
           // Redirect AFTER redeem
           setTimeout(() => {
             window.location.href = '/interactive-classes';
-          }, 800);
+          }, 1500);
         } else {
           const err = document.createElement('div');
-          err.className = 'mt-3 text-sm text-red-300';
+          err.className = 'mt-4 text-base text-red-400 font-bold';
           err.innerText = 'Erro ao resgatar pontos.';
           finishBtn.parentNode.appendChild(err);
           window.__redeemed = false;
@@ -237,10 +278,13 @@ document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("redeem-status")?.remove();
         window.__redeemed = false;
       });
+    })
+    .catch(() => {
+      document.getElementById("redeem-status")?.remove();
+      window.__redeemed = false;
+    });
   });
 
 });
 </script>
-
-
 {% endblock %}

@@ -1,6 +1,6 @@
 {% extends 'layout.html' %}
 {% block pagename %}Início{% endblock %}
-{% block pagetext %}Seja bem-vindo(a) ao Redaction!{% endblock %}
+{% block pagetext %}Seja bem-vindo(a) ao Redaction, {{ session['username'] }}!{% endblock %}
 {% set header = True %}
 {% set footer = True %}
 {% set main = True %}

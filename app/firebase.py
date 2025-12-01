@@ -161,6 +161,9 @@ def get_all_users():
 def delete_user(user_id):
     doc_ref = _get_user_doc_ref_by_user_id(user_id)
     if doc_ref:
+        essays_ref = doc_ref.collection('essays')
+        for essay in essays_ref.stream():
+            essay.reference.delete()
         doc_ref.delete()
         return True
     return False
@@ -330,6 +333,43 @@ def register_class(class_data):
     except Exception as e:
         print(f"Error registering class '{class_data.get('title', 'N/A')}': {e}")
         return False
+
+# mark_class_as_done adds the class_id to the user's 'completed_classes' array
+def mark_class_as_done(user_id, class_id):
+    user_doc_ref = _get_user_doc_ref_by_user_id(user_id)
+    if not user_doc_ref:
+        return False
+
+    try:
+        user_snapshot = user_doc_ref.get()
+        user_data = user_snapshot.to_dict()
+        completed_classes = user_data.get('completed_classes', [])
+
+        if class_id not in completed_classes:
+            completed_classes.append(class_id)
+            user_doc_ref.update({'completed_classes': completed_classes})
+            print(f"Class {class_id} marked as done for user {user_id}.")
+        else:
+            print(f"Class {class_id} was already marked as done for user {user_id}.")
+
+        return True
+    except Exception as e:
+        print(f"Error marking class {class_id} as done for user {user_id}: {e}")
+        return False
+    
+def get_completed_classes(user_id):
+    user_doc_ref = _get_user_doc_ref_by_user_id(user_id)
+    if not user_doc_ref:
+        return []
+
+    try:
+        user_snapshot = user_doc_ref.get()
+        user_data = user_snapshot.to_dict()
+        completed_classes = user_data.get('completed_classes', [])
+        return completed_classes
+    except Exception as e:
+        print(f"Error fetching completed classes for user {user_id}: {e}")
+        return []
 
 def get_example_essays(min_grade=900):
     """

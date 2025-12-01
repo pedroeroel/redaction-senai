@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, session, redirect
-from ...firebase import get_classes_by_user, get_class_content, get_all_classes, register_class, get_score, update_score
+from ...firebase import get_classes_by_user, get_class_content, get_all_classes, mark_class_as_done, get_score, update_score, get_completed_classes
 from flask import request, jsonify
 
 classes = Blueprint('classes', __name__, template_folder='templates')
@@ -13,20 +13,21 @@ def interactive_classes():
     if not user_id:
         return redirect('/login')
 
-    user_classes = get_classes_by_user(user_id)
+    completed_class_ids = get_completed_classes(user_id)
     all_classes = get_all_classes()
     
-    print(f"User {user_id} classes: {user_classes}")
+    print(f"Completed classes for user {user_id}: {completed_class_ids}")
     print(f"All classes: {all_classes}")
 
     formatted_classes = []
     for c in all_classes:
+        status = "completed" if c.get("id") in completed_class_ids else "pending"
         formatted_classes.append({
             "id": c.get("id"),
             "title": c.get("title"),
             "description": c.get("description", "Sem descrição disponível."),
             "duration": c.get("duration", "N/A"),
-            "status": c.get("status", "pending"),
+            "status": status,
             "category": c.get("category", "Redação"),
             "level": c.get("level", "Básico"),
             "thumbnail": c.get("thumbnail", "https://example.com/default.png"),
@@ -112,3 +113,23 @@ def redeem_points():
         return jsonify({"error": "Redeem operation failed"}), 500
 
     return jsonify({"message": "Points redeemed", "user_id": user_id, "points_redeemed": points_to_redeem}), 200
+
+@classes.route('/interactive-classes/mark-done/<string:class_id>', methods=['POST'])
+def mark_class_done(class_id):
+    if not session:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    user_id = session.get('user_id')
+    if not user_id:
+        return jsonify({"error": "Not authenticated"}), 401
+
+    try:
+        # Assuming there's a function to update the user's class status
+        result = mark_class_as_done(user_id, class_id)
+    except Exception as e:
+        return jsonify({"error": "Failed to mark class as done", "detail": str(e)}), 500
+
+    if result is False or result is None:
+        return jsonify({"error": "Failed to update class status"}), 500
+
+    return jsonify({"message": "Class marked as done", "user_id": user_id, "class_id": class_id}), 200
