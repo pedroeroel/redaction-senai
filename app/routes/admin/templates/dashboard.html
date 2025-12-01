@@ -54,7 +54,7 @@
                                                         {% if user.username %} {{ user.username }} {% else %}N/A{% endif %}
                                                     </div>
                                                     <div class="text-sm text-[#cfc6ff] mt-1 whitespace-nowrap overflow-hidden text-ellipsis">
-                                                        {% if user.email %} {{ user.email | truncate(40) }} {% else %}N/A{% endif %}
+                                                        {% if user.email %} {{ user.email | truncate(25) }} {% else %}N/A{% endif %}
                                                     </div>
                                                 </div>
 
