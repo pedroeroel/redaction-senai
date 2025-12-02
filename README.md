@@ -121,9 +121,16 @@ O projeto utiliza uma paleta de cores *Dark Mode* personalizada para conforto vi
 *   **Text:** `#E8E1CF` (Beige Claro para alto contraste)
 *   **Success/Error:** Tailwind standard colors (Emerald/Red).
 
-## 📄 Licença
+## 📄 Autoria e Licenciamento
 
-Este projeto foi desenvolvido para fins acadêmicos.
+Este projeto foi desenvolvido para fins acadêmicos pela equipe AlphaTech, alunos do SENAI Luiz Pagliato (Sorocaba) em Itapeva.
+
+A equipe foi composta por:
+
+* [Pedro Eduardo Roel](https://linkedin.com/in/pedroedroel) (Dev. Fullstack)
+* Mariana Meirelles (SCRUM Master)
+* Joaquim Vitorino (Tech Lead)
+* Yasmim Moraes (Dev. Frontend)
 
 Acesse a [licença](LICENSE).
 
