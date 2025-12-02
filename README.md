@@ -43,7 +43,7 @@ O sistema utiliza uma estrutura NoSQL baseada em coleções e documentos:
 
 1.  **Clone o repositório:**
     ```bash
-    git clone https://github.com/seu-usuario/redaction-senai.git
+    git clone https://github.com/pedroeroel/redaction-senai.git
     cd redaction-senai
     ```
 
