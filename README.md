@@ -123,7 +123,7 @@ O projeto utiliza uma paleta de cores *Dark Mode* personalizada para conforto vi
 
 ## 📄 Autoria e Licenciamento
 
-Este projeto foi desenvolvido para fins acadêmicos pela equipe AlphaTech, alunos do SENAI Luiz Pagliato (Sorocaba) em Itapeva.
+Este projeto foi desenvolvido para fins acadêmicos pela equipe AlphaTech, alunos do Técnico em Desenvolvimento de Sistemas na escola SENAI Luiz Pagliato (Sorocaba) em Itapeva.
 
 A equipe foi composta por:
 
