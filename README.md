@@ -98,9 +98,14 @@ O sistema utiliza uma estrutura NoSQL baseada em coleções e documentos:
     *   **Montador de Frases:** Drag-and-drop para estruturação sintática.
     *   Sistema de XP (Pontos) integrado ao banco de dados.
 
-4.  **Banco de Repertórios:**
-    *   Argumentos prontos divididos por eixos temáticos (Saúde, Educação, Tecnologia, etc.).
-    *   Modais responsivos para visualização de detalhes.
+4.  **Temas Atuais:**
+    *   Biblioteca de conteúdo com repertórios socioculturais, dados estatísticos e argumentos prontos para temas de alta relevância:
+        *   Desigualdade Social no Brasil.
+        *   Inteligência Artificial e Ética.
+        *   Desafios da Educação Pública.
+        *   Violência contra a Mulher.
+        *   Inclusão de Pessoas com Deficiência.
+        *   Saúde Mental entre os Jovens.
 
 5.  **Painel Administrativo:**
     *   Visão geral de usuários cadastrados.
