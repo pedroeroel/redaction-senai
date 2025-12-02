@@ -7,49 +7,221 @@
 
 {% block content %}
 
-<section class="mb-12 text-center">
-    <h2 class="text-3xl font-bold mb-4">Nova Redação</h2>
-    <p class="text-gray-300">Preencha os campos abaixo para enviar sua redação.</p>
-</section>
+<div class="max-w-7xl mx-auto">
+    <section class="mb-10 text-center">
+        <h2 class="text-3xl font-bold mb-4 text-[#E8E1CF]">Nova Redação</h2>
+        <p class="text-gray-300">Escreva com foco nas 5 competências do ENEM.</p>
+    </section>
 
-<form id="essay-form" action="/new-essay" method="POST"
-      class="max-w-2xl mx-auto bg-[#1e1a2b] border border-white/20 shadow-xl rounded-xl p-8 backdrop-blur-lg">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+        
+        <!-- COLUMN 1: WRITING FORM (Takes 2/3 of width on large screens) -->
+        <div class="lg:col-span-2">
+            <form id="essay-form" action="/new-essay" method="POST"
+                  class="bg-[#1e1a2b] border border-white/10 shadow-2xl rounded-2xl p-6 sm:p-8 backdrop-blur-lg">
 
-    <div class="mb-6">
-        <label for="theme" class="block text-lg font-semibold mb-2">Tema</label>
-        <input type="text" id="theme" name="theme" required
-               class="text-black w-full rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#3D1E8D]">
+                <div class="mb-6">
+                    <label for="theme" class="block text-lg font-semibold mb-2 text-[#E8E1CF]">Tema</label>
+                    <input type="text" id="theme" name="theme" placeholder="Ex: Os desafios da..." required
+                           class="w-full rounded-lg px-4 py-3 bg-[#2A0F5E] text-[#E8E1CF] placeholder-gray-400 border border-transparent focus:outline-none focus:ring-2 focus:ring-[#A78BFA] transition-all">
+                </div>
+
+                <div class="mb-6">
+                    <label for="title" class="block text-lg font-semibold mb-2 text-[#E8E1CF]">
+                        Título <span class="text-sm font-normal text-gray-400 ml-2">(Opcional no ENEM, mas recomendado)</span>
+                    </label>
+                    <input type="text" id="title" name="title" required
+                           class="w-full rounded-lg px-4 py-3 bg-[#2A0F5E] text-[#E8E1CF] placeholder-gray-400 border border-transparent focus:outline-none focus:ring-2 focus:ring-[#A78BFA] transition-all">
+                </div>
+
+                <div class="mb-4">
+                    <label for="text" class="block text-lg font-semibold mb-2 text-[#E8E1CF]">
+                        Redação
+                    </label>
+                    
+                    <textarea id="text" name="text" rows="18" required
+                              placeholder="Comece sua introdução aqui..."
+                              class="w-full rounded-lg px-4 py-3 bg-[#2A0F5E] text-[#E8E1CF] placeholder-gray-500 border-2 border-transparent focus:outline-none focus:ring-2 focus:ring-[#A78BFA] transition-colors resize-y leading-relaxed"></textarea>
+                    
+                    <!-- Validation Feedback Bar -->
+                    <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center mt-3 gap-2">
+                        <span id="error-message" class="text-red-400 text-sm font-semibold hidden flex items-center gap-1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                                <path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" />
+                            </svg>
+                            Mínimo de 7 linhas necessárias.
+                        </span>
+                        
+                        <div class="text-sm ml-auto flex gap-4">
+                            <span id="char-counter" class="text-gray-400">0 caracteres</span>
+                            <span id="line-counter" class="text-gray-400 font-bold transition-colors">
+                                Linhas: <span id="current-lines">0</span>/7
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <button id="send-button" type="submit" disabled
+                        class="w-full bg-[#3D1E8D] text-white font-bold rounded-xl py-4 hover:bg-[#4C2DBF] transition-all duration-300 opacity-50 cursor-not-allowed shadow-lg hover:shadow-purple-900/50 mt-4">
+                    Enviar para Correção
+                </button>
+
+                <div id="loading" class="hidden text-center mt-6 p-4 bg-[#2A0F5E] rounded-xl border border-[#A78BFA]/30">
+                    <p class="text-lg text-gray-200 mb-2 font-semibold">A I.A. está analisando sua redação...</p>
+                    <p class="text-sm text-gray-400 mb-4">Isso pode levar alguns segundos.</p>
+                    <div class="animate-spin w-8 h-8 border-4 border-[#A78BFA] border-t-transparent rounded-full mx-auto"></div>
+                </div>
+            </form>
+        </div>
+
+        <!-- COLUMN 2: GUIDELINES (Sidebar) -->
+        <div class="lg:col-span-1 space-y-6">
+            
+            <!-- Card 1: Checklist -->
+            <div class="bg-[#3D1E8D] p-6 rounded-2xl shadow-xl border-l-4 border-[#FCA311]">
+                <h3 class="text-xl font-bold text-[#FCA311] mb-4 flex items-center gap-2">
+                    <span>📝</span> Checklist ENEM
+                </h3>
+                <ul class="space-y-3 text-sm text-[#E8E1CF] opacity-90">
+                    <li class="flex items-start gap-2">
+                        <span class="text-green-400 font-bold">✓</span>
+                        Texto dissertativo-argumentativo.
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-green-400 font-bold">✓</span>
+                        Mínimo de 7 linhas, máximo de 30.
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-green-400 font-bold">✓</span>
+                        Respeito aos Direitos Humanos.
+                    </li>
+                    <li class="flex items-start gap-2">
+                        <span class="text-green-400 font-bold">✓</span>
+                        Uso da norma culta da língua.
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Card 2: Structure -->
+            <div class="bg-[#2A0F5E] p-6 rounded-2xl shadow-xl border border-white/5">
+                <h3 class="text-xl font-bold text-[#A78BFA] mb-4">Estrutura Ideal</h3>
+                
+                <div class="space-y-4">
+                    <div>
+                        <h4 class="font-bold text-white text-sm">1. Introdução</h4>
+                        <p class="text-xs text-gray-400 mt-1">Apresente o tema e sua tese (posicionamento).</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">2. Desenvolvimento (2 parágrafos)</h4>
+                        <p class="text-xs text-gray-400 mt-1">Argumentos sólidos, dados e repertório sociocultural.</p>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-white text-sm">3. Conclusão</h4>
+                        <p class="text-xs text-gray-400 mt-1">Proposta de intervenção com: Agente, Ação, Meio/Modo, Efeito e Detalhamento.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Card 3: Competencies -->
+            <div class="bg-[#2A0F5E] p-6 rounded-2xl shadow-xl border border-white/5">
+                <h3 class="text-xl font-bold text-[#A78BFA] mb-4">As 5 Competências</h3>
+                <ul class="text-xs space-y-2 text-gray-300">
+                    <li><strong>C1:</strong> Domínio da escrita formal.</li>
+                    <li><strong>C2:</strong> Compreender o tema e não fugir dele.</li>
+                    <li><strong>C3:</strong> Organizar e interpretar informações.</li>
+                    <li><strong>C4:</strong> Conhecimento dos mecanismos linguísticos (coesão).</li>
+                    <li><strong>C5:</strong> Proposta de intervenção detalhada.</li>
+                </ul>
+            </div>
+
+        </div>
     </div>
-
-    <div class="mb-6">
-        <label for="title" class="block text-lg font-semibold mb-2">Título</label>
-        <input type="text" id="title" name="title" required
-               class="text-black w-full rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#3D1E8D]">
-    </div>
-
-    <div class="mb-6">
-        <label for="text" class="block text-lg font-semibold mb-2">Texto</label>
-        <textarea id="text" name="text" rows="12" required
-                  class="text-black w-full rounded px-4 py-2 focus:outline-none focus:ring-2 focus:ring-[#3D1E8D]"></textarea>
-    </div>
-
-    <button id="send-button" type="submit"
-            class="w-full bg-[#3D1E8D] text-white font-bold rounded-lg py-3 hover:bg-[#2a1460] transition">
-        Enviar Redação
-    </button>
-
-    <div id="loading" class="hidden text-center mt-6">
-        <p class="text-lg text-gray-200 mb-2">Analisando sua redação...</p>
-        <div class="animate-spin w-10 h-10 border-4 border-purple-400 border-t-transparent rounded-full mx-auto"></div>
-    </div>
-</form>
+</div>
 
 <script>
-document.getElementById("essay-form").addEventListener("submit", () => {
-    document.getElementById("send-button").disabled = true;
-    document.getElementById("send-button").innerText = "Enviando...";
-    document.getElementById("loading").classList.remove("hidden");
-});
+    const form = document.getElementById('essay-form');
+    const textarea = document.getElementById('text');
+    const submitBtn = document.getElementById('send-button');
+    const counterDisplay = document.getElementById('current-lines');
+    const charCounter = document.getElementById('char-counter');
+    const counterContainer = document.getElementById('line-counter');
+    const errorMessage = document.getElementById('error-message');
+    const loadingDiv = document.getElementById('loading');
+
+    const MIN_LINES = 7;
+    const MIN_CHARS_TOTAL = 50; 
+
+    function validateEssay() {
+        const text = textarea.value;
+        // Count lines (split by newline and filter empty lines to force content)
+        const lines = text.split(/\r\n|\r|\n/).length;
+        const charCount = text.length;
+
+        // Update Counters
+        counterDisplay.innerText = lines;
+        charCounter.innerText = charCount + " caracteres";
+
+        // Validation Logic
+        const isValid = lines >= MIN_LINES && charCount >= MIN_CHARS_TOTAL;
+
+        if (isValid) {
+            // Valid State
+            submitBtn.disabled = false;
+            submitBtn.classList.remove('opacity-50', 'cursor-not-allowed');
+            submitBtn.classList.add('hover:scale-[1.01]'); // slight interactive effect
+            
+            textarea.classList.remove('border-red-500', 'focus:ring-red-500');
+            textarea.classList.add('focus:ring-[#A78BFA]');
+            
+            counterContainer.classList.remove('text-gray-400', 'text-red-400');
+            counterContainer.classList.add('text-green-400');
+            
+            errorMessage.classList.add('hidden');
+        } else {
+            // Invalid State
+            submitBtn.disabled = true;
+            submitBtn.classList.add('opacity-50', 'cursor-not-allowed');
+            submitBtn.classList.remove('hover:scale-[1.01]');
+            
+            if (charCount > 0) {
+                // Show visual error if user started typing but hasn't finished
+                counterContainer.classList.add('text-red-400');
+                counterContainer.classList.remove('text-green-400', 'text-gray-400');
+            } else {
+                // Default state
+                counterContainer.classList.add('text-gray-400');
+                counterContainer.classList.remove('text-red-400', 'text-green-400');
+            }
+        }
+
+        return isValid;
+    }
+
+    // Listen for typing
+    textarea.addEventListener('input', validateEssay);
+
+    // Prevent submission if invalid
+    form.addEventListener("submit", (e) => {
+        if (!validateEssay()) {
+            e.preventDefault();
+            textarea.classList.add('border-red-500', 'focus:ring-red-500');
+            textarea.classList.remove('focus:ring-[#A78BFA]');
+            errorMessage.classList.remove('hidden');
+            // Animation for error
+            errorMessage.classList.add('animate-pulse');
+        } else {
+            submitBtn.disabled = true;
+            submitBtn.innerHTML = `
+                <div class="flex items-center justify-center gap-2">
+                    <span>Enviando</span>
+                    <span class="block w-4 h-4 border-2 border-white/50 border-t-white rounded-full animate-spin"></span>
+                </div>
+            `;
+            loadingDiv.classList.remove("hidden");
+            // Scroll to bottom to show loading
+            loadingDiv.scrollIntoView({ behavior: 'smooth' });
+        }
+    });
 </script>
 
 {% endblock %}
