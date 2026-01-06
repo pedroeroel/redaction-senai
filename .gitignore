@@ -1,5 +1,5 @@
-venv
-instance
+instance/*.json
+.venv
 *.pyc
 __pycache__
 .vscode

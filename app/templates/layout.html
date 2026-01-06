@@ -24,7 +24,7 @@
             {% block pagetext %}{% endblock %}
         </p>
 
-        <div class="flex items-center gap-4 ml-auto">
+        <div class="flex items-center gap-5 ml-auto">
             {% if session.get('score') is defined %}
                 <span class="hidden md:block whitespace-nowrap">Seus Pontos: {{ session.get('score') }}</span>
             {% endif %}
